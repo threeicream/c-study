@@ -1,0 +1,17 @@
+﻿  study.cpp
+D:\Vs\project\c++study\c++study\test.h(76,18): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+  (编译源文件“study.cpp”)
+  
+  test.cpp
+D:\Vs\project\c++study\c++study\test.h(76,18): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+  (编译源文件“test.cpp”)
+  
+D:\Vs\project\c++study\c++study\test.cpp(127,14): warning C4267: “初始化”: 从“size_t”转换到“unsigned int”，可能丢失数据
+D:\Vs\project\c++study\c++study\test.cpp(168,13): warning C4267: “初始化”: 从“size_t”转换到“unsigned int”，可能丢失数据
+  正在生成代码...
+D:\Vs\project\c++study\c++study\test.cpp(123,1): warning C4715: “str_subrange”: 不是所有的控件路径都返回值
+D:\Vs\project\c++study\c++study\test.cpp(145,1): warning C4172: 返回局部变量或临时变量的地址: a
+D:\Vs\project\c++study\c++study\test.cpp(138,1): warning C4172: 返回局部变量或临时变量的地址: a
+D:\Vs\project\c++study\c++study\test.cpp(151,1): warning C4172: 返回局部变量或临时变量的地址: a
+D:\Vs\project\c++study\c++study\test.cpp(158,1): warning C4172: 返回局部变量或临时变量的地址: a
+  c++study.vcxproj -> D:\Vs\project\c++study\x64\Debug\c++study.exe

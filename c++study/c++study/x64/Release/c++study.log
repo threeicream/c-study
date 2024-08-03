@@ -1,0 +1,15 @@
+﻿  study.cpp
+D:\Vs\project\c++study\c++study\test.h(33,18): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+  (编译源文件“study.cpp”)
+  
+  test.cpp
+D:\Vs\project\c++study\c++study\test.h(33,18): warning C4267: “return”: 从“size_t”转换到“int”，可能丢失数据
+  (编译源文件“test.cpp”)
+  
+D:\Vs\project\c++study\c++study\test.cpp(126,14): warning C4267: “初始化”: 从“size_t”转换到“unsigned int”，可能丢失数据
+D:\Vs\project\c++study\c++study\test.cpp(167,13): warning C4267: “初始化”: 从“size_t”转换到“unsigned int”，可能丢失数据
+  正在生成代码
+  Previous IPDB not found, fall back to full compilation.
+  All 139 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  已完成代码的生成
+  c++study.vcxproj -> D:\Vs\project\c++study\x64\Release\c++study.exe
