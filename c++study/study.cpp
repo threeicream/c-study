@@ -81,7 +81,7 @@ public:
 int main()
 {
     int a = 2;
-    int b = 3;
+    int b = 2;
     const int c = b;
     
     const int* i = &a;
@@ -89,6 +89,8 @@ int main()
     int* const j = &a;
     *j = 4;
     cout << *i << *j << endl;
+    for (int c = 0; c < 5; ++c)
+        cout << c << ' ';
     /*int* const u = &c;
     u = &b;*/
     
