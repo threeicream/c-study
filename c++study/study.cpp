@@ -88,7 +88,7 @@ int main()
     i = &c;
     int* const j = &a;
     *j = 4;
-    cout << *i << endl;
+    cout << *i << *j << endl;
     /*int* const u = &c;
     u = &b;*/
     
