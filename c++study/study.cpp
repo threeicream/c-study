@@ -81,14 +81,14 @@ public:
 int main()
 {
     int a = 2;
-    int b = 3;
+    int b = 2;
     const int c = b;
     
     const int* i = &a;
     i = &c;
     int* const j = &a;
-    *j = 4;
-    cout << *i << endl;
+    *j = 3;
+    cout << *j << endl;
     /*int* const u = &c;
     u = &b;*/
     
