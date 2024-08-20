@@ -78,22 +78,21 @@ public:
     }
 };
 
+struct A1 {
+    virtual ~A1(){}
+};
+
+struct A2 {
+    virtual ~A2(){}
+};
+struct B1 :A1, A2 {};
+
 int main()
 {
-    int a = 2;
-    int b = 2;
-    const int c = b;
-    
-    const int* i = &a;
-    i = &c;
-    int* const j = &a;
-    *j = 4;
-    cout << *i << *j << endl;
-    for (int c = 0; c < 5; ++c)
-        cout << c << ' ';
-    /*int* const u = &c;
-    u = &b;*/
-    
+    B1 d;
+    A1* pb1 = &d;
+    A2* pb2 = dynamic_cast<A2*>(pb1);
+    //A2* pb22 = static_cast<A2*>(pb1);
 	return 0;
 }
 
