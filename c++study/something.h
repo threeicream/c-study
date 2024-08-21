@@ -851,6 +851,9 @@ c.erase(p);É¾³ýµü´úÆ÷pÖ¸ÏòµÄÔªËØ£¬·µ»ØºóÒ»¸öÔªËØµÄµü´úÆ÷£¬ÈôpÖ¸ÏòÎ²ÔªËØ£¬·µ»ØÎ²º
  q.push(item);//ÔÚqueueÄ©Î²»òÕßpriorityÖÐÇ¡µ±Î»ÖÃ´´½¨Ò»¸öÔªËØ£¬ÆäÖµÎªitem£¬»òÕßÓÉargs¹¹Ôì
  q.emplace(args);
 
+ Ëã·¨º¯Êý£º
+ find(e,q,t);//e¡¢q¶¼ÊÇµü´úÆ÷£¬²éÕÒ·¶Î§[e,q)£¬Î´ÕÒµ½·µ»Øq£¬ÕÒµ½t¾Í·µ»ØtµÄÎ»ÖÃ£¬·µ»ØÖµ±Ø¶¨ÊÇµü´úÆ÷ÀàÐÍ
+ count(e,q,t);//·µ»ØµÄÊÇt³öÏÖµÄ´ÎÊý
 */
 
 //IO¿â

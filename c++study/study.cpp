@@ -13,6 +13,9 @@
 //适配器
 #include<stack>
 #include<queue>
+//算法
+#include<algorithm>
+#include<numeric>
 
 #include <initializer_list>
 #include<stdexcept>
@@ -63,36 +66,52 @@ using namespace std;//一个就把上面using全等效了
 //    }
 //}
 
-class A
-{
-    int a;
-public:
-    A(int x = 0) :a(x) {}
-   const void show1() const
-    {
-        cout << a << endl;
-    }
-    void show2()
-    {
-        cout << a << endl;
-    }
-};
-
-struct A1 {
-    virtual ~A1(){}
-};
-
-struct A2 {
-    virtual ~A2(){}
-};
-struct B1 :A1, A2 {};
+//class A
+//{
+//    int a;
+//public:
+//    A(int x = 0) :a(x) {}
+//   const void show1() const
+//    {
+//        cout << a << endl;
+//    }
+//    void show2()
+//    {
+//        cout << a << endl;
+//    }
+//};
+//
+//struct A1 {
+//    virtual ~A1(){}
+//};
+//
+//struct A2 {
+//    virtual ~A2(){}
+//};
+//struct B1 :A1, A2 {};
 
 int main()
 {
-    B1 d;
-    A1* pb1 = &d;
-    A2* pb2 = dynamic_cast<A2*>(pb1);
-    //A2* pb22 = static_cast<A2*>(pb1);
+    //B1 d;
+    //A1* pb1 = &d;
+    //A2* pb2 = dynamic_cast<A2*>(pb1);
+    ////A2* pb22 = static_cast<A2*>(pb1);
+    ifstream in("H://examtest//a.txt");
+    if (!in)
+    {
+        cerr << "无法打开文件" << endl;
+        return -1;
+    }
+    int u = 0;
+    string a;
+    list<string>x;
+    while (in >> a)
+        x.push_back(a);
+    in.close();
+    cout << "请输入需要比较的单词：" << endl;
+    cin >> a;
+    u = count(begin(x), end(x), a);
+    cout << u << endl;
 	return 0;
 }
 
