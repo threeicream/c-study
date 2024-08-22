@@ -17,11 +17,12 @@
 #include<algorithm>
 #include<numeric>
 
+#include<cstring>
 #include <initializer_list>
 #include<stdexcept>
 #include<cassert>//预处理宏  assert(x);x为假，输出信息并终止程序运行
 #include"test.h"
-#include"person.h"
+//#include"person.h"
 
 using std::cout;
 using std::cin;
@@ -90,29 +91,39 @@ using namespace std;//一个就把上面using全等效了
 //};
 //struct B1 :A1, A2 {};
 
+bool five_or_more(const string& s1)
+{
+    return s1.size() >= 5;
+}
+
 int main()
 {
     //B1 d;
     //A1* pb1 = &d;
     //A2* pb2 = dynamic_cast<A2*>(pb1);
     ////A2* pb22 = static_cast<A2*>(pb1);
-    ifstream in("H://examtest//a.txt");
-    if (!in)
-    {
-        cerr << "无法打开文件" << endl;
-        return -1;
-    }
-    int u = 0;
-    string a;
-    list<string>x;
-    while (in >> a)
-        x.push_back(a);
-    in.close();
-    cout << "请输入需要比较的单词：" << endl;
-    cin >> a;
-    u = count(begin(x), end(x), a);
-    cout << u << endl;
-	return 0;
+    //size_t i, j, k;
+    //vector<int>x{ 1,3,4,5,6,7 };
+    //string words{ "you" };
+    ///*auto l=[]() {return 1; };
+    //auto a = l();
+    //std::partition(x.begin(), x.end(), [&,i,j,k](const string& s1){return s1.size() >= 5; });
+    //for (const auto& i : x) {
+    //    std::cout << i << ' ';
+    //}
+    //ostream& os=cout;*/
+    //std::vector<int> vec = { 1, 2, 6, 4, 5, 6, 7, 8, 9, 0 };
+    //vector<int>xy(vec.size());
+
+    //// 使用lambda表达式作为谓词，查找第一个偶数
+    //auto it = find_if(vec.begin(), vec.end(), [](int n) {return n % 3 == 0; });
+    //transform(vec.begin(), vec.end(), xy.begin(), [](int n) {return n * n; });
+    //for (auto a : xy)
+    //    cout << a << ' ';
+    vector<string>ff{ "love","you","baby11" };
+    auto sum = count_if(ff.begin(), ff.end(), [](string& n) {return n.size() >= 5; });
+    cout << sum;
+    return 0;
 }
 
 //int main()

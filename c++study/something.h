@@ -851,9 +851,57 @@ c.erase(p);É¾³ıµü´úÆ÷pÖ¸ÏòµÄÔªËØ£¬·µ»ØºóÒ»¸öÔªËØµÄµü´úÆ÷£¬ÈôpÖ¸ÏòÎ²ÔªËØ£¬·µ»ØÎ²º
  q.push(item);//ÔÚqueueÄ©Î²»òÕßpriorityÖĞÇ¡µ±Î»ÖÃ´´½¨Ò»¸öÔªËØ£¬ÆäÖµÎªitem£¬»òÕßÓÉargs¹¹Ôì
  q.emplace(args);
 
- Ëã·¨º¯Êı£º
+ Ëã·¨º¯Êı£º£¨±ê×¼¿âµÄº¯Êı¶¼²»ÄÜ¶ÔÈİÆ÷½øĞĞÌí¼Ó/É¾³ı²Ù×÷£¬³ıÁËback_inserter,ÔËĞĞ¿½±´µÈ²Ù×÷Ê±È·±£¿½±´¶ÔÏóµÄ¿Õ¼ä×ã¹»£©
  find(e,q,t);//e¡¢q¶¼ÊÇµü´úÆ÷£¬²éÕÒ·¶Î§[e,q)£¬Î´ÕÒµ½·µ»Øq£¬ÕÒµ½t¾Í·µ»ØtµÄÎ»ÖÃ£¬·µ»ØÖµ±Ø¶¨ÊÇµü´úÆ÷ÀàĞÍ
  count(e,q,t);//·µ»ØµÄÊÇt³öÏÖµÄ´ÎÊı
+ Ö»¶ÁËã·¨£º
+ accumulate(e,q,t);//ÇóºÍ£¬ºÍµÄ³õÖµÎªt£¬µÚÈı¸ö²ÎÊı¾ö¶¨·µ»ØÀàĞÍ£¬ÒÔ¼°+µÄÊ¹ÓÃ£¨stringÀàĞÍÒ²¿ÉÒÔÏà¼Ó£©accumulate(x.begin(), x.end(), string("i "));
+ equal(i1.begin(),i1.end(),i2.begin());//±È½Ïi1ºÍi2ÊÇ·ñÏàÍ¬£¬i2µÄĞòÁĞ>=i1µÄĞòÁĞ£¬Á½ÕßÀàĞÍÏàÈİ£¬¿ÉÒÔ½øĞĞ±È½Ï¼´¿É£¬±ÈÈçvector<string>ºÍlist<const char*>¶¼¿ÉÒÔÏà»¥±È½Ï
+ Ğ´ÈİÆ÷ÔªËØËã·¨£º
+ fill(e,q,t);//½«Ã¿¸öÔªËØÖØÖÃÎªt
+ fill_n(e,n,t);//eÖ¸ÏòÒ»¸öÔªËØ£¬´Óe¿ªÊ¼n¸öÔªËØÖØÖÃÎªt
+ ²åÈëµü´úÆ÷£º
+ auto i=back_inserter(vector<int>a);//´ËÊ±¸ø*i¸³Öµ¼´¿ÉÌí¼ÓÔªËØ
+ ¿½±´Ëã·¨£º
+ copy(a.begin(),a.end(),b);//°ÑaµÄÄÚÈİ¿½±´µ½bÖĞ ±ØĞë±£Ö¤a¡¢bÁ½ÕßÓĞÒ»Ñù¶àµÄÔªËØ£¨copyÎŞ·¨´ÓÈİÆ÷½øĞĞÌí¼Ó/É¾³ı²Ù×÷£©
+ replace(a.begin(),a.end(),0,5);//°ÑaÖĞÎª0µÄÖµ¸ÄÎª5
+ replace_copy(a.cbegin(), a.cend(), back_inserter(b), 0, 55);//½«aµÄÄÚÈİ¿½±´µ½b£¬²¢½«bÖĞÎª0µÄÖµ¸ÄÎª55
+ ÖØÅÅËã·¨£º
+ sort(e,q);//°´×ÖÄ¸/´óĞ¡ÅÅĞòÈİÆ÷
+ stable_sort(e,q);//ºÍsortÒ»Ñù£¬Èç¹ûÁ½¸öÔªËØÏàµÈ£¬ËüÃÇÔÚÅÅĞòºóµÄÏà¶ÔË³Ğò²»»á¸Ä±ä¡£
+ unique(e,q);//Ïû³ıÏàÁÚµÄÖØ¸´Ïî£¬·µ»ØÖ¸Ïò²»ÖØ¸´ÇøÓòÖ®ºóÒ»¸öÎ»ÖÃµÄµü´úÆ÷£¨ËµÊÇÏû³ı£¬ÆäÊµÊÇ½«ÆäÒÆ¶¯µ½Ä©Î²£¬²¢½«ÔªËØµÈÓÚÔ­À´µÄend£©
+
+ partition(e,q,predicate);//ÓÃÓÚ¸ù¾İ¸ø¶¨µÄÎ½´Ê£¨predicate£©½«·¶Î§ÄÚµÄÔªËØÖØĞÂÅÅÁĞ£¬Ê¹µÃÂú×ãÎ½´ÊµÄÔªËØÎ»ÓÚ·¶Î§µÄÇ°°ë²¿·Ö£¬¶ø²»Âú×ãÎ½´ÊµÄÔªËØÎ»ÓÚ·¶Î§µÄºó°ë²¿·Ö¡£
+ Î½´Ê£¨predicate£©£º
+ Ò»¸öº¯Êı£¬Æä·µ»Ø½á¹ûÊÇÒ»¸öÄÜ×÷ÎªÌõ¼şµÄÖµ£¨×î¶àµ÷ÓÃÁ½¸ö²ÎÊıj£¬ÇÒ·µ»ØÖµÎªbool£©
+ bool compare(int a, int b) {
+	return a < b;
+}
+ Lambda£º
+ ±í´ïÊ½£º
+ capture -> return_type {
+	// function body
+}
+ [capture](parameters){function body}
+capture£º²¶»ñÍâ²¿±äÁ¿µÄ·½Ê½£¬¿ÉÒÔÊÇÖµ²¶»ñ£¨=£©»òÒıÓÃ²¶»ñ£¨&£©¡£//[=,&a][&,a]ÒşÊ½²¶»ñ
+parameters£ºº¯Êı²ÎÊıÁĞ±í¡£
+return_type£º·µ»ØÀàĞÍ£¨¿ÉÒÔÊ¡ÂÔ£¬±àÒëÆ÷»á×Ô¶¯ÍÆ¶Ï£©¡£
+function body£ºº¯ÊıÌå£¬°üº¬¾ßÌåµÄ²Ù×÷¡£
+ ¶ÔÓÚ¿½±´µÄ±äÁ¿£¬Èç¹ûĞèÒªĞŞ¸Ä£¬±ØĞë¼ÓÉÏmutable
+ size_t v1=42
+ auto f=[v1]()mutable(return ++v1;};
+ v1=0
+ auto j=f();//j=43
+ ¶ÔÓÚ·Çconst±äÁ¿µÄÒıÓÃ£¬¿ÉÒÔÍ¨¹ıÒıÓÃ½øĞĞĞŞ¸Ä
+ size_t v1=42
+ auto f=[v1]()mutable(return ++v1;};
+ v1=0
+ auto j=f();//j=1
+
+ find_if(e,q,Lambda);//ÓÃÓÚÔÚ·¶Î§ÄÚ²éÕÒµÚÒ»¸öÂú×ãÌØ¶¨Ìõ¼şµÄÔªËØ¡£Ëü½ÓÊÜÒ»¸öLambda×÷Îª²ÎÊı£¬²¢·µ»ØÒ»¸öÖ¸ÏòµÚÒ»¸öÂú×ãÌõ¼şµÄÔªËØµÄµü´úÆ÷¡£Èç¹ûÃ»ÓĞÕÒµ½Âú×ãÌõ¼şµÄÔªËØ£¬Ôò·µ»ØÖ¸Ïò·¶Î§Ä©Î²µÄµü´úÆ÷¡£
+ count_if(e,q,Lambda);//·µ»ØÂú×ãÒªÇóµÄÔªËØµÄ¸öÊı
+ find_each(e,q,Lambda);//¶Ôe-q·¶Î§ÄÚµÄÔªËØ½øĞĞ²Ù×÷£¬¿´Lambda±í´ïÊ½·µ»ØµÄÖµ
+ transform(numbers.begin(), numbers.end(), results.begin(),Lambda);//ÊÇÓÃÓÚ¶ÔÈİÆ÷ÖĞµÄÔªËØÓ¦ÓÃÖ¸¶¨µÄ²Ù×÷,²¢½«½á¹û´æ´¢µ½ÁíÒ»¸öÈİÆ÷ÖĞ¡£È·±£resultsµÄ¿Õ¼ä>=numbers
 */
 
 //IO¿â
@@ -1248,5 +1296,32 @@ c.erase(p);É¾³ıµü´úÆ÷pÖ¸ÏòµÄÔªËØ£¬·µ»ØºóÒ»¸öÔªËØµÄµü´úÆ÷£¬ÈôpÖ¸ÏòÎ²ÔªËØ£¬·µ»ØÎ²º
 //		throw invalid_argument("·Ç·¨±í´ïÊ½");
 //
 //	cout << so.top().v << endl;
+//	return 0;
+//}
+
+//ÈçºÎÊ¹ÓÃoperator<<
+
+// ¶¨ÒåÒ»¸ö×Ô¶¨ÒåÀàĞÍ
+//class Person {
+//public:
+//	Person(const std::string& name, int age) : name_(name), age_(age) {}
+//
+//	// ÓÑÔªÉùÃ÷£¬Ê¹µÃoperator<<¿ÉÒÔ·ÃÎÊË½ÓĞ³ÉÔ±
+//	friend std::ostream& operator<<(std::ostream& out, const Person& person);
+//
+//private:
+//	std::string name_;
+//	int age_;
+//};
+//
+//// ÖØÔØoperator<<
+//std::ostream& operator<<(std::ostream& out, const Person& person) {
+//	out << "Name: " << person.name_ << ", Age: " << person.age_;
+//	return out;
+//}
+//
+//int main() {
+//	Person person("Alice", 30);
+//	std::cout << person << std::endl; // Ê¹ÓÃÖØÔØµÄoperator<<Êä³öPerson¶ÔÏó
 //	return 0;
 //}
