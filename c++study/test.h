@@ -172,4 +172,6 @@ string name_string(string& s, const string& n, const string& o);
 void find_string1(string& s, const string& chars);
 void find_string2(string& s, const string& chars);
 vector<string> nn(istream& in, const string& shang, const string& xia);
+bool five_or_more(const string& s1, string::size_type sz);
+bool isshorter1(const string& a, const string& b);
 #endif

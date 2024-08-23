@@ -16,6 +16,7 @@
 //算法
 #include<algorithm>
 #include<numeric>
+#include<functional>
 
 #include<cstring>
 #include <initializer_list>
@@ -34,6 +35,7 @@ using std::vector;
 using std::initializer_list;
 typedef string::size_type sz;
 using namespace std;//一个就把上面using全等效了
+using namespace placeholders;
 
  /*string xyy(string& x,string&y)
 {
@@ -91,38 +93,45 @@ using namespace std;//一个就把上面using全等效了
 //};
 //struct B1 :A1, A2 {};
 
-bool five_or_more(const string& s1)
-{
-    return s1.size() >= 5;
-}
-
 int main()
 {
     //B1 d;
     //A1* pb1 = &d;
     //A2* pb2 = dynamic_cast<A2*>(pb1);
     ////A2* pb22 = static_cast<A2*>(pb1);
-    //size_t i, j, k;
-    //vector<int>x{ 1,3,4,5,6,7 };
-    //string words{ "you" };
-    ///*auto l=[]() {return 1; };
-    //auto a = l();
-    //std::partition(x.begin(), x.end(), [&,i,j,k](const string& s1){return s1.size() >= 5; });
-    //for (const auto& i : x) {
-    //    std::cout << i << ' ';
-    //}
-    //ostream& os=cout;*/
-    //std::vector<int> vec = { 1, 2, 6, 4, 5, 6, 7, 8, 9, 0 };
-    //vector<int>xy(vec.size());
+    
+    /*int t = 4;
+    auto f = []( int& m)mutable ->int {--m; return m; };
+    vector<int>x{ 1,2,3};
+    for_each(x.begin(), x.end(), f);
+    for (auto a : x)
+        cout << a << ' ';
+    vector<string>y{ "lov","fuckik" };
+    auto check = bind(five_or_more, _1, t);
+    auto i = find_if(y.cbegin(), y.cend(), check);
+    cout << *i << endl;*/
 
-    //// 使用lambda表达式作为谓词，查找第一个偶数
-    //auto it = find_if(vec.begin(), vec.end(), [](int n) {return n % 3 == 0; });
-    //transform(vec.begin(), vec.end(), xy.begin(), [](int n) {return n * n; });
-    //for (auto a : xy)
-    //    cout << a << ' ';
-    vector<string>ff{ "love","you","baby11" };
-    auto sum = count_if(ff.begin(), ff.end(), [](string& n) {return n.size() >= 5; });
-    cout << sum;
+    /*vector<string>y{ "lov","juckik","jjda"};
+    sort(y.begin(), y.end(), bind(isshorter1,_2,_1));
+    auto c=find(y.begin(), y.end(), "lov");
+    cout << *c << endl;*/
+    /*list<int>x{ 1,2,34,5 };
+    list<int>y(4);
+    
+    copy(x.cbegin(), x.cend(), inserter(y,y.begin()));
+    for (auto a : y)
+        cout << a << ' ';*/
+    std::vector<int> vec;
+    auto it = std::back_inserter(vec);
+    it++;
+    it = 1;
+    it = 2;
+    it = 3;
+    
+
+    for (int val : vec) {
+        std::cout << val << " ";
+    }
     return 0;
 }
 

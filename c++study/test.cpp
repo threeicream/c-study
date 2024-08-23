@@ -379,3 +379,13 @@ vector<string> nn(istream& in, const string& shang, const string& xia)
 	}
 	return xy;
 }
+
+bool five_or_more(const string& s1, string::size_type sz)
+{
+	return s1.size() >= sz;
+}
+
+bool isshorter1(const string& a, const string& b)
+{
+	return a.size() >= b.size();
+}
