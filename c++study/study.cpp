@@ -121,17 +121,20 @@ int main()
     copy(x.cbegin(), x.cend(), inserter(y,y.begin()));
     for (auto a : y)
         cout << a << ' ';*/
-    std::vector<int> vec;
-    auto it = std::back_inserter(vec);
-    it++;
-    it = 1;
-    it = 2;
-    it = 3;
-    
-
-    for (int val : vec) {
-        std::cout << val << " ";
-    }
+    vector<int>x;
+    istream_iterator<int> is(cin), eof;
+    ostream_iterator<int> os(cout, " ");
+    while (is != eof)
+        x.push_back(*is++);
+   sort(x.begin(), x.end(), [](int a, int b) {
+        if (a < 5 && b >= 5) return true;
+        if (a >= 5 && b < 5) return false;
+        return a < b;
+    });
+    //unique_copy(x.begin(), x.end(), os);
+    auto last=unique(x.begin(), x.end(), [](int a,int b) {return a%2==0&&b%2==0; });
+    x.erase(last, x.end());
+    copy(x.begin(), x.end(), os);
     return 0;
 }
 
