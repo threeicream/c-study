@@ -100,41 +100,13 @@ int main()
     //A2* pb2 = dynamic_cast<A2*>(pb1);
     ////A2* pb22 = static_cast<A2*>(pb1);
     
-    /*int t = 4;
-    auto f = []( int& m)mutable ->int {--m; return m; };
-    vector<int>x{ 1,2,3};
-    for_each(x.begin(), x.end(), f);
-    for (auto a : x)
-        cout << a << ' ';
-    vector<string>y{ "lov","fuckik" };
-    auto check = bind(five_or_more, _1, t);
-    auto i = find_if(y.cbegin(), y.cend(), check);
-    cout << *i << endl;*/
-
-    /*vector<string>y{ "lov","juckik","jjda"};
-    sort(y.begin(), y.end(), bind(isshorter1,_2,_1));
-    auto c=find(y.begin(), y.end(), "lov");
-    cout << *c << endl;*/
-    /*list<int>x{ 1,2,34,5 };
-    list<int>y(4);
-    
-    copy(x.cbegin(), x.cend(), inserter(y,y.begin()));
-    for (auto a : y)
-        cout << a << ' ';*/
-    vector<int>x;
-    istream_iterator<int> is(cin), eof;
-    ostream_iterator<int> os(cout, " ");
-    while (is != eof)
-        x.push_back(*is++);
-   sort(x.begin(), x.end(), [](int a, int b) {
-        if (a < 5 && b >= 5) return true;
-        if (a >= 5 && b < 5) return false;
-        return a < b;
-    });
-    //unique_copy(x.begin(), x.end(), os);
-    auto last=unique(x.begin(), x.end(), [](int a,int b) {return a%2==0&&b%2==0; });
-    x.erase(last, x.end());
-    copy(x.begin(), x.end(), os);
+    ifstream in("H://examtest//a.txt");
+    ofstream out1("H://examtest//b.txt");
+    ofstream out2("H://examtest//c.txt");
+    oneis_twoos(in, out1, out2);
+    in.close();
+    out1.close();
+    out2.close();
     return 0;
 }
 

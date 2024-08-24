@@ -389,3 +389,13 @@ bool isshorter1(const string& a, const string& b)
 {
 	return a.size() >= b.size();
 }
+
+void oneis_twoos(istream& is, ostream& os1, ostream& os2)
+{
+	istream_iterator<int> in(is), eof;
+	vector<int>yuan(in, eof);
+	ostream_iterator<int> out1(os1, " ");
+	ostream_iterator<int> out2(os2, "\n");
+	copy_if(yuan.begin(), yuan.end(), out1, [](int n) {if (n % 2 == 0 )return true; return false; });
+	copy_if(yuan.begin(), yuan.end(), out2, [](int n) {if (!(n % 2 == 0))return true; return false; });
+}

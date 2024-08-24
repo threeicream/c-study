@@ -13,7 +13,15 @@
 #include<forward_list>
 #include<deque>
 #include<array>
+//适配器
+#include<stack>
+#include<queue>
+//算法
+#include<algorithm>
+#include<numeric>
+#include<functional>
 
+#include<cstring>
 #include <initializer_list>
 #include<stdexcept>
 #include<cassert>//预处理宏  assert(x);x为假，输出信息并终止程序运行
@@ -174,4 +182,5 @@ void find_string2(string& s, const string& chars);
 vector<string> nn(istream& in, const string& shang, const string& xia);
 bool five_or_more(const string& s1, string::size_type sz);
 bool isshorter1(const string& a, const string& b);
+void oneis_twoos(istream& is, ostream& os1, ostream& os2);
 #endif
