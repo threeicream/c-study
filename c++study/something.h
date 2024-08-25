@@ -964,14 +964,44 @@ c.erase(p);É¾³ıµü´úÆ÷pÖ¸ÏòµÄÔªËØ£¬·µ»ØºóÒ»¸öÔªËØµÄµü´úÆ÷£¬ÈôpÖ¸ÏòÎ²ÔªËØ£¬·µ»ØÎ²º
  1.¶ÁÈ¡²åÈë
  ostream_iterator<string> os(cout, " ");
  for (auto e : y)
-	*os++ = e;
+	*os++ = e;//µÈĞ§Îªos=e;
  2.Ëã·¨²Ù×÷
  copy(y.begin(), y.end(), os);//ºÍÉÏÃæĞ§¹ûÒ»Ñù
 
- ·´Ïòµü´úÆ÷£¨forward_list²»Ö§³Ö·´Ïòµü´úÆ÷£©
+ ·´Ïòµü´úÆ÷£¨forward_list²»Ö§³Ö·´Ïòµü´úÆ÷£©·´Ïòµü´úÆ÷µÄÌØĞÔÊÇËüÖ¸ÏòµÄÔªËØÊµ¼ÊÉÏÊÇËüÇ°Ò»¸öÎ»ÖÃµÄÔªËØ
  ÍêÈ«Ïà·´
  crend()ÔÚbeginÇ°Ãæ£¬crbegin()ÔÚendÇ°Ãæ
  com.base();//»ñµÃÒ»¸öÕıÏòµü´úÆ÷
+ ÏÂÊö´úÂë¸´ÖÆ·¶Î§Îª3->7
+  vector<int>y{ 1,2,3,4,5,6,7,8,9,10 };
+	list<int>z;
+	vector<int>::reverse_iterator rb(y.begin() + 2);
+	vector<int>::reverse_iterator rs(y.begin() + 7);
+	copy(rs, rb, back_inserter(z));
+
+ 5¸öµü´úÆ÷Àà±ğ£º
+ ÊäÈë£º			p392
+ Êä³ö£º			p392
+ Ç°Ïò£º			p392
+ Ë«Ïò£º			p392
+ Ëæ»ú·ÃÎÊ£º		p392
+
+ Ëã·¨ĞÎ²ÎÄ£Ê½£º
+ alg(beg,end,other args);
+ alg(beg,end,dest,other args);//dest¿ÉÒÔÊÇ²åÈëµü´úÆ÷£¬Êä³öµü´úÆ÷µÈ
+ alg(beg,end,beg2,other args);//Ä¬ÈÏbeg2µÄÈİÆ÷¿Õ¼ä>=begµÄ
+ alg(beg,end,beg2,end2,other args);
+
+ ÌØ¶¨ÈİÆ÷Ëã·¨£¨list¡¢forward_list£©¶¼·µ»Øvoid
+ lst.merge(lst2);
+ lst.merge(lst2,comp);
+ lst.remove(val);
+ lst.remove_if(pred);
+ lst.reserve();
+ lst.sort();
+ lst.sort(comp);
+ lst.unique();
+ lst.unique(pred);
 */
 
 //IO¿â

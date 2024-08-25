@@ -78,7 +78,7 @@ public:
 	using screenindex = vector<screen>::size_type;
 	void clear(screenindex);
 	screenindex addscreen(const screen&);
-	void c_out()const { cout << screens[0].height << ' ' << screens[0].width << '\n' << screens[0].contents << endl; }
+	void c_out(screenindex i)const { cout << screens[i].height << ' ' << screens[i].width << '\n' << screens[i].contents << endl; }
 private:
 	vector<screen>screens{ screen(5,6,'x') };
 };

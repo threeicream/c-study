@@ -100,13 +100,9 @@ int main()
     //A2* pb2 = dynamic_cast<A2*>(pb1);
     ////A2* pb22 = static_cast<A2*>(pb1);
     
-    ifstream in("H://examtest//a.txt");
-    ofstream out1("H://examtest//b.txt");
-    ofstream out2("H://examtest//c.txt");
-    oneis_twoos(in, out1, out2);
-    in.close();
-    out1.close();
-    out2.close();
+    list<int>x{ 1,2,2,3,4,5,5,6,7 };
+    
+   
     return 0;
 }
 
