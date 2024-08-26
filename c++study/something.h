@@ -993,15 +993,19 @@ c.erase(p);É¾³ıµü´úÆ÷pÖ¸ÏòµÄÔªËØ£¬·µ»ØºóÒ»¸öÔªËØµÄµü´úÆ÷£¬ÈôpÖ¸ÏòÎ²ÔªËØ£¬·µ»ØÎ²º
  alg(beg,end,beg2,end2,other args);
 
  ÌØ¶¨ÈİÆ÷Ëã·¨£¨list¡¢forward_list£©¶¼·µ»Øvoid
- lst.merge(lst2);
- lst.merge(lst2,comp);
- lst.remove(val);
- lst.remove_if(pred);
+ lst.merge(lst2);		Ê¹ÓÃ<ÔËËã·û½øĞĞºÏ²¢£¨»¹µÃÓĞĞò£©
+ lst.merge(lst2,comp);	Ê¹ÓÃ¸ø¶¨µÄ±È½Ï²Ù×÷½øĞĞºÏ²¢
+ lst.remove(val);		É¾µôÒ»¸öÖµÏàÍ¬µÄ
+ lst.remove_if(pred);	É¾µôÒ»¸öÂú×ãÒ»ÔªÎ½´ÊµÄ
  lst.reserve();
  lst.sort();
- lst.sort(comp);
+ lst.sort(comp);		
  lst.unique();
  lst.unique(pred);
+ spliceËã·¨ÊÇÁ´Ê½½á¹¹ÌØÓĞ£¬ÓÃÓÚ½«Ò»¸öÁĞ±íµÄÔªËØ²åÈëµ½ÁíÒ»¸öÁĞ±íÖĞ
+ lst.splice(args);
+ flst.splice_after(args);
+ (p,lst2)(p,lst2,p2),(p,lst2,b,e)
 */
 
 //IO¿â

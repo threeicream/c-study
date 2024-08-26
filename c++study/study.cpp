@@ -101,8 +101,11 @@ int main()
     ////A2* pb22 = static_cast<A2*>(pb1);
     
     list<int>x{ 1,2,2,3,4,5,5,6,7 };
-    
-   
+    vector<int>y{ 1,2,2,3,4 };
+    auto i = unique(y.begin(), y.end());
+    y.erase(i, y.end());
+    for (auto a : y)
+        cout << a << ' ';
     return 0;
 }
 
