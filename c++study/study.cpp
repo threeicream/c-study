@@ -10,6 +10,9 @@
 #include<forward_list>
 #include<deque>
 #include<array>
+//¹ØÁªÈİÆ÷
+#include<map>
+#include<set>
 //ÊÊÅäÆ÷
 #include<stack>
 #include<queue>
@@ -93,19 +96,40 @@ using namespace placeholders;
 //};
 //struct B1 :A1, A2 {};
 
+class Base {
+public:
+    int Bar(char x) {
+        return (int)(x);
+    }
+    virtual int Bar(int x) {
+        return (2 * x);
+    }
+};
+class Derived : public Base {
+public:
+    int Bar(char x) {
+        return (int)(-x);
+    }
+    int Bar(int x) {
+        return (x / 2);
+    }
+};
+
 int main()
 {
     //B1 d;
     //A1* pb1 = &d;
     //A2* pb2 = dynamic_cast<A2*>(pb1);
     ////A2* pb22 = static_cast<A2*>(pb1);
-    
-    list<int>x{ 1,2,2,3,4,5,5,6,7 };
-    vector<int>y{ 1,2,2,3,4 };
-    auto i = unique(y.begin(), y.end());
-    y.erase(i, y.end());
-    for (auto a : y)
-        cout << a << ' ';
+    map<string, size_t>x;
+    set<string>y{ "example","¡¢","Example","EXAMPLE" };
+    string words;
+    while (cin >> words)
+        if(y.find(words)==y.end())
+        ++x[words];
+    for (auto& a : x)
+        cout << a.first << ' ' << a.second << endl;
+
     return 0;
 }
 

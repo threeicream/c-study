@@ -752,7 +752,7 @@ size()£º·µ»ØÔªËØ¸öÊı
 insert(iterator, value)£ºÔÚÖ¸¶¨Î»ÖÃ²åÈëÔªËØ
 erase(iterator)£ºÉ¾³ıÖ¸¶¨Î»ÖÃµÄÔªËØ
 4. forward_list
-¶¨Òå£ºforward_list ÊÇµ¥ÏòÁ´±í£¬Ö»Ö§³Öµ¥Ïò±éÀúºÍÔÚÍ·²¿²åÈëÉ¾³ıÔªËØ¡£ ³£ÓÃ³ÉÔ±º¯Êı£º
+¶¨Òå£ºforward_list ÊÇµ¥ÏòÁ´±í£¬Ö»Ö§³Öµ¥Ïò±éÀúºÍ²åÈëÉ¾³ıÔªËØ¡£ ³£ÓÃ³ÉÔ±º¯Êı£º
 
 push_front(value)£ºÔÚÍ·²¿Ìí¼ÓÔªËØ
 pop_front()£ºÉ¾³ıÍ·²¿ÔªËØ
@@ -1006,6 +1006,14 @@ c.erase(p);É¾³ıµü´úÆ÷pÖ¸ÏòµÄÔªËØ£¬·µ»ØºóÒ»¸öÔªËØµÄµü´úÆ÷£¬ÈôpÖ¸ÏòÎ²ÔªËØ£¬·µ»ØÎ²º
  lst.splice(args);
  flst.splice_after(args);
  (p,lst2)(p,lst2,p2),(p,lst2,b,e)
+
+ ¹ØÁªÈİÆ÷£º°´¹Ø¼ü×ÖÀ´±£´æºÍ·ÃÎÊ
+ ÓĞĞò±£´æ£º<valve,key>
+ map¡¢set ¹Ø¼ü´Ê¡ª¡ªÖµ¡¢Ö»±£´æ¹Ø¼ü´Ê set³£³£×÷ÎªºÚÃûµ¥¡¢°×Ãûµ¥µÄÊµÏÖ·½Ê½
+ multimap¡¢multiset ¹Ø¼ü´Ê¿ÉÖØ¸´³öÏÖ
+ ÎŞĞò±£´æ£º
+ unordered_map¡¢unordered_set Ê¹ÓÃ¹şÏ£º¯Êı×éÖ¯
+ unordered_multimap¡¢unordered_multiset
 */
 
 //IO¿â
