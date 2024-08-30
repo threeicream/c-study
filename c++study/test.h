@@ -13,6 +13,9 @@
 #include<forward_list>
 #include<deque>
 #include<array>
+//¹ØÁªÈİÆ÷
+#include<map>
+#include<set>
 //ÊÊÅäÆ÷
 #include<stack>
 #include<queue>
@@ -183,4 +186,6 @@ vector<string> nn(istream& in, const string& shang, const string& xia);
 bool five_or_more(const string& s1, string::size_type sz);
 bool isshorter1(const string& a, const string& b);
 void oneis_twoos(istream& is, ostream& os1, ostream& os2);
+void add_family(map<string, vector<string>>& families, const string& family);
+void add_child(map<string, vector<string>>& families, const string& family, const string& child);
 #endif

@@ -13,6 +13,7 @@
 //关联容器
 #include<map>
 #include<set>
+#include<utility>
 //适配器
 #include<stack>
 #include<queue>
@@ -96,24 +97,35 @@ using namespace placeholders;
 //};
 //struct B1 :A1, A2 {};
 
-class Base {
-public:
-    int Bar(char x) {
-        return (int)(x);
+//class Base {
+//public:
+//    int Bar(char x) {
+//        return (int)(x);
+//    }
+//    virtual int Bar(int x) {
+//        return (2 * x);
+//    }
+//};
+//class Derived : public Base {
+//public:
+//    int Bar(char x) {
+//        return (int)(-x);
+//    }
+//    int Bar(int x) {
+//        return (x / 2);
+//    }
+//};
+
+string& trans(string& s)
+{
+    for (int p = 0; p < s.size(); p++) {
+        if (s[p] >= 'A' && s[p] <= 'Z')
+            s[p] -= ('A' - 'a');
+        else if (s[p] == ',' || s[p] == '.')
+            s.erase(p, 1);
     }
-    virtual int Bar(int x) {
-        return (2 * x);
-    }
-};
-class Derived : public Base {
-public:
-    int Bar(char x) {
-        return (int)(-x);
-    }
-    int Bar(int x) {
-        return (x / 2);
-    }
-};
+    return s;
+}
 
 int main()
 {
@@ -121,15 +133,49 @@ int main()
     //A1* pb1 = &d;
     //A2* pb2 = dynamic_cast<A2*>(pb1);
     ////A2* pb22 = static_cast<A2*>(pb1);
-    map<string, size_t>x;
-    set<string>y{ "example","、","Example","EXAMPLE" };
-    string words;
-    while (cin >> words)
-        if(y.find(words)==y.end())
-        ++x[words];
-    for (auto& a : x)
-        cout << a.first << ' ' << a.second << endl;
+    
+    //map<string, vector<string>> families;
+    ////add_family(families, "张");
+    //add_child(families, "张", "强");
+    //add_child(families, "张", "刚");
+    //add_child(families, "王", "五");
+    ////add_family(families, "王");
+    //for (const auto &f : families) {
+    //    cout << f.first << "家的孩子：";
+    //    for (const auto &c : f.second)
+    //        cout << c << " ";
+    //    cout << endl;
+    //}
 
+    map<string, list<int>>x;
+    list<int>y;
+    string words,line;
+    istringstream ss;
+    int i = 0;
+    ifstream in("H://examtest//a.txt");
+    if (!in)
+       {
+          cerr << "无法打开文件："  << endl;
+          return -1;
+       }
+    while (getline(in, line))
+    {
+        ++i;
+        ss.str(line);
+        while (ss >> words)
+        {
+            trans(words);
+            x[words].push_back(i);
+        }
+        ss.clear();
+    }
+    for (const auto& a : x)
+    {
+        cout << a.first << "所在行：";
+        for (auto& b : a.second)
+            cout << b << " ";
+        cout << endl;
+    }
     return 0;
 }
 

@@ -399,3 +399,15 @@ void oneis_twoos(istream& is, ostream& os1, ostream& os2)
 	copy_if(yuan.begin(), yuan.end(), out1, [](int n) {if (n % 2 == 0 )return true; return false; });
 	copy_if(yuan.begin(), yuan.end(), out2, [](int n) {if (!(n % 2 == 0))return true; return false; });
 }
+
+void add_family(map<string, vector<string>>& families, const string& family)
+{
+	/*if (families.find(family) == families.end())
+		families[family] = vector<string>();*///vector<string>()相当于创建一个空集
+	families[family];//如果有family，就只是调用，如果没有，直接创建
+}
+
+void add_child(map<string, vector<string>>& families, const string& family, const string& child)
+{
+	families[family].push_back(child);//families[family] 返回的是一个 vector<string> 的引用，因此在使用时可以像 vector<string> 一样操作。例如，可以调用 push_back、size、empty 等 vector 的成员函数。
+}
