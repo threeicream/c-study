@@ -46,8 +46,8 @@ public:
 	//构造函数初始化，跟=符号赋值差别还是有的
 	screen() = default;
 	//screen() :screen(1, 0, 0, ' ') { cout << "不接受任何信息" << endl; }
-	screen(const pos& h, const pos& w) :screen(0, h, w, ' ') { cout << "接受两个信息" << endl; }
-	screen(const pos& h, const pos& w, char c) :screen(0,h,w,'c') { cout << "接受三个信息" << endl; }
+	screen(const pos& h, const pos& w) :screen(0, h, w, 'c') { cout << "接受两个信息" << endl; }
+	screen(const pos& h, const pos& w, char c) :screen(0,h,w,c) { cout << "接受三个信息" << endl; }
 	screen(const pos& cu,const pos& h, const pos& w, char c) :cursor(cu),height(h), width(w), contents(h* w, c) { cout << "接受四个信息" << endl; }
 	void re_width(pos i) { width = i; }
 	//pos re_width() { return width; }
@@ -140,6 +140,20 @@ private:
 	int y_;
 };
 
+class student
+{
+public:
+	int score;
+	string name;
+};
+
+class teacher
+{
+public:
+	string name;
+	student stu[3];
+};
+
 int xyz();
 void diaohuan(int* i, int* j);
 void diaohuan_1(int& i, int& j);
@@ -188,4 +202,6 @@ bool isshorter1(const string& a, const string& b);
 void oneis_twoos(istream& is, ostream& os1, ostream& os2);
 void add_family(map<string, vector<string>>& families, const string& family);
 void add_child(map<string, vector<string>>& families, const string& family, const string& child);
+void allocatespace(teacher sum[], int len, istream& in);
+int L(vector<int>nums, int i);//暴力递归计算递增最大长度，O(n*2^n)
 #endif

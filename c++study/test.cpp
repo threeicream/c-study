@@ -411,3 +411,101 @@ void add_child(map<string, vector<string>>& families, const string& family, cons
 {
 	families[family].push_back(child);//families[family] 返回的是一个 vector<string> 的引用，因此在使用时可以像 vector<string> 一样操作。例如，可以调用 push_back、size、empty 等 vector 的成员函数。
 }
+
+void allocatespace(teacher sum[], int len, istream& in)
+{
+	string name1;
+	int score1;
+
+	for (int i = 0; i < len; ++i)
+	{
+		cout << "请输入老师姓名：";
+		in >> name1;
+		cout << endl;
+		sum[i].name = "teacher_" + name1;
+		for (int j = 0; j < 3; ++j)
+		{
+			cout << "请输入老师所带第" << j + 1 << "个学生姓名：";
+			in >> name1;
+			cout << endl;
+			sum[i].stu[j].name = "student_" + name1;
+			cout << "请输入老师所带第" << j + 1 << "个学生成绩：";
+			in >> score1;
+			cout << endl;
+			sum[i].stu[j].score = score1;
+		}
+	}
+	for (auto i = 0; i < 2; ++i)
+	{
+		cout << sum[i].name << endl;
+		for (auto j = 0; j < 3; ++j)
+			cout << sum[i].stu[j].name << " " << sum[i].stu[j].score << endl;
+	}
+}
+
+int L(vector<int>nums, int i)//暴力递归计算递增最大长度，O(n*2^n)
+{
+	int j = 0;
+	int Max = 1;
+	vector<int>meme;
+	if (meme[i])
+		for (int j = i + 1; j < nums.size(); ++j)
+		{
+			if (nums[j] > nums[i])
+				Max = max(Max, L(nums, j) + 1);
+		}
+	return Max;
+}
+
+string& trans(string& s)
+{
+	for (int p = 0; p < s.size(); p++) {
+		if (s[p] >= 'A' && s[p] <= 'Z')
+			s[p] -= ('A' - 'a');
+		else if (s[p] == ',' || s[p] == '.')
+			s.erase(p, 1);
+	}
+	return s;
+}
+
+class hero
+{
+public:
+	string name;
+	string xingbie;
+	int age;
+	//hero& jiaohuan();
+};
+
+void allocate_hero(hero sum[], int len, istream& in)
+{
+	string name1, xingbie1;
+	int age1;
+	for (auto i = 0; i < len; ++i)
+	{
+		cout << "请输入hero姓名：";
+		in >> name1;
+		cout << endl;
+		sum[i].name = name1;
+		cout << "请输入hero性别：";
+		in >> xingbie1;
+		cout << endl;
+		sum[i].xingbie = xingbie1;
+		cout << "请输入hero年龄：";
+		in >> age1;
+		cout << endl;
+		sum[i].age = age1;
+	}
+	for (auto i = 0; i < len; ++i)
+		for (auto j = len - 1; j > i; --j)
+		{
+			if (sum[i].age > sum[j].age)
+			{
+				hero temp = sum[i];
+				sum[i] = sum[j];
+				sum[j] = temp;
+			}
+		}
+	for (auto i = 0; i < len; ++i)
+		cout << sum[i].name << " " << sum[i].xingbie << " " << sum[i].age << endl;
+}

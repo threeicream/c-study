@@ -116,16 +116,7 @@ using namespace placeholders;
 //    }
 //};
 
-string& trans(string& s)
-{
-    for (int p = 0; p < s.size(); p++) {
-        if (s[p] >= 'A' && s[p] <= 'Z')
-            s[p] -= ('A' - 'a');
-        else if (s[p] == ',' || s[p] == '.')
-            s.erase(p, 1);
-    }
-    return s;
-}
+
 
 int main()
 {
@@ -146,36 +137,14 @@ int main()
     //        cout << c << " ";
     //    cout << endl;
     //}
-
-    map<string, list<int>>x;
-    list<int>y;
-    string words,line;
-    istringstream ss;
-    int i = 0;
-    ifstream in("H://examtest//a.txt");
-    if (!in)
-       {
-          cerr << "无法打开文件："  << endl;
-          return -1;
-       }
-    while (getline(in, line))
-    {
-        ++i;
-        ss.str(line);
-        while (ss >> words)
-        {
-            trans(words);
-            x[words].push_back(i);
-        }
-        ss.clear();
-    }
-    for (const auto& a : x)
-    {
-        cout << a.first << "所在行：";
-        for (auto& b : a.second)
-            cout << b << " ";
-        cout << endl;
-    }
+    /*screen p(1, 2);
+    screen x = p.display(cout);
+    x.set('u').display(cout);*/
+    /*hero p[3];
+    allocate_hero(p,3,cin);*/
+    vector<int>x{ 1,2,3,4,5 };
+    vector<int>y(x.begin(), x.end());
+    cout << *(y.begin() + 1);
     return 0;
 }
 

@@ -36,6 +36,12 @@
     <ClInclude Include="screen.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="suanfa.h">
+      <Filter>资源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="heima.h">
+      <Filter>资源文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="study.cpp">
