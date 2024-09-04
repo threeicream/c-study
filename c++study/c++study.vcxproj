@@ -138,6 +138,7 @@
     <ClInclude Include="sales.h" />
     <ClInclude Include="Sales_item.h" />
     <ClInclude Include="screen.h" />
+    <ClInclude Include="shujujiegou.h" />
     <ClInclude Include="something.h" />
     <ClInclude Include="suanfa.h" />
     <ClInclude Include="test.h" />

@@ -123,6 +123,8 @@ int* funcii()
     return p;
 }
 
+
+
 int main()
 {
     //B1 d;
@@ -147,12 +149,12 @@ int main()
     x.set('u').display(cout);*/
     /*hero p[3];
     allocate_hero(p,3,cin);*/
-    const int a = 5;
-    int i = 4;
-    const int b = i;
-    i = 3;
-    const int& c = 4;
-    cout << b;
+    cube a{ 1,2,3 };
+    cube b{ 3,2,1 };
+    cout << a.Area() << ' ' << a.Volume() << endl;
+    compare_cube(a, b);
+    cin >> a;
+    cout << a;
     return 0;
 }
 

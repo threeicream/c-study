@@ -154,6 +154,23 @@ public:
 	student stu[3];
 };
 
+class cube
+{
+public:
+	cube() = default;
+	cube(const double& L,const double& W,const double& H):Length(L),Width(W),Height(H){}
+	double Area();
+	double Volume();
+	bool operator==(const cube& other)const;
+	double r_Length() const { return this->Length; }
+	friend ostream& operator<<(ostream& os,const cube&cu);
+	friend istream& operator>>(istream& is, cube& cu);
+private:
+	double Length;
+	double Width;
+	double Height;
+};
+
 int xyz();
 void diaohuan(int* i, int* j);
 void diaohuan_1(int& i, int& j);
@@ -204,4 +221,5 @@ void add_family(map<string, vector<string>>& families, const string& family);
 void add_child(map<string, vector<string>>& families, const string& family, const string& child);
 void allocatespace(teacher sum[], int len, istream& in);
 int L(vector<int>nums, int i);//暴力递归计算递增最大长度，O(n*2^n)
+void compare_cube(const cube& a, const cube& b);
 #endif

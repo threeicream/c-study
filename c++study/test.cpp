@@ -509,3 +509,45 @@ void allocate_hero(hero sum[], int len, istream& in)
 	for (auto i = 0; i < len; ++i)
 		cout << sum[i].name << " " << sum[i].xingbie << " " << sum[i].age << endl;
 }
+
+double cube::Area()
+{
+	return (this->Length * this->Width + this->Length * this->Height + this->Height * this->Width) * 2;
+}
+
+double cube::Volume()
+{
+	return this->Height* this->Length* this->Width;
+}
+
+bool cube::operator==(const cube& other)const
+{
+	return this->Length == other.Length && this->Width == other.Width && this->Height == other.Height;
+}
+
+void compare_cube(const cube& a, const cube& b)
+{
+	if (a == b)
+		cout << "两者相等" << endl;
+	else
+		cout << "两者不相等" << endl;
+}
+
+ostream& operator<<(ostream& os, const cube& cu)//运算符重载注意要有return
+{
+	os << "长" << cu.Length << "宽" << cu.Width << "高" << cu.Height << endl;
+	return os;
+}
+
+istream& operator>>(istream& is, cube& cu)//cu不能是const，不然就没法修改了
+{
+	cout << "请输入长、宽、高：" << endl;
+	is >> cu.Length >>cu.Width >>cu.Height;
+	return is;
+}
+
+void fja(const cube& a,const cube& b)
+{
+	if (a.r_Length() == b.r_Length())
+		cout << "f" << endl;
+}
