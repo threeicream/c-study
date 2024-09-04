@@ -116,7 +116,12 @@ using namespace placeholders;
 //    }
 //};
 
-
+int* funcii()
+{
+    int a = 10;
+    int* p = new int(a);
+    return p;
+}
 
 int main()
 {
@@ -142,9 +147,12 @@ int main()
     x.set('u').display(cout);*/
     /*hero p[3];
     allocate_hero(p,3,cin);*/
-    vector<int>x{ 1,2,3,4,5 };
-    vector<int>y(x.begin(), x.end());
-    cout << *(y.begin() + 1);
+    const int a = 5;
+    int i = 4;
+    const int b = i;
+    i = 3;
+    const int& c = 4;
+    cout << b;
     return 0;
 }
 

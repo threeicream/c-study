@@ -97,7 +97,7 @@ C++ 和 C 是两种广泛使用的编程语言，它们在多个方面有显著区别：
 
 这两种编程范式各有其适用场景，开发者可以根据具体需求选择合适的编程方法。
 
-int main()
+int main()//针对读取行的一种方法，另一种方法是使用istringstream L(s)构建字符串流，再使用while(L>>word)读取单词
 {
 	using namespace std;
 	vector<string>v1 ;
@@ -202,8 +202,8 @@ int a(0)
  1.对象：	                            const=变量 不合法，但是变量=const 合法        不对，不要理解
  2.指向常量的指针or引用：			    变量=const 不合法，但是const=变量 合法//常量  不对，不要理解
 	int i = 10;
-	const int a = 5;
-	i = a;//合法
+	const int a = 5;//这是初始化
+	i = a;//合法，这是拷贝赋值
 	a = i;//非法
 	int* p2;
 	const int& p1 = i;//合法
@@ -524,7 +524,7 @@ int main() {
  在内的外部定义构造函数：
  Person1::Person1(istream &is)
  {
-	read(is, *this);//调用istream的read函数，从is中读取数据到*this
+	read(is, *this);//调用Person类中的read函数，从is中读取数据到*this
  }
 
  const screen& display(ostream& os) const { do_display(os); return *this; }
