@@ -45,6 +45,9 @@
     <ClInclude Include="shujujiegou.h">
       <Filter>资源文件</Filter>
     </ClInclude>
+    <ClInclude Include="cp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="study.cpp">
@@ -57,6 +60,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="screen.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

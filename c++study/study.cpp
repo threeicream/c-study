@@ -27,6 +27,7 @@
 #include<stdexcept>
 #include<cassert>//预处理宏  assert(x);x为假，输出信息并终止程序运行
 #include"test.h"
+#include"cp.h"
 //#include"person.h"
 
 using std::cout;
@@ -149,12 +150,10 @@ int main()
     x.set('u').display(cout);*/
     /*hero p[3];
     allocate_hero(p,3,cin);*/
-    cube a{ 1,2,3 };
-    cube b{ 3,2,1 };
-    cout << a.Area() << ' ' << a.Volume() << endl;
-    compare_cube(a, b);
-    cin >> a;
-    cout << a;
+    
+    const char* p1 = "hello";
+    char* const p2 = "world";
+    
     return 0;
 }
 

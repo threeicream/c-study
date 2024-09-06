@@ -551,3 +551,4 @@ void fja(const cube& a,const cube& b)
 	if (a.r_Length() == b.r_Length())
 		cout << "f" << endl;
 }
+

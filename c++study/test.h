@@ -128,17 +128,17 @@ private:
 	bool other;
 };
 
-class Point {
-public:
-	constexpr Point(int x = 0, int y = 0) : x_(x), y_(y) {}
-
-	constexpr int getX() const { return x_; }
-	constexpr int getY() const { return y_; }
-
-private:
-	int x_;
-	int y_;
-};
+//class Point {
+//public:
+//	constexpr Point(int x = 0, int y = 0) : x_(x), y_(y) {}
+//
+//	constexpr int getX() const { return x_; }
+//	constexpr int getY() const { return y_; }
+//
+//private:
+//	int x_;
+//	int y_;
+//};
 
 class student
 {
@@ -170,6 +170,8 @@ private:
 	double Width;
 	double Height;
 };
+
+
 
 int xyz();
 void diaohuan(int* i, int* j);
