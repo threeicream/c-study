@@ -124,7 +124,101 @@ int* funcii()
     return p;
 }
 
+class tree_2
+{
+public:
+    int val;
+    tree_2* right;
+    tree_2* left;
+public:
+    tree_2(int a):val(a),right(nullptr),left(nullptr){}
+};
 
+void qianxiang(tree_2* root)
+{
+    if (root == nullptr)return;
+    cout << root->val << " ";
+    qianxiang(root->left);
+    qianxiang(root->right);
+}
+
+void zhongxiang(tree_2* root)
+{
+    if (root == nullptr)return;
+    zhongxiang(root->left);
+    cout << root->val << " ";
+    zhongxiang(root->right);
+}
+
+void houxiang(tree_2* root)
+{
+    if (root == nullptr)return;
+    houxiang(root->left);
+    houxiang(root->right);
+    cout << root->val << " ";
+}
+
+void qianxiang2(tree_2* root)
+{
+    if (root == nullptr)return;
+    stack<tree_2*>x;
+    x.push(root);
+    while (!x.empty())
+    {
+        tree_2* node = x.top();
+        x.pop();
+        cout << node->val << " ";
+
+        if (node->right)x.push(node->right);
+        if (node->left)x.push(node->left);
+    }
+}
+
+void zhongxiang2(tree_2* root)
+{
+    if (root == nullptr)return;
+    stack<tree_2*>x;
+    tree_2* node = root;
+    while (node != nullptr||!x.empty())
+    {
+        while (node != nullptr)
+        {
+            x.push(node);
+            node = node->left;
+        }
+        node = x.top();
+        x.pop();
+        cout << node->val << " ";
+
+        node = node->right;
+
+    }
+}
+
+void houxiang2(tree_2* root)
+{
+    if (root == nullptr)return;
+    stack<tree_2*>x,y;
+    x.push(root);
+
+    while (!x.empty())
+    {
+        tree_2* node = x.top();
+        x.pop();
+        y.push(node);
+
+        if (node->left)x.push(node->left);
+        if (node->right)x.push(node->right);
+    }
+    
+    while (!y.empty())
+    {
+        tree_2* node = y.top();
+        y.pop();
+        cout << node->val << " ";
+        
+    }
+}
 
 int main()
 {
@@ -151,9 +245,25 @@ int main()
     /*hero p[3];
     allocate_hero(p,3,cin);*/
     
-    const char* p1 = "hello";
-    char* const p2 = "world";
-    
+    tree_2* p = new tree_2(1);
+    p->left = new tree_2(2);
+    p->right = new tree_2(3);
+    p->left->left = new tree_2(4);
+    p->left->right = new tree_2(5);
+    p->right->left = new tree_2(6);
+    p->right->right = new tree_2(7);
+
+    cout << "前向遍历" << endl;
+    qianxiang2(p);
+    cout << endl;
+
+    cout << "中向遍历" << endl;
+    zhongxiang2(p);
+    cout << endl;
+
+    cout << "后向遍历" << endl;
+    houxiang2(p);
+    cout << endl;
     return 0;
 }
 

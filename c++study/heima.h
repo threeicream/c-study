@@ -91,7 +91,7 @@ new与malloc的区别：
 析构函数：1.没有返回值不写void；2.函数名称=类名，在名称前加~；3.不能有参数，不能重载；4.对象销毁前自动调用一次
 
 构造函数分类：
-1.1有参构造 Circle(const double& x, const double& y, const double& r) : circle_point_x(x), circle_point_y(y), Reter(r) {}
+1.1有参构造 Circle(const double& x, const double& y, const double& r){}
 1.2无参构造（默认构造函数）Person()=default;
 2.1普通构造
 2.2拷贝构造 Circle(const Circle& p) { circle_point_x = p.circle_point_x; }
@@ -128,4 +128,21 @@ Circle(const Circle &p)
 上述总结：若属性有在堆区开辟，一定要自己提供析构函数和拷贝构造函数，避免出现浅拷贝问题
 初始化列表：初始化成员属性
 语法 构造函数():属性1(值1),属性2(值2){}
+类对象作为类成员：构造时会先构造类成员，再构造自身；析构时先析构自身，再析构类成员
+静态成员：成员变量或成员函数加上关键字static
+静态成员变量：1.所有对象共享一份数据2.编译阶段分配内存3.类内声明，类外初始化 访问方式：1.通过对象访问；2.可以通过类名进行访问Circle::m_A
+静态成员函数：1.所有成员共享一个函数2.静态成员函数之恶能访问静态成员变量 访问方式：1.通过对象访问；2.可以通过类名进行访问
+成员变量 和 成员函数是分开储存的
+this指针指向被调用的成员函数所属的对象（return *this主要应用于成员函数的链式编程）this指针本质上就是指针常量，不可修改指向的地址，但是可以修改指向地址的值
+空指针访问成员函数：注意成员函数是否使用this指针
+const修饰成员函数==常函数： void asd()const{this->age=100;}//不可修改age  
+1.常函数内不可修改成员属性  添加const此时this指针多了顶层const，指向地址和地址的值皆不可修改
+2.声明时加mutable关键字后，就可以在常函数中修改成员 mutable int age;//即可在常函数中修改age
+常对象： const Circle p;
+1.声明对象前加const称该对象为常对象
+2.常对象只能调用常函数
+友元：
+1.全局函数做友元 可以访问类内私有成员变量
+2.类做友元  friend class x;
+3.类中成员函数做友元  friend void x::visit();//使用2、3时成员函数都要类外定义
 */
