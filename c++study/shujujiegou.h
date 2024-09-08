@@ -333,4 +333,21 @@ int main() {
 
     return 0;
 }
+
+void guangdu(tree_2* root)//¹ã¶È±éÀú
+{
+    if (root == nullptr)return;
+    queue<tree_2*>x;
+    tree_2* node = root;
+    x.push(node);
+    while (!x.empty())
+    {
+        if (node->left)x.push(node->left);
+        if (node->right)x.push(node->right);
+        node = x.front();
+        cout << node->val << " ";
+        x.pop();
+        if(!x.empty())node = x.front();
+    }
+}
 */

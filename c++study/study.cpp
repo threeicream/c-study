@@ -124,101 +124,154 @@ int* funcii()
     return p;
 }
 
-class tree_2
+class Base
 {
 public:
-    int val;
-    tree_2* right;
-    tree_2* left;
-public:
-    tree_2(int a):val(a),right(nullptr),left(nullptr){}
+    void header()
+    {
+        cout << "首页" << endl;
+    }
+    void footer()
+    {
+        cout << "交流中心" << endl;
+    }
+    void left()
+    {
+        cout << "Java、python、c++" << endl;
+    }
 };
 
-void qianxiang(tree_2* root)
+class Java :public Base
 {
-    if (root == nullptr)return;
-    cout << root->val << " ";
-    qianxiang(root->left);
-    qianxiang(root->right);
-}
-
-void zhongxiang(tree_2* root)
-{
-    if (root == nullptr)return;
-    zhongxiang(root->left);
-    cout << root->val << " ";
-    zhongxiang(root->right);
-}
-
-void houxiang(tree_2* root)
-{
-    if (root == nullptr)return;
-    houxiang(root->left);
-    houxiang(root->right);
-    cout << root->val << " ";
-}
-
-void qianxiang2(tree_2* root)
-{
-    if (root == nullptr)return;
-    stack<tree_2*>x;
-    x.push(root);
-    while (!x.empty())
+public:
+    void content()
     {
-        tree_2* node = x.top();
-        x.pop();
-        cout << node->val << " ";
-
-        if (node->right)x.push(node->right);
-        if (node->left)x.push(node->left);
+        cout << "Java学科视频" << endl;
     }
-}
+};
 
-void zhongxiang2(tree_2* root)
+void test1()
 {
-    if (root == nullptr)return;
-    stack<tree_2*>x;
-    tree_2* node = root;
-    while (node != nullptr||!x.empty())
-    {
-        while (node != nullptr)
-        {
-            x.push(node);
-            node = node->left;
-        }
-        node = x.top();
-        x.pop();
-        cout << node->val << " ";
-
-        node = node->right;
-
-    }
+    Java ja;
+    cout << "Java下载视频页面如下：" << endl;
+    ja.header();
+    ja.footer();
+    ja.left();
+    ja.content();
 }
 
-void houxiang2(tree_2* root)
-{
-    if (root == nullptr)return;
-    stack<tree_2*>x,y;
-    x.push(root);
-
-    while (!x.empty())
-    {
-        tree_2* node = x.top();
-        x.pop();
-        y.push(node);
-
-        if (node->left)x.push(node->left);
-        if (node->right)x.push(node->right);
-    }
-    
-    while (!y.empty())
-    {
-        tree_2* node = y.top();
-        y.pop();
-        cout << node->val << " ";
-        
-    }
-}
+//class tree_2
+//{
+//public:
+//    int val;
+//    tree_2* right;
+//    tree_2* left;
+//public:
+//    tree_2(int a):val(a),right(nullptr),left(nullptr){}
+//};
+//
+//void qianxiang(tree_2* root)
+//{
+//    if (root == nullptr)return;
+//    cout << root->val << " ";
+//    qianxiang(root->left);
+//    qianxiang(root->right);
+//}
+//
+//void zhongxiang(tree_2* root)
+//{
+//    if (root == nullptr)return;
+//    zhongxiang(root->left);
+//    cout << root->val << " ";
+//    zhongxiang(root->right);
+//}
+//
+//void houxiang(tree_2* root)
+//{
+//    if (root == nullptr)return;
+//    houxiang(root->left);
+//    houxiang(root->right);
+//    cout << root->val << " ";
+//}
+//
+//void qianxiang2(tree_2* root)
+//{
+//    if (root == nullptr)return;
+//    stack<tree_2*>x;
+//    x.push(root);
+//    while (!x.empty())
+//    {
+//        tree_2* node = x.top();
+//        x.pop();
+//        cout << node->val << " ";
+//
+//        if (node->right)x.push(node->right);
+//        if (node->left)x.push(node->left);
+//    }
+//}
+//
+//void zhongxiang2(tree_2* root)
+//{
+//    if (root == nullptr)return;
+//    stack<tree_2*>x;
+//    tree_2* node = root;
+//    while (node != nullptr||!x.empty())
+//    {
+//        while (node != nullptr)
+//        {
+//            x.push(node);
+//            node = node->left;
+//        }
+//        node = x.top();
+//        x.pop();
+//        cout << node->val << " ";
+//
+//        node = node->right;
+//
+//    }
+//}
+//
+//void houxiang2(tree_2* root)
+//{
+//    if (root == nullptr)return;
+//    stack<tree_2*>x,y;
+//    x.push(root);
+//
+//    while (!x.empty())
+//    {
+//        tree_2* node = x.top();
+//        x.pop();
+//        y.push(node);
+//
+//        if (node->left)x.push(node->left);
+//        if (node->right)x.push(node->right);
+//    }
+//    
+//    while (!y.empty())
+//    {
+//        tree_2* node = y.top();
+//        y.pop();
+//        cout << node->val << " ";
+//        
+//    }
+//}
+//
+//void guangdu(tree_2* root)
+//{
+//    if (root == nullptr)return;
+//    queue<tree_2*>x;
+//    tree_2* node = root;
+//    x.push(node);
+//    while (!x.empty())
+//    {
+//        if (node->left)x.push(node->left);
+//        if (node->right)x.push(node->right);
+//        node = x.front();
+//        cout << node->val << " ";
+//        x.pop();
+//        if(!x.empty())node = x.front();
+//    }
+//}
 
 int main()
 {
@@ -245,7 +298,7 @@ int main()
     /*hero p[3];
     allocate_hero(p,3,cin);*/
     
-    tree_2* p = new tree_2(1);
+    /*tree_2* p = new tree_2(1);
     p->left = new tree_2(2);
     p->right = new tree_2(3);
     p->left->left = new tree_2(4);
@@ -264,6 +317,13 @@ int main()
     cout << "后向遍历" << endl;
     houxiang2(p);
     cout << endl;
+
+    cout << "广度遍历" << endl;
+    guangdu(p);
+    cout << endl;*/
+
+    test1();
+
     return 0;
 }
 
