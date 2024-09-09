@@ -3,7 +3,7 @@
 char*p="love";
 cout<<p<<endl;//p是指针，直接输出p所指向的整个字符串，直到遇到\0
 cout << *p << endl;//p 指向字符串 "love" 的第一个字符 'l'
-const char* p[] = {"love", "you"};
+const char* p[] = {"love", "you"};//这是c风格字符串数组 char p[]="love"是字符数组 "love"可以理解为指向常量字符的指针 string s[] = {"abc", "def", "ghi"};  // C++风格字符串数组
 cout << p << endl;   // 输出 p 的地址,p是一个数组，数组成员都是char类型的指针，指针分别指向字符串
 cout << *p << endl;  // 输出 p[0] 指向的字符串 "love"
 cout << p[0] << endl; // 输出 "love"
@@ -136,7 +136,7 @@ Circle& operator=(Circle& p)//赋值运算符重载
 语法 构造函数():属性1(值1),属性2(值2){}
 类对象作为类成员：构造时会先构造类成员，再构造自身；析构时先析构自身，再析构类成员
 静态成员：成员变量或成员函数加上关键字static
-静态成员变量：1.所有对象共享一份数据2.编译阶段分配内存3.类内声明，类外初始化 访问方式：1.通过对象访问；2.可以通过类名进行访问Circle::m_A
+静态成员变量：1.所有对象共享一份数据2.编译阶段分配内存3.类内声明，类外初始化 访问方式：1.通过对象访问，Circle p;p.m_A；2.可以通过类名进行访问Circle::m_A
 静态成员函数：1.所有成员共享一个函数2.静态成员函数之恶能访问静态成员变量 访问方式：1.通过对象访问；2.可以通过类名进行访问
 成员变量 和 成员函数是分开储存的
 this指针指向被调用的成员函数所属的对象（return *this主要应用于成员函数的链式编程）this指针本质上就是指针常量，不可修改指向的地址，但是可以修改指向地址的值
@@ -218,5 +218,40 @@ cout << Myadd()(10,20);//匿名函数对象
 
 继承  下级别成员除了拥有上一级的共性，还有自己的特性，可以使用继承技术，减少重复代码
 基本语法
-
+class Java :public Base{};
+class 子类：继承方式 父类
+子类也称派生类 1.继承于基类，表现为共性2.自己增加的成员，表现为个性
+父类也称基类
+基类有三种子类：class A{public:int a;protected:int b;private:int c;};
+1.公共继承 public:int a; protected: int b; 不可访问:int c;
+2.保护继承 protected:int a; protected: int b; 不可访问:int c;
+3.私有继承 private:int a; private: int b; 不可访问:int c;
+继承中的对象模型
+除了静态成员变量/函数，其他的都会继承到子类（包括私有成员） 利用工具查看类结构：1.F: ;2.cd 具体路径 ;3.cl / dl reportSingleClassLayout类名 源文件
+继承中构造和析构顺序：
+先构造父类，再构造子类
+先析构子类，再析构父类
+同名成员处理：
+父类和子类都有同名成员变量ma，父类ma=1，子类ma=2
+son s;
+cout<<s.ma<<endl;//输出2
+cout<<s.base::ma<<endl;//输出1
+父类和子类都有同名成员函数func()
+s.func();//输出子类
+s.base::func();//输出父类
+同名静态成员处理：
+1.通过对象访问
+s.ma
+s.base::ma
+2.通过类名访问
+son::ma
+son::base::ma//第一个::代表通过类名的方式访问，第二个::代表访问父类作用域下
+多继承语法
+class 子类：继承方式 父类1，继承方式，父类2...//实际开发中不建议使用
+菱形继承：
+利用虚继承 解决菱形继承问题
+继承之前 加上关键字 virtual 变为虚继承
+class sheep :virtual public animal{};
+class tuo :virtual public animal{};
+class sheeptuo :public sheep,public tuo{};
 */

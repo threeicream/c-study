@@ -42,288 +42,48 @@ typedef string::size_type sz;
 using namespace std;//一个就把上面using全等效了
 using namespace placeholders;
 
- /*string xyy(string& x,string&y)
-{
-	 x = x + y;
-	return x;
-}*/
-
- //class X
- //{
-	// Y y;
- //};
- //class Y
- //{
-	// X* x;
- //};
-
-//vector<int>::iterator asd(const vector<int>::iterator beg, const vector<int>::iterator en, int i)
-//{
-//    for (auto x = beg; x != en; ++x)
-//        if (*x == i)
-//            return x;
-//    return en;
-//}
-
-//void vector_int_sum(const vector<string>& x,double &j)
-//{
-//    j = 0.0;
-//    for (auto a : x)
-//    {
-//        j += stod(a);
-//    }
-//}
-
-//class A
-//{
-//    int a;
-//public:
-//    A(int x = 0) :a(x) {}
-//   const void show1() const
-//    {
-//        cout << a << endl;
-//    }
-//    void show2()
-//    {
-//        cout << a << endl;
-//    }
-//};
-//
-//struct A1 {
-//    virtual ~A1(){}
-//};
-//
-//struct A2 {
-//    virtual ~A2(){}
-//};
-//struct B1 :A1, A2 {};
-
-//class Base {
-//public:
-//    int Bar(char x) {
-//        return (int)(x);
-//    }
-//    virtual int Bar(int x) {
-//        return (2 * x);
-//    }
-//};
-//class Derived : public Base {
-//public:
-//    int Bar(char x) {
-//        return (int)(-x);
-//    }
-//    int Bar(int x) {
-//        return (x / 2);
-//    }
-//};
-
-int* funcii()
-{
-    int a = 10;
-    int* p = new int(a);
-    return p;
-}
-
-class Base
+class Base1
 {
 public:
-    void header()
+    Base1()
     {
-        cout << "首页" << endl;
+        cout << "Base1的构造函数" << endl;
     }
-    void footer()
+    ~Base1()
     {
-        cout << "交流中心" << endl;
-    }
-    void left()
-    {
-        cout << "Java、python、c++" << endl;
+        cout << "Base1的析构函数" << endl;
     }
 };
 
-class Java :public Base
+class Son :public Base1
 {
 public:
-    void content()
+    Son()
     {
-        cout << "Java学科视频" << endl;
+        cout << "Son的构造函数" << endl;
+    }
+    ~Son()
+    {
+        cout << "Son的析构函数" << endl;
     }
 };
 
 void test1()
 {
-    Java ja;
-    cout << "Java下载视频页面如下：" << endl;
-    ja.header();
-    ja.footer();
-    ja.left();
-    ja.content();
+    Son s1;
+    //s1.ma = 100;
 }
 
-//class tree_2
-//{
-//public:
-//    int val;
-//    tree_2* right;
-//    tree_2* left;
-//public:
-//    tree_2(int a):val(a),right(nullptr),left(nullptr){}
-//};
-//
-//void qianxiang(tree_2* root)
-//{
-//    if (root == nullptr)return;
-//    cout << root->val << " ";
-//    qianxiang(root->left);
-//    qianxiang(root->right);
-//}
-//
-//void zhongxiang(tree_2* root)
-//{
-//    if (root == nullptr)return;
-//    zhongxiang(root->left);
-//    cout << root->val << " ";
-//    zhongxiang(root->right);
-//}
-//
-//void houxiang(tree_2* root)
-//{
-//    if (root == nullptr)return;
-//    houxiang(root->left);
-//    houxiang(root->right);
-//    cout << root->val << " ";
-//}
-//
-//void qianxiang2(tree_2* root)
-//{
-//    if (root == nullptr)return;
-//    stack<tree_2*>x;
-//    x.push(root);
-//    while (!x.empty())
-//    {
-//        tree_2* node = x.top();
-//        x.pop();
-//        cout << node->val << " ";
-//
-//        if (node->right)x.push(node->right);
-//        if (node->left)x.push(node->left);
-//    }
-//}
-//
-//void zhongxiang2(tree_2* root)
-//{
-//    if (root == nullptr)return;
-//    stack<tree_2*>x;
-//    tree_2* node = root;
-//    while (node != nullptr||!x.empty())
-//    {
-//        while (node != nullptr)
-//        {
-//            x.push(node);
-//            node = node->left;
-//        }
-//        node = x.top();
-//        x.pop();
-//        cout << node->val << " ";
-//
-//        node = node->right;
-//
-//    }
-//}
-//
-//void houxiang2(tree_2* root)
-//{
-//    if (root == nullptr)return;
-//    stack<tree_2*>x,y;
-//    x.push(root);
-//
-//    while (!x.empty())
-//    {
-//        tree_2* node = x.top();
-//        x.pop();
-//        y.push(node);
-//
-//        if (node->left)x.push(node->left);
-//        if (node->right)x.push(node->right);
-//    }
-//    
-//    while (!y.empty())
-//    {
-//        tree_2* node = y.top();
-//        y.pop();
-//        cout << node->val << " ";
-//        
-//    }
-//}
-//
-//void guangdu(tree_2* root)
-//{
-//    if (root == nullptr)return;
-//    queue<tree_2*>x;
-//    tree_2* node = root;
-//    x.push(node);
-//    while (!x.empty())
-//    {
-//        if (node->left)x.push(node->left);
-//        if (node->right)x.push(node->right);
-//        node = x.front();
-//        cout << node->val << " ";
-//        x.pop();
-//        if(!x.empty())node = x.front();
-//    }
-//}
-
 int main()
-{
-    //B1 d;
-    //A1* pb1 = &d;
-    //A2* pb2 = dynamic_cast<A2*>(pb1);
-    ////A2* pb22 = static_cast<A2*>(pb1);
+{   
+    int a[]{ 1,2,3,4,5 };
+    char str[] = "abcde";
+    char s[]{ "abcde" };
+    const char* p[] = { "love", "you" };
+    p[0] = "fuck";
+    const char* x = "love";
     
-    //map<string, vector<string>> families;
-    ////add_family(families, "张");
-    //add_child(families, "张", "强");
-    //add_child(families, "张", "刚");
-    //add_child(families, "王", "五");
-    ////add_family(families, "王");
-    //for (const auto &f : families) {
-    //    cout << f.first << "家的孩子：";
-    //    for (const auto &c : f.second)
-    //        cout << c << " ";
-    //    cout << endl;
-    //}
-    /*screen p(1, 2);
-    screen x = p.display(cout);
-    x.set('u').display(cout);*/
-    /*hero p[3];
-    allocate_hero(p,3,cin);*/
-    
-    /*tree_2* p = new tree_2(1);
-    p->left = new tree_2(2);
-    p->right = new tree_2(3);
-    p->left->left = new tree_2(4);
-    p->left->right = new tree_2(5);
-    p->right->left = new tree_2(6);
-    p->right->right = new tree_2(7);
-
-    cout << "前向遍历" << endl;
-    qianxiang2(p);
-    cout << endl;
-
-    cout << "中向遍历" << endl;
-    zhongxiang2(p);
-    cout << endl;
-
-    cout << "后向遍历" << endl;
-    houxiang2(p);
-    cout << endl;
-
-    cout << "广度遍历" << endl;
-    guangdu(p);
-    cout << endl;*/
-
-    test1();
-
+    cout << *p;
     return 0;
 }
 
