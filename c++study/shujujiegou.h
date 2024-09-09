@@ -85,11 +85,13 @@ FIFO，元素先入先出。队列的出口端叫作队头（front），队列的入口端叫作队尾（rear）
 二叉堆：是一种完全二叉树，分为两个类型
 1.最大堆：任何一个父节点的值，都>=它左、右孩子节点的值
 2.最小堆：任何一个父节点的值，都<=它左、右孩子节点的值
-二叉树的根节点叫做堆顶
+二叉堆的根节点叫做堆顶
 二叉堆的操作：完全二叉树的高度为logn
 1.插入节点 插入后数据后根据是最大堆还是最小堆数据进行上浮 O(logn)
 2.删除节点 删除数据后将最后一个节点放到堆顶数据进行下沉 O(logn)
 3.构建二叉堆 也就是把一个无序的完全二叉树调整为二叉堆，本质就是让所有非叶子节点依次“下沉” O(n)原因：https://blog.csdn.net/2302_80220453/article/details/139068636
+二叉堆的存储方式：顺序存储，使用数组
+二叉堆是实现堆排序及优先队列的基础
 */
 
 
@@ -358,5 +360,91 @@ void guangdu(tree_2* root)//广度遍历
         x.pop();
         if(!x.empty())node = x.front();
     }
+}
+
+二叉堆的插入、删除、构建操作实现
+class maxheap
+{
+private:
+    vector<int>heap;
+    void shiftup(int index)
+    {
+        while (index > 0 && heap[index] > heap[(index - 1) / 2])
+        {
+            swap(heap[index], heap[(index - 1) / 2]);
+            index = (index - 1) / 2;
+        }
+    }
+
+    void shiftdown(int index)
+    {
+        int leftchild, rightchild, large;
+        while (index * 2 + 1 < heap.size())
+        {
+            leftchild = index * 2 + 1;
+            rightchild = index * 2 + 2;
+            large = index;
+            if (leftchild < heap.size() && heap[leftchild] > heap[large])
+                large = leftchild;
+            if (rightchild < heap.size() && heap[rightchild] > heap[large])
+                large = rightchild;
+            if (large != index)
+            {
+                swap(heap[large], heap[index]);
+                //large = index;
+                index = large;//顺序很重要，需要反复下沉父节点
+            }
+            else
+                break;
+        }
+    }
+public:
+    maxheap() = default;
+    maxheap(const vector<int>&x) :heap(x) {}
+    void insert(int value)
+    {
+        heap.push_back(value);
+        shiftup(heap.size()-1);
+    }
+
+    void delete_heap(int index)
+    {
+        if (heap.size() == 0)return;
+        swap(heap[index], heap[heap.size() - 1]);
+        heap.pop_back();
+        shiftdown(index);
+    }
+    void sort_heap()
+    {
+        //heap = num;
+        for (int i = heap.size() / 2 - 1; i >= 0; --i)
+            shiftdown(i);
+    }
+    void print_heap()
+    {
+        for (auto a : heap)
+            cout << a << " ";
+        cout << endl;
+    }
+};
+
+
+int main()
+{
+    //maxheap maxHeap;
+    //maxHeap.insert(10);
+    //maxHeap.insert(20);
+    //maxHeap.insert(5);
+    //maxHeap.insert(30);
+    //maxHeap.insert(40);
+    //maxHeap.insert(35);
+    //maxHeap.insert(80);
+    //maxHeap.delete_heap(1);
+vector<int> nums = { 10, 20, 5, 30, 15 };
+maxheap maxHeap(nums);
+maxHeap.sort_heap();
+maxHeap.print_heap();
+
+return 0;
 }
 */

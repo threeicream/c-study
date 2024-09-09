@@ -42,48 +42,88 @@ typedef string::size_type sz;
 using namespace std;//一个就把上面using全等效了
 using namespace placeholders;
 
-class Base1
+class maxheap
 {
-public:
-    Base1()
+private:
+    vector<int>heap;
+    void shiftup(int index)
     {
-        cout << "Base1的构造函数" << endl;
+        while (index > 0 && heap[index] < heap[(index - 1) / 2])
+        {
+            swap(heap[index], heap[(index - 1) / 2]);
+            index = (index - 1) / 2;
+        }
     }
-    ~Base1()
+
+    void shiftdown(int index)
     {
-        cout << "Base1的析构函数" << endl;
+        int leftchild, rightchild, large;
+        while (index * 2 + 1 < heap.size())
+        {
+            leftchild = index * 2 + 1;
+            rightchild = index * 2 + 2;
+            large = index;
+            if (leftchild < heap.size() && heap[leftchild] < heap[large])
+                large = leftchild;
+            if (rightchild < heap.size() && heap[rightchild] < heap[large])
+                large = rightchild;
+            if (large != index)
+            {
+                swap(heap[large], heap[index]);
+                //large = index;
+                index = large;//顺序很重要，需要反复下沉父节点
+            }
+            else
+                break;
+        }
+    }
+public:
+    maxheap() = default;
+    maxheap(const vector<int>&x) :heap(x) {}
+    void insert(int value)
+    {
+        heap.push_back(value);
+        shiftup(heap.size()-1);
+    }
+
+    void delete_heap(int index)
+    {
+        if (heap.size() == 0)return;
+        swap(heap[index], heap[heap.size() - 1]);
+        heap.pop_back();
+        shiftdown(index);
+    }
+    void sort_heap()
+    {
+        //heap = num;
+        for (int i = heap.size() / 2 - 1; i >= 0; --i)
+            shiftdown(i);
+    }
+    void print_heap()
+    {
+        for (auto a : heap)
+            cout << a << " ";
+        cout << endl;
     }
 };
 
-class Son :public Base1
-{
-public:
-    Son()
-    {
-        cout << "Son的构造函数" << endl;
-    }
-    ~Son()
-    {
-        cout << "Son的析构函数" << endl;
-    }
-};
-
-void test1()
-{
-    Son s1;
-    //s1.ma = 100;
-}
 
 int main()
 {   
-    int a[]{ 1,2,3,4,5 };
-    char str[] = "abcde";
-    char s[]{ "abcde" };
-    const char* p[] = { "love", "you" };
-    p[0] = "fuck";
-    const char* x = "love";
-    
-    cout << *p;
+    //maxheap maxHeap;
+    /*maxHeap.insert(10);
+    maxHeap.insert(20);
+    maxHeap.insert(5);
+    maxHeap.insert(30);
+    maxHeap.insert(40);
+    maxHeap.insert(35);
+    maxHeap.insert(80);*/
+    //maxHeap.delete_heap(1);
+    vector<int> nums = { 10, 20, 5, 30, 15 };
+    maxheap maxHeap(nums);
+    maxHeap.sort_heap();
+    maxHeap.print_heap(); 
+
     return 0;
 }
 
