@@ -229,8 +229,8 @@ class 子类：继承方式 父类
 继承中的对象模型
 除了静态成员变量/函数，其他的都会继承到子类（包括私有成员） 利用工具查看类结构：1.F: ;2.cd 具体路径 ;3.cl / dl reportSingleClassLayout类名 源文件
 继承中构造和析构顺序：
-先构造父类，再构造子类
-先析构子类，再析构父类
+先构造父类，再构造对象，再构造子类
+先析构子类，再析构对象，再析构父类
 同名成员处理：
 父类和子类都有同名成员变量ma，父类ma=1，子类ma=2
 son s;
@@ -239,7 +239,7 @@ cout<<s.base::ma<<endl;//输出1
 父类和子类都有同名成员函数func()
 s.func();//输出子类
 s.base::func();//输出父类
-同名静态成员处理：
+同名静态成员处理：类内声明，类外定义
 1.通过对象访问
 s.ma
 s.base::ma
@@ -250,8 +250,230 @@ son::base::ma//第一个::代表通过类名的方式访问，第二个::代表访问父类作用域下
 class 子类：继承方式 父类1，继承方式，父类2...//实际开发中不建议使用
 菱形继承：
 利用虚继承 解决菱形继承问题
-继承之前 加上关键字 virtual 变为虚继承
+继承之前 加上关键字 virtual 变为虚继承 vbptr 是指虚基类表指针（Virtual Base Table Pointer） vbtable
 class sheep :virtual public animal{};
 class tuo :virtual public animal{};
 class sheeptuo :public sheep,public tuo{};
+
+多态:
+1.静态多态：函数重载、运算符重载属于静态多态
+2.动态多态：派生类和虚函数实现运行时多态 满足条件1.有继承关系 2.子类重写父类的虚函数（父类和子类的函数完全一致）   使用条件：父类的指针或者引用指向子类对象
+两者区别：静态多态的函数地址早绑定-编译阶段确认函数地址；动态多态的函数地址晚绑定-运行阶段确认函数地址
+虚函数：vfptr虚函数表指针 vftable
+总结：当子类重写父类的虚函数时，会覆盖父类中的虚函数
+纯虚函数：virtual 返回值类型 函数名（参数列表）=0; 当类中有了纯虚函数，类就为抽象类
+抽象类特点：
+1.无法实例化对象
+2.子类必须重写抽象类中的纯虚函数，否则也属于抽象类
+虚析构和纯虚析构共性：     语法：virtual ~类名(){}        virtual ~类名(){}=0 
+1.解决父类指针释放子类对象
+2.需要具体实现的函数 （类内声明，类外实现最好）
+3.如果是纯虚析构，类就属于抽象类，无法实例化对象
+
+继承的作用：通过继承，子类可以使用父类的所有非私有成员，并且可以添加新的成员或重写父类的方法。
+多态的作用：多态是指同一个函数或方法在不同对象中有不同的实现。
+继承和多态的关系
+继承是实现多态的基础。只有在存在继承关系的情况下，才能实现多态。具体来说，多态依赖于以下条件：
+1.继承关系：必须有一个基类和一个或多个派生类。
+2.虚函数：基类中的方法必须声明为虚函数（virtual）。
+3.基类指针或引用：通过基类的指针或引用调用派生类的方法。
+
+文件打开方式：
+ios::in         读
+ios::out        写
+ios::ate        初始位置：文件末尾
+ios::app        追加方式写文件
+ios::trunc      删除源文件，在创建
+ios:binary      二进制方式
+*/
+
+
+/*
+多态：
+//普通写法
+class Calculator
+{
+public:
+
+    int getresult(string oper)
+    {
+        if (oper == "+")
+            return num1 + num2;
+        else if (oper == "-")
+            return num1 - num2;
+        else if (oper == "*")
+            return num1 * num2;
+    }
+
+    int num1;
+    int num2;
+};
+
+void test1()
+{
+    Calculator c;
+    c.num1 = 2;
+    c.num2 = 3;
+    cout << c.num1 << "+" << c.num2 << "=" << c.getresult("+") << endl;
+}
+
+//多态实现计算器
+//多态好处：
+// 1.组织结构清晰
+// 2.可读性强
+// 3.对于前期和后期拓展以及维护性高
+//实现计算器抽象类
+class Abstractcalculator
+{
+public:
+
+    virtual int getresult()
+    {
+        return 0;
+    }
+
+    int num1;
+    int num2;
+};
+
+//加法计算器类
+class addcalculator :public Abstractcalculator
+{
+public:
+
+    virtual int getresult()
+    {
+        return num1 + num2;
+    }
+};
+
+//减法计算器类
+class subcalculator :public Abstractcalculator
+{
+public:
+
+    virtual int getresult()
+    {
+        return num1 - num2;
+    }
+};
+
+//乘法计算器类
+class mulcalculator :public Abstractcalculator
+{
+public:
+
+    virtual int getresult()
+    {
+        return num1 * num2;
+    }
+};
+
+void test2()
+{
+    //多态使用条件
+    //父类指针或引用指向子类对象
+
+    //加法运算
+    Abstractcalculator* abc = new addcalculator;
+    abc->num1 = 12;
+    abc->num2 = 23;
+    cout << abc->getresult() << endl;
+    //用完后记得销毁
+    delete abc;
+
+    //减法运算
+abc = new subcalculator;
+abc->num1 = 12;
+abc->num2 = 23;
+cout << abc->getresult() << endl;
+delete abc;
+
+//乘法运算
+abc = new mulcalculator;
+abc->num1 = 12;
+abc->num2 = 23;
+cout << abc->getresult() << endl;
+delete abc;
+
+}
+
+class drink//使用多态时，父类相当于模板
+{
+public:
+    //virtual void boil() = 0;
+    virtual void boil()
+    {
+        cout << "煮水" << endl;
+    }
+    virtual void brew() = 0;
+    virtual void putcup() = 0;
+    virtual void putcamel() = 0;
+    void makedrink()
+    {
+        boil();
+        brew();
+        putcup();
+        putcamel();
+    }
+};
+
+class coffee :public drink
+{
+public:
+    void boil()
+    {
+        cout << "煮圣水" << endl;
+    }
+    virtual void brew()
+    {
+        cout << "冲泡咖啡" << endl;
+    }
+    virtual void putcup()
+    {
+        cout << "倒入杯中" << endl;
+    }
+    virtual void putcamel()
+    {
+        cout << "加入牛奶和糖" << endl;
+    }
+};
+
+class tea :public drink
+{
+public:
+    virtual void boil()
+    {
+        cout << "煮开水" << endl;
+    }
+    virtual void brew()
+    {
+        cout << "冲泡茶叶" << endl;
+    }
+    virtual void putcup()
+    {
+        cout << "倒入杯中" << endl;
+    }
+    virtual void putcamel()
+    {
+        cout << "加入枸杞" << endl;
+    }
+};
+
+void dowork(drink* abs)
+{
+    abs->makedrink();
+    delete abs;//释放
+}
+
+void test1()
+{
+    //制作咖啡
+    dowork(new coffee);
+    cout << endl;
+    dowork(new tea);
+    coffee x;
+    x.drink::boil();
+}
+
 */

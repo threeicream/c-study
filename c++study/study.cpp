@@ -42,88 +42,153 @@ typedef string::size_type sz;
 using namespace std;//一个就把上面using全等效了
 using namespace placeholders;
 
-class maxheap
+class CPU
 {
-private:
-    vector<int>heap;
-    void shiftup(int index)
-    {
-        while (index > 0 && heap[index] < heap[(index - 1) / 2])
-        {
-            swap(heap[index], heap[(index - 1) / 2]);
-            index = (index - 1) / 2;
-        }
-    }
-
-    void shiftdown(int index)
-    {
-        int leftchild, rightchild, large;
-        while (index * 2 + 1 < heap.size())
-        {
-            leftchild = index * 2 + 1;
-            rightchild = index * 2 + 2;
-            large = index;
-            if (leftchild < heap.size() && heap[leftchild] < heap[large])
-                large = leftchild;
-            if (rightchild < heap.size() && heap[rightchild] < heap[large])
-                large = rightchild;
-            if (large != index)
-            {
-                swap(heap[large], heap[index]);
-                //large = index;
-                index = large;//顺序很重要，需要反复下沉父节点
-            }
-            else
-                break;
-        }
-    }
 public:
-    maxheap() = default;
-    maxheap(const vector<int>&x) :heap(x) {}
-    void insert(int value)
-    {
-        heap.push_back(value);
-        shiftup(heap.size()-1);
-    }
+    virtual void caculate1() = 0;
+};
 
-    void delete_heap(int index)
+class GPU
+{
+public:
+    virtual void caculate2() = 0;
+};
+
+class neicun
+{
+public:
+    virtual void caculate3() = 0;
+};
+
+class computer
+{
+public:
+    computer( CPU* x, GPU* y, neicun* z):c(x),g(y),n(z){}
+    void computerWork()
     {
-        if (heap.size() == 0)return;
-        swap(heap[index], heap[heap.size() - 1]);
-        heap.pop_back();
-        shiftdown(index);
+        c->caculate1();
+        g->caculate2();
+        n->caculate3();
     }
-    void sort_heap()
+    virtual ~computer()//释放三个电脑零件内存
     {
-        //heap = num;
-        for (int i = heap.size() / 2 - 1; i >= 0; --i)
-            shiftdown(i);
+        if (c != nullptr)
+        {
+            delete c;
+            c = nullptr;
+        }
+
+        if (g != nullptr)
+        {
+            delete g;
+            g = nullptr;
+        }
+
+        if (n != nullptr)
+        {
+            delete n;
+            n = nullptr;
+        }
     }
-    void print_heap()
+private:
+    CPU* c;
+    GPU* g;
+    neicun* n;
+};
+
+class intelcpu :public CPU
+{
+public:
+    virtual void caculate1()
     {
-        for (auto a : heap)
-            cout << a << " ";
-        cout << endl;
+        cout << "intel CPU 工作中" << endl;
+    }
+};
+class intelgpu :public GPU
+{
+public:
+    virtual void caculate2()
+    {
+        cout << "intel GPU 工作中" << endl;
+    }
+};
+class intelneicun :public neicun
+{
+public:
+    virtual void caculate3()
+    {
+        cout << "intel 内存 工作中" << endl;
     }
 };
 
+class weixingcpu :public CPU
+{
+public:
+    virtual void caculate1()
+    {
+        cout << "weixing CPU 工作中" << endl;
+    }
+};
+class weixinggpu :public GPU
+{
+public:
+    virtual void caculate2()
+    {
+        cout << "weixing GPU 工作中" << endl;
+    }
+};
+class weixingneicun :public neicun
+{
+public:
+    virtual void caculate3()
+    {
+        cout << "weixing 内存 工作中" << endl;
+    }
+};
+
+void test1()
+{
+    CPU* inte = new weixingcpu;
+    GPU* gp = new weixinggpu;
+    neicun* nei = new weixingneicun;
+    computer p1(inte, gp, nei);
+    p1.computerWork();
+    cout << endl;
+    computer p2(new intelcpu, new weixinggpu, new intelneicun);
+    p2.computerWork();
+    //delete inte, gp, nei;//第一种释放方式
+}
+
+void test2()
+{
+    CPU* inte = new intelcpu;
+    GPU* gp = new weixinggpu;
+    neicun* nei = new intelneicun;
+    computer p1(inte, gp, nei);
+    p1.computerWork();
+    //delete inte, gp, nei;
+}
+
+void test3()
+{
+    CPU* inte = new intelcpu;
+    GPU* gp = new intelgpu;
+    neicun* nei = new intelneicun;
+    computer p1(inte, gp, nei);
+    p1.computerWork();
+    //delete inte, gp, nei;
+}
 
 int main()
 {   
-    //maxheap maxHeap;
-    /*maxHeap.insert(10);
-    maxHeap.insert(20);
-    maxHeap.insert(5);
-    maxHeap.insert(30);
-    maxHeap.insert(40);
-    maxHeap.insert(35);
-    maxHeap.insert(80);*/
-    //maxHeap.delete_heap(1);
-    vector<int> nums = { 10, 20, 5, 30, 15 };
-    maxheap maxHeap(nums);
-    maxHeap.sort_heap();
-    maxHeap.print_heap(); 
-
+    const char* c[] = { "ENTER", "NEW", "POINT", "FIRST" };
+    const char** cp[] = { c + 3, c + 2, c + 1, c };
+    const char*** cpp = cp;
+    printf("%s", **++cpp);
+    printf("%s", *-- * ++cpp + 3);
+    printf("%s", *cpp[-2] + 3);
+    printf("%s\n", cpp[-1][-1] + 1);
+    
     return 0;
 }
 
