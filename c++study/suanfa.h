@@ -38,4 +38,250 @@ void fun3(int n){ int[][] matrix = new int[n][n];}
 void fun4(int n){if(n<=1){return;} fun4(n-1);}
 若递归深度为n，O(n)
 时间与空间的取舍
+
+排序算法：
+时间复杂度O(n^2):冒泡排序、选择排序、插入排序、希尔排序（介于O(nlogn)和O(N^2)之间）
+时间复杂度O(nlogn):快速排序、归并排序、堆排序
+时间复杂度为线性：计数排序、桶排序、基数排序
+排序算法还可以根据其稳定性，划分为稳定排序和不稳定排序。
+即如果值相同的元素在排序后仍然保持着排序前的顺序，则这样的排序算法是
+稳定排序；如果值相同的元素在排序后打乱了排序前的顺序，则这样的排序算法是
+不稳定排序。
+
+冒泡排序实现以及优化：
+1.使用两段for循环，使每个元素都与后面的元素进行大小比较
+2.加入标志位，判断后续是否还有值交换，若没有则跳转出二次循环
+3.记录最后一次交换的位置，每次比较到这个位置，后面的元素就不进行比较，节约时间
+鸡尾酒排序（冒泡排序的升级版，双向冒泡排序）
+排序过程就像钟摆一样，第1轮从左到右，第2轮从右到左，第3轮再从左到右
+
+快速排序：
+冒泡的升级版，使用了分治法
+在每一轮挑选一个基准元素，并让其他比它大的元素移动到数列一边，比它小的元素移动到数列的另一边，从而把数列拆解成两个部分。
+实现分治法的方法：
+1.单边循环法
+2.双边循环法
+双边循环法的基本步骤
+选择基准元素: 通常选择数组的第一个元素作为基准元素（pivot）。
+初始化两个指针: 左指针（left）从数组的起始位置开始，右指针（right）从数组的末尾位置开始。
+移动右指针: 从右向左移动右指针，直到找到一个小于基准元素的元素。
+移动左指针: 从左向右移动左指针，直到找到一个大于基准元素的元素。
+交换元素: 交换左指针和右指针指向的元素。
+重复步骤3-5: 直到左指针和右指针相遇。
+交换基准元素: 将基准元素与左指针或右指针相遇位置的元素交换。
+递归排序: 对基准元素左右两侧的子数组递归进行上述步骤。
+
+单边循环法：第一，把mark指针右移1位，因为小于pivot的区域边界增大了1；
+第二，让最新遍历到的元素和mark指针所在位置的元素交换位置，因为最新遍历的元素归属于小于pivot的区域。
+
+使用非递归方式实现快速排序：栈
+
+*/
+
+//冒泡排序
+/*
+
+void sort_array(int array[],int length)
+{
+    //记录最后一次交换位置
+    int lastChange = 0;
+    //记录边境
+    int sortloca = length -1;
+
+    for (int a = 0; a < length - 1; ++a)
+    {
+        bool flag = true;
+        for (auto b = 0; b < sortloca; ++b)
+        {
+            int temp = 0;
+            if (array[b] > array[b + 1])
+            {
+                temp = array[b];
+                array[b] = array[b + 1];
+                array[b + 1] = temp;
+                //有交换，则flag变为false
+                flag = false;
+                lastChange = b;
+            }
+        }
+        //最后一次交换的位置赋给边界，此后的元素不再比较
+        sortloca = lastChange;
+        if (flag == true)
+            break;
+    }
+}
+*/
+
+//鸡尾酒排序,使用两个分开的for循环
+/*
+void sort_gas(int array[], int length)
+{
+    int start = 0;
+    int end = length - 1;
+    bool flag = true;
+    while (flag)
+    {
+        flag = false;
+        for (int a = start; a < end; ++a)
+        {
+            if (array[a] > array[a + 1])
+                swap(array[a], array[a + 1]);
+            flag = true;
+        }
+        --end;
+        if (flag == false)
+            break;
+        for (int b = end; b > start; --b)
+        {
+            if (array[b - 1] > array[b])
+                swap(array[b - 1], array[b]);
+            flag = true;
+        }
+        ++start;
+    }
+}
+*/
+
+//双边循环——快速排序
+/*
+void quickSort(vector<int>& arr, int left, int right)
+{
+    if (left > right)return;
+    int pivot = arr[left];
+    int i = left;
+    int j = right;
+    while (i < j)
+    {
+        while (i < j && arr[j] >= pivot)//先找右再找左，否则容易进入死循环
+        {
+            --j;
+        }
+
+        while (i < j && arr[i] <= pivot)
+        {
+            ++i;
+        }
+
+        if (i < j)
+            swap(arr[i], arr[j]);
+    }
+    swap(arr[i], arr[left]);
+    quickSort(arr, left, i - 1);
+    quickSort(arr, i + 1, right);
+}
+*/
+
+//单边循环——快速排序
+/*
+void quicksort_l(vector<int>&arr, int left,int right)
+{
+    if (left > right)return;
+
+    int pivot = arr[left];
+    int mark = left + 1;
+
+    for (int i = left + 1; i <= right; ++i)
+    {
+        if (arr[i] < pivot) {
+            std::swap(arr[i], arr[mark]);
+            ++mark;
+        }
+    }
+    swap(arr[mark-1], arr[left]);
+    quicksort_l(arr, left, mark - 2);
+    quicksort_l(arr, mark, right);
+}
+*/
+
+//非递归双边循环——快速排序（将low,high的数据存入到栈中）
+/*
+int partition(std::vector<int>& arr, int low, int high) {
+    int pivot = arr[low];
+    int i = low;
+    int j = high;
+
+    while (i < j) {
+        while (i < j && arr[j] >= pivot) {
+            j--;
+        }
+        while (i < j && arr[i] <= pivot) {
+            i++;
+        }
+        if (i < j) {
+            std::swap(arr[i], arr[j]);
+        }
+    }
+    std::swap(arr[low], arr[i]);
+    return i;
+}
+
+void quickSortNonRecursive(std::vector<int>& arr, int left, int right) {
+    if (left >= right) return;
+
+    std::stack<int> stack;
+    stack.push(left);
+    stack.push(right);
+
+    while (!stack.empty()) {
+        int high = stack.top();
+        stack.pop();
+        int low = stack.top();
+        stack.pop();
+
+        int pivotIndex = partition(arr, low, high);
+
+        if (pivotIndex - 1 > low) {
+            stack.push(low);
+            stack.push(pivotIndex - 1);
+        }
+        if (pivotIndex + 1 < high) {
+            stack.push(pivotIndex + 1);
+            stack.push(high);
+        }
+    }
+}
+*/
+
+//非递归单边循环——快速排序（将low,high的数据存入到栈中）
+/*
+int partition(std::vector<int>& arr, int low, int high) {
+    int pivot = arr[low];
+    int mark = low + 1;
+
+    for (int i = low + 1; i <= high; ++i) {
+        if (arr[i] < pivot) {
+            std::swap(arr[i], arr[mark]);
+            ++mark;
+        }
+    }
+    std::swap(arr[low], arr[mark - 1]);
+    return mark - 1;
+}
+
+void quickSortNonRecursive(std::vector<int>& arr, int left, int right) {
+    if (left >= right) return;
+
+    std::stack<int> stack;
+    stack.push(left);
+    stack.push(right);
+
+    while (!stack.empty()) {
+        int high = stack.top();
+        stack.pop();
+        int low = stack.top();
+        stack.pop();
+
+        int pivotIndex = partition(arr, low, high);
+
+        if (pivotIndex - 1 > low) {
+            stack.push(low);
+            stack.push(pivotIndex - 1);
+        }
+        if (pivotIndex + 1 < high) {
+            stack.push(pivotIndex + 1);
+            stack.push(high);
+        }
+    }
+}
+
 */

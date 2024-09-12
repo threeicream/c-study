@@ -42,153 +42,63 @@ typedef string::size_type sz;
 using namespace std;//一个就把上面using全等效了
 using namespace placeholders;
 
-class CPU
-{
-public:
-    virtual void caculate1() = 0;
-};
+int partition(std::vector<int>& arr, int low, int high) {
+    int pivot = arr[low];
+    int i = low;
+    int j = high;
 
-class GPU
-{
-public:
-    virtual void caculate2() = 0;
-};
-
-class neicun
-{
-public:
-    virtual void caculate3() = 0;
-};
-
-class computer
-{
-public:
-    computer( CPU* x, GPU* y, neicun* z):c(x),g(y),n(z){}
-    void computerWork()
-    {
-        c->caculate1();
-        g->caculate2();
-        n->caculate3();
-    }
-    virtual ~computer()//释放三个电脑零件内存
-    {
-        if (c != nullptr)
-        {
-            delete c;
-            c = nullptr;
+    while (i < j) {
+        while (i < j && arr[j] >= pivot) {
+            j--;
         }
-
-        if (g != nullptr)
-        {
-            delete g;
-            g = nullptr;
+        while (i < j && arr[i] <= pivot) {
+            i++;
         }
-
-        if (n != nullptr)
-        {
-            delete n;
-            n = nullptr;
+        if (i < j) {
+            std::swap(arr[i], arr[j]);
         }
     }
-private:
-    CPU* c;
-    GPU* g;
-    neicun* n;
-};
-
-class intelcpu :public CPU
-{
-public:
-    virtual void caculate1()
-    {
-        cout << "intel CPU 工作中" << endl;
-    }
-};
-class intelgpu :public GPU
-{
-public:
-    virtual void caculate2()
-    {
-        cout << "intel GPU 工作中" << endl;
-    }
-};
-class intelneicun :public neicun
-{
-public:
-    virtual void caculate3()
-    {
-        cout << "intel 内存 工作中" << endl;
-    }
-};
-
-class weixingcpu :public CPU
-{
-public:
-    virtual void caculate1()
-    {
-        cout << "weixing CPU 工作中" << endl;
-    }
-};
-class weixinggpu :public GPU
-{
-public:
-    virtual void caculate2()
-    {
-        cout << "weixing GPU 工作中" << endl;
-    }
-};
-class weixingneicun :public neicun
-{
-public:
-    virtual void caculate3()
-    {
-        cout << "weixing 内存 工作中" << endl;
-    }
-};
-
-void test1()
-{
-    CPU* inte = new weixingcpu;
-    GPU* gp = new weixinggpu;
-    neicun* nei = new weixingneicun;
-    computer p1(inte, gp, nei);
-    p1.computerWork();
-    cout << endl;
-    computer p2(new intelcpu, new weixinggpu, new intelneicun);
-    p2.computerWork();
-    //delete inte, gp, nei;//第一种释放方式
+    std::swap(arr[low], arr[i]);
+    return i;
 }
 
-void test2()
-{
-    CPU* inte = new intelcpu;
-    GPU* gp = new weixinggpu;
-    neicun* nei = new intelneicun;
-    computer p1(inte, gp, nei);
-    p1.computerWork();
-    //delete inte, gp, nei;
+void quickSortNonRecursive(std::vector<int>& arr, int left, int right) {
+    if (left >= right) return;
+
+    std::stack<int> stack;
+    stack.push(left);
+    stack.push(right);
+
+    while (!stack.empty()) {
+        int high = stack.top();
+        stack.pop();
+        int low = stack.top();
+        stack.pop();
+
+        int pivotIndex = partition(arr, low, high);
+
+        if (pivotIndex - 1 > low) {
+            stack.push(low);
+            stack.push(pivotIndex - 1);
+        }
+        if (pivotIndex + 1 < high) {
+            stack.push(pivotIndex + 1);
+            stack.push(high);
+        }
+    }
 }
 
-void test3()
-{
-    CPU* inte = new intelcpu;
-    GPU* gp = new intelgpu;
-    neicun* nei = new intelneicun;
-    computer p1(inte, gp, nei);
-    p1.computerWork();
-    //delete inte, gp, nei;
+void printArray(const std::vector<int>& arr) {
+    for (int num : arr) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
 }
 
-int main()
-{   
-    const char* c[] = { "ENTER", "NEW", "POINT", "FIRST" };
-    const char** cp[] = { c + 3, c + 2, c + 1, c };
-    const char*** cpp = cp;
-    printf("%s", **++cpp);
-    printf("%s", *-- * ++cpp + 3);
-    printf("%s", *cpp[-2] + 3);
-    printf("%s\n", cpp[-1][-1] + 1);
-    
+int main() {
+    std::vector<int> arr = { 5, 1, 4, 2, 8, 0, 2 };
+    quickSortNonRecursive(arr, 0, arr.size() - 1);
+    printArray(arr);
     return 0;
 }
 

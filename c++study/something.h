@@ -904,7 +904,7 @@ c.erase(p);É¾³ýµü´úÆ÷pÖ¸ÏòµÄÔªËØ£¬·µ»ØºóÒ»¸öÔªËØµÄµü´úÆ÷£¬ÈôpÖ¸ÏòÎ²ÔªËØ£¬·µ»ØÎ²º
 	// function body
 }
  [capture](parameters){function body}
- capture£º²¶»ñÍâ²¿±äÁ¿µÄ·½Ê½£¬¿ÉÒÔÊÇÖµ²¶»ñ£¨=£©»òÒýÓÃ²¶»ñ£¨&£©¡£//[=,&a][&,a]ÒþÊ½²¶»ñ
+ capture£º²¶»ñÍâ²¿±äÁ¿µÄ·½Ê½£¬¿ÉÒÔÊÇÖµ²¶»ñ£¨=£©»òÒýÓÃ²¶»ñ£¨&£©¡£//[=,&a][&,a]ÒþÊ½²¶»ñ Öµ²¶»ñ²»ÄÜÐÞ¸ÄÖµ£¬ÒýÓÃ²¶»ñÔò¿ÉÒÔ
  parameters£ºº¯Êý²ÎÊýÁÐ±í¡£
  return_type£º·µ»ØÀàÐÍ£¨¿ÉÒÔÊ¡ÂÔ£¬±àÒëÆ÷»á×Ô¶¯ÍÆ¶Ï£©¡£
  function body£ºº¯ÊýÌå£¬°üº¬¾ßÌåµÄ²Ù×÷¡£
