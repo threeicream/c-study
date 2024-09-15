@@ -76,6 +76,20 @@ void fun4(int n){if(n<=1){return;} fun4(n-1);}
 
 使用非递归方式实现快速排序：栈
 
+堆排序：
+1利用二叉堆实现，把删除的数值传入到另一个vector容器中
+1构建初始堆: 将待排序的数组构造成一个大顶堆（或小顶堆）。
+2交换堆顶元素与末尾元素: 将堆顶元素（最大值或最小值）与末尾元素交换，此时末尾元素就为最大值（或最小值）。
+3调整堆: 将剩余的元素重新调整为大顶堆（或小顶堆）。
+4重复步骤2和步骤3: 直到整个序列有序。
+
+计数排序：
+这种排序算法是利用数组下标来确定元素的正确位置的
+每一个下标位置的值代表数列中对应整数出现的次数
+直接遍历数组，输出数组元素的下标值，元素的值是几，就输出几次
+
+桶排序：
+每一个桶（bucket）代表一个区间范围，里面可以承载一个或多个元素
 */
 
 //冒泡排序
@@ -138,6 +152,31 @@ void sort_gas(int array[], int length)
             flag = true;
         }
         ++start;
+    }
+}
+*/
+
+//选择排序
+/*
+template<typename T>
+void choiceSort(T&a)
+{
+    for(int i=0;i<a.size();++i)
+    {
+        int max = i;
+        for (int j = i + 1; j < a.size(); ++j)
+        {
+            if (a[j] > a[max])
+            {
+                max = j;
+            }
+        }
+        if (max != i)
+        {
+            int temp = a[i];
+            a[i] = a[max];
+            a[max] = temp;
+        }
     }
 }
 */
@@ -284,4 +323,305 @@ void quickSortNonRecursive(std::vector<int>& arr, int left, int right) {
     }
 }
 
+*/
+
+//堆排序 1
+/*
+int asd = 0;
+
+class maxheap
+{
+private:
+    vector<int>heap;
+    void shiftup(int index)
+    {
+        while (index > 0 && heap[index] < heap[(index - 1) / 2])
+        {
+            swap(heap[index], heap[(index - 1) / 2]);
+            index = (index - 1) / 2;
+        }
+    }
+
+    void shiftdown(int index)
+    {
+        int leftchild, rightchild, large;
+        while (index * 2 + 1 < heap.size())
+        {
+            leftchild = index * 2 + 1;
+            rightchild = index * 2 + 2;
+            large = index;
+            if (leftchild < heap.size() && heap[leftchild] < heap[large])
+                large = leftchild;
+            if (rightchild < heap.size() && heap[rightchild] < heap[large])
+                large = rightchild;
+            if (large != index)
+            {
+                swap(heap[large], heap[index]);
+                //large = index;
+                index = large;//顺序很重要，需要反复下沉父节点
+            }
+            else
+                break;
+        }
+    }
+public:
+    maxheap() = default;
+    maxheap(const vector<int>& x) :heap(x) {}
+    void insert(int value)
+    {
+        heap.push_back(value);
+        shiftup(heap.size() - 1);
+    }
+
+    void delete_heap(int index)
+    {
+        if (heap.size() == 0)return;
+        swap(heap[index], heap[heap.size() - 1]);
+        asd = heap[heap.size() - 1];
+        heap.pop_back();
+        shiftdown(index);
+    }
+    void sort_heap()
+    {
+        //heap = num;
+        for (int i = heap.size() / 2 - 1; i >= 0; --i)
+            shiftdown(i);
+    }
+    void print_heap()
+    {
+        for (auto a : heap)
+            cout << a << " ";
+        cout << endl;
+    }
+};
+
+
+int main()
+{
+    //maxheap maxHeap;
+    //maxHeap.insert(10);
+    //maxHeap.insert(20);
+    //maxHeap.insert(5);
+    //maxHeap.insert(30);
+    //maxHeap.insert(40);
+    //maxHeap.insert(35);
+    //maxHeap.insert(80);
+    //maxHeap.delete_heap(1);
+    vector<int> nums = { 10, 20, 5, 30, 15 };
+    vector<int>x;
+    maxheap maxHeap(nums);
+    maxHeap.sort_heap();
+    maxHeap.print_heap();
+    cout << endl;
+    for(int i=0;i<nums.size();++i)
+    {
+        maxHeap.delete_heap(0);
+        int y = asd;
+        x.push_back(y);
+    }
+    for (auto& a : x)
+        cout << a << " ";
+
+    return 0;
+}
+*/
+
+//堆排序 2
+/*
+// 向下调整函数
+void heapify(std::vector<int>& arr, int n, int i) {
+    int largest = i; // 初始化最大值为根节点
+    int left = 2 * i + 1; // 左子节点
+    int right = 2 * i + 2; // 右子节点
+
+    // 如果左子节点大于根节点
+    if (left < n && arr[left] > arr[largest])
+        largest = left;
+
+    // 如果右子节点大于目前的最大值
+    if (right < n && arr[right] > arr[largest])
+        largest = right;
+
+    // 如果最大值不是根节点
+    if (largest != i) {
+        std::swap(arr[i], arr[largest]);
+        // 递归地调整受影响的子树
+        heapify(arr, n, largest);
+    }
+}
+
+// 堆排序函数
+void heapSort(std::vector<int>& arr) {
+    int n = arr.size();
+
+    // 构建初始堆
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapify(arr, n, i);
+
+    // 一个个地从堆中取出元素
+    for (int i = n - 1; i > 0; i--) {
+        // 将当前根节点与末尾节点交换
+        std::swap(arr[0], arr[i]);
+        // 调整堆
+        heapify(arr, i, 0);
+    }
+}
+
+// 打印数组
+void printArray(const std::vector<int>& arr) {
+    for (int num : arr) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    std::vector<int> arr = { 12, 11, 13, 5, 6, 7 };
+    heapSort(arr);
+    printArray(arr);
+    return 0;
+}
+*/
+/*
+void shiftdown(vector<int>&heap,int index, int n)
+{
+    int leftchild, rightchild, large;
+
+    while(index<=n/2-1)
+    {
+        leftchild = index * 2 + 1;
+        rightchild = index * 2 + 2;
+        large = index;
+        if (leftchild < n && heap[leftchild] > heap[large])
+            large = leftchild;
+        if (rightchild < n && heap[rightchild] > heap[large])
+            large = rightchild;
+        if (large != index)
+        {
+            swap(heap[large], heap[index]);
+            //large = index;
+            index = large;//顺序很重要，需要反复下沉父节点
+            //shiftdown(heap, large, n);
+        }
+        else
+            break;
+    }
+}
+
+void heapsort(vector<int>& heap)
+{
+    int n = heap.size();
+
+    for (auto a = n / 2 - 1; a >= 0; --a)
+        shiftdown(heap, a, n);
+
+    for (int i = n - 1; i > 0; --i)
+    {
+        swap(heap[i], heap[0]);
+        shiftdown(heap, 0, i);
+    }
+}
+
+int main()
+{
+    //maxheap maxHeap;
+    //maxHeap.insert(10);
+    //maxHeap.insert(20);
+    //maxHeap.insert(5);
+    //maxHeap.insert(30);
+    //maxHeap.insert(40);
+    //maxHeap.insert(35);
+    //maxHeap.insert(80);
+    //maxHeap.delete_heap(1);
+    vector<int> nums = { 10, 20, 5, 30, 15 };
+    heapsort(nums);
+    for (auto& a : nums)
+        cout << a << " ";
+
+    return 0;
+}
+*/
+
+//计数排序最终版
+/*
+void rememberNumSort(vector<int>& x, vector<int>& y)
+{
+    int max = x[0];
+    int min = x[0];
+    for (auto a = 1; a < x.size(); ++a)
+    {
+        if (x[a] > max)
+            max = x[a];
+        if (x[a] < min)
+            min = x[a];
+    }
+    int d = max - min;
+    //int* com = new int[d+1];
+    vector<int>com(d+1,0);
+    for (auto& flag : x)
+    {
+        ++com[flag - min];
+    }
+    for (auto i = 0; i < d; ++i)
+    {
+        com[i + 1] += com[i];
+    }
+
+    for (auto i = 0; i < x.size(); ++i)
+    {
+        int c = com[x[i] - min];
+        y[c-1] = x[i];
+    }
+}
+int main()
+{
+    vector<int>x{ 55,52,58,60,54 };
+    vector<int>y(x.size());
+    rememberNumSort(x, y);
+    for (auto i : y)
+        cout << i << " ";
+    return 0;
+}
+*/
+
+//桶排序
+/*
+void bucketSort(vector<int>& arr)
+{
+    if(arr.empty()) return;
+    int max = *max_element(arr.begin(), arr.end());
+    int min = *min_element(arr.begin(), arr.end());
+    int range = max - min + 1;
+
+    //确认桶数量
+    int bucketnum = arr.size();
+    vector<vector<int>>buckets(bucketnum);
+
+    //分配数据到桶中
+    for (int num : arr)
+    {
+        int bucketindex = (range - 1) / (bucketnum - 1);
+        buckets[bucketindex].push_back(num);
+    }
+
+    //对每个桶进行排序
+    for (auto& num : buckets)
+    {
+        sort(num.begin(), num.end());
+    }
+
+    int index = 0;
+    for (const auto& bucket : buckets)
+        for (int num : bucket)
+            arr[index++] = num;
+}
+
+int main()
+{
+    vector<int> arr = { 4, 2, 2, 8, 3, 3, 1 };
+    bucketSort(arr);
+    for (auto a : arr)
+        cout << a << " ";
+    return 0;
+}
 */

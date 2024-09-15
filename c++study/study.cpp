@@ -14,6 +14,9 @@
 #include<map>
 #include<set>
 #include<utility>
+//哈希表容器
+#include<unordered_map>
+#include<unordered_set>
 //适配器
 #include<stack>
 #include<queue>
@@ -42,63 +45,28 @@ typedef string::size_type sz;
 using namespace std;//一个就把上面using全等效了
 using namespace placeholders;
 
-int partition(std::vector<int>& arr, int low, int high) {
-    int pivot = arr[low];
-    int i = low;
-    int j = high;
-
-    while (i < j) {
-        while (i < j && arr[j] >= pivot) {
-            j--;
-        }
-        while (i < j && arr[i] <= pivot) {
-            i++;
-        }
-        if (i < j) {
-            std::swap(arr[i], arr[j]);
-        }
+class Base {
+public:
+    virtual void show() {
+        cout << "Base class" << endl;
     }
-    std::swap(arr[low], arr[i]);
-    return i;
-}
+};
 
-void quickSortNonRecursive(std::vector<int>& arr, int left, int right) {
-    if (left >= right) return;
-
-    std::stack<int> stack;
-    stack.push(left);
-    stack.push(right);
-
-    while (!stack.empty()) {
-        int high = stack.top();
-        stack.pop();
-        int low = stack.top();
-        stack.pop();
-
-        int pivotIndex = partition(arr, low, high);
-
-        if (pivotIndex - 1 > low) {
-            stack.push(low);
-            stack.push(pivotIndex - 1);
-        }
-        if (pivotIndex + 1 < high) {
-            stack.push(pivotIndex + 1);
-            stack.push(high);
-        }
+class Derived : public Base {
+public:
+    void show() override {
+        cout << "Derived class" << endl;
     }
-}
+};
 
-void printArray(const std::vector<int>& arr) {
-    for (int num : arr) {
-        std::cout << num << " ";
-    }
-    std::cout << std::endl;
+void display(Base obj) {
+    obj.show(); // 动态联编，根据对象的实际类型调用相应的函数
 }
 
 int main() {
-    std::vector<int> arr = { 5, 1, 4, 2, 8, 0, 2 };
-    quickSortNonRecursive(arr, 0, arr.size() - 1);
-    printArray(arr);
+    double x;
+    x = 218.82631;
+    printf("%-6.2e\n", x);
     return 0;
 }
 
