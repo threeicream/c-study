@@ -344,7 +344,10 @@ T:通用数据类型，通常为大写字母
 建立一个通用函数，其函数返回值类型和形参类型可以不具体指定，用一个虚拟类型代替
 语法：template<class nametype,class agetype>
 类
-②显式指定类型：Person<string,int> p1("qwe",999);
+①显式指定类型：Person<string,int> p1("qwe",999);
+类模板没有自动推导使用方式
+类模板在模板参数列表中可以有默认参数template<class nametype=string, class agetype=int> 这样调用ppp <>x(15, "erw");就不需要写类型进去
+类模板的成员函数只有在调用时才创建（因为没有确认类型）
 */
 
 

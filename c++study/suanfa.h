@@ -45,8 +45,7 @@ void fun4(int n){if(n<=1){return;} fun4(n-1);}
 时间复杂度为线性：计数排序、桶排序、基数排序
 排序算法还可以根据其稳定性，划分为稳定排序和不稳定排序。
 即如果值相同的元素在排序后仍然保持着排序前的顺序，则这样的排序算法是
-稳定排序；如果值相同的元素在排序后打乱了排序前的顺序，则这样的排序算法是
-不稳定排序。
+稳定排序；如果值相同的元素在排序后打乱了排序前的顺序，则这样的排序算法是不稳定排序。
 
 冒泡排序实现以及优化：
 1.使用两段for循环，使每个元素都与后面的元素进行大小比较
@@ -84,12 +83,28 @@ void fun4(int n){if(n<=1){return;} fun4(n-1);}
 4重复步骤2和步骤3: 直到整个序列有序。
 
 计数排序：
-这种排序算法是利用数组下标来确定元素的正确位置的
+这种排序算法是利用数组下标来确定元素的正确位置
 每一个下标位置的值代表数列中对应整数出现的次数
 直接遍历数组，输出数组元素的下标值，元素的值是几，就输出几次
 
 桶排序：
 每一个桶（bucket）代表一个区间范围，里面可以承载一个或多个元素
+
+
+
+问题：
+1.如何判断一个链表是否有环
+①遍历法，每遍历一个节点，就将他和之前的所有节点做比较，时间O(n^2),空间O(1)
+②建立哈希表，每遍历一个节点，就将他与哈希表的节点进行比较，时间O(n),空间O(n)
+③追击法，创建两个指针p1和p2，同时指向头节点，p1一次移动1个节点，p2一次移动2个几点，比较两个指针是否相同，一直到尾节点，代码见链表
+2.如何求出环的长度
+3.如何求出入环节点
+4.求两数最大公约数：
+辗转相除法 10和25，25除以10商2余5，那么10和25的最大公约数，等同于10和5的最大公约数
+更相减损术 10和25，25减10的差是15，那么10和25的最大公约数，等同于10和15的最大公约数
+更相减损术+移位运算 通过移位将数据都转换为奇数，然后调用更相减损术
+5.求数字是否是2的整数次幂：把2的整数次幂转换成二进制数，其最高位为1，其他为0，n&(n-1)
+6.求无序数组排序后两个相邻元素的最大插值（使用桶排序的思路）
 */
 
 //冒泡排序
@@ -622,6 +637,128 @@ int main()
     bucketSort(arr);
     for (auto a : arr)
         cout << a << " ";
+    return 0;
+}
+*/
+
+//求最大公约数
+/*
+int maxnum1(int a, int b)
+{
+    int max = a > b ? a : b;
+    int min = a < b ? a : b;
+    int t = max % min;
+    if (t == 0)
+        return min;
+    else
+        maxnum1(min, t);
+}
+
+int maxnum2(int a, int b)
+{
+    int max = a > b ? a : b;
+    int min = a < b ? a : b;
+    int t = max - min;
+    if (t == 0)
+        return min;
+    else
+        maxnum1(min, t);
+}
+
+int bestmaxnum(int a, int b)
+{
+    if (a == b)return a;
+    if (a == 0)return b;
+    if (b == 0)return a;
+
+    // a 和 b 都是偶数
+    if ((a & 1) == 0 && (b & 1) == 0)
+        return bestmaxnum(a >> 1, b >> 1) << 1;
+
+    // a 是偶数，b 是奇数
+    if ((a & 1) == 0)
+        return bestmaxnum(a >> 1, b);
+
+    // a 是奇数，b 是偶数
+    if ((b & 1) == 0)
+        return bestmaxnum(a, b >> 1);
+
+    // a 和 b 都是奇数，使用更相减损术
+    if (a > b)
+        return bestmaxnum((a - b) >> 1, b);
+    else
+        return bestmaxnum((b - a) >> 1, a);
+}
+*/
+
+//无序数组 最大差值（桶排序思路）
+/*
+stack<int>tz;
+
+struct Bucket
+{
+    int minval = INT_MAX;
+    int maxval = INT_MIN;
+    bool isempty = true;
+};
+
+int getMaxSortedDistance(vector<int>& x)
+{
+    int n = x.size();
+    if (n < 2)
+        return 0;
+    int minval = *min_element(x.begin(), x.end());
+    int maxval = *max_element(x.begin(), x.end());
+
+    if (minval == maxval)
+        return 0;
+
+    int bucketsize = max(1,(maxval - minval) / (n - 1));//宽度
+    int bucketcount = (maxval - minval) / bucketsize + 1;//桶数量
+
+    vector<Bucket>buckets(bucketcount);
+
+    for (int num : x)
+    {
+        int bucketindex = (num - minval) / bucketsize;//计算元素对应的桶
+        buckets[bucketindex].minval = min(buckets[bucketindex].minval, num);
+        buckets[bucketindex].maxval = max(buckets[bucketindex].maxval, num);
+        buckets[bucketindex].isempty = false;//表示此桶非空
+    }
+
+    //计算临界差值
+    int preMax = minval;
+    int maxGap = 0;
+    for (const Bucket& bu : buckets)
+    {
+        if (bu.isempty)
+            continue;
+        int t = maxGap;
+        maxGap = max(maxGap, bu.minval - preMax);
+        if (maxGap != t && maxGap != 0)//记录最大差值是哪两个数字
+        {
+            if (!tz.empty())
+            {
+                tz.pop();
+                tz.pop();
+            }
+            tz.push(preMax);
+            tz.push(bu.minval);
+        }
+        preMax = bu.maxval;
+    }
+    return maxGap;
+}
+
+int main()
+{
+    vector<int>x{2,5,6,1,8,6,9,3,7};
+    cout << getMaxSortedDistance(x) << endl;
+    int z = tz.top();
+    tz.pop();
+    int y = tz.top();
+    tz.pop();
+    cout << z << "-" << y << endl;
     return 0;
 }
 */

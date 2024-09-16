@@ -45,28 +45,29 @@ typedef string::size_type sz;
 using namespace std;//一个就把上面using全等效了
 using namespace placeholders;
 
-class Base {
+template<class nametype=string, class agetype=int>
+class ppp
+{
 public:
-    virtual void show() {
-        cout << "Base class" << endl;
+    agetype age;
+    nametype name;
+    ppp(agetype a, nametype n)
+    {
+        age = a;
+        name = n;
+    }
+    void show()
+    {
+        cout << age << endl;
+        cout << name << endl;
     }
 };
 
-class Derived : public Base {
-public:
-    void show() override {
-        cout << "Derived class" << endl;
-    }
-};
+int main() 
+{
+    ppp <>x(15, "erw");
+    x.show();
 
-void display(Base obj) {
-    obj.show(); // 动态联编，根据对象的实际类型调用相应的函数
-}
-
-int main() {
-    double x;
-    x = 218.82631;
-    printf("%-6.2e\n", x);
     return 0;
 }
 

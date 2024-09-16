@@ -165,6 +165,116 @@ int main() {
     return 0;
 }
 */
+//链表注意事项：
+//1.链表是一个整体中的指针域指向另一个整体，而不是指向另一个整体的指针域
+//2.新建链表时如果不对链表初始化（链表是指针），直接使用会导致未定义行为，所以要new，分配内存
+//3.通过创建两个指针判断是否为环类链表，追击法
+//4.如何判断环长度，第一次相遇后，通过两个指针的速度差*步数即可球的
+//5.如何判断环点，第一次相遇后，根据公式2(D+S1) = D+S1+n(S1+S2)=>D = (n-1)(S1+S2)+S2
+//得出速度相同，且p1位于头节点，p2位于第一次相遇节点：p1和p2相遇的节点即为环点
+/*
+class Node
+{
+public:
+    int data;
+    Node* next;
+    Node() = default;
+    Node(int da) :data(da), next(nullptr){}
+    void insertNode(int da, Node* x)
+    {
+        data = da;
+        next = x;
+    }
+    bool findNode(int da)
+    {
+        Node* temp = this;
+        if (temp == nullptr)return false;
+        while (temp != nullptr)
+        {
+            if (temp->data == da)
+                return true;
+            temp = temp->next;
+        }
+        return false;
+    }
+
+    void findLoop()//判断是否为环类链表
+    {
+        Node* p1 = this, * p2 = this;
+        while (p2 != nullptr && p2->next != nullptr)
+        {
+            p1 = p1->next;
+            p2 = p2->next->next;
+
+            if (p1 == p2)
+            {
+                cout<< "It's a loop" << endl;
+                return;
+            }
+        }
+        cout << "Not a loop" << endl;
+    }
+
+    int loopLength()
+    {
+        Node* p1 = this, * p2 = this;
+        while (p2 != nullptr && p2->next != nullptr)
+        {
+            p1 = p1->next;
+            p2 = p2->next->next;
+
+            if (p1 == p2)
+            {
+                int len = 1;
+                Node* temp = p1;
+                while (temp->next != p1)
+                {
+                    ++len;
+                    temp = temp->next;
+                }
+                return len;
+            }
+        }
+        return 0;
+    }
+
+    Node* loopPoint()
+    {
+        Node* p1 = this, * p2 = this;
+        while (p2 != nullptr && p2->next != nullptr)
+        {
+                p1 = p1->next;
+                p2 = p2->next->next;
+
+            if (p1 == p2)
+            {
+                p1 = this;
+                while (p1 != p2)
+                {
+                    p1 = p1->next;
+                    p2 = p2->next;
+                }
+                return p1;
+            }
+        }
+        return nullptr;
+    }
+};
+int main()
+{
+    Node *M[5];//直接使用会导致未定义行为，需要分配内存
+        for (int i = 0; i < 5; ++i) 
+	{
+		M[i] = new Node();
+	}
+	M[0]->insertNode(1, M[1]);
+	M[1]->insertNode(2, M[2]);
+	M[2]->insertNode(3, M[3]);
+	M[3]->insertNode(4, M[4]);
+	M[4]->insertNode(5, nullptr);
+    cout << M[0]->findNode(6);
+}
+*/
 
 //二叉树的递归
 /*
