@@ -105,6 +105,10 @@ void fun4(int n){if(n<=1){return;} fun4(n-1);}
 更相减损术+移位运算 通过移位将数据都转换为奇数，然后调用更相减损术
 5.求数字是否是2的整数次幂：把2的整数次幂转换成二进制数，其最高位为1，其他为0，n&(n-1)
 6.求无序数组排序后两个相邻元素的最大插值（使用桶排序的思路）
+7.如何用栈实现队列操作（两个栈，一个入，一个出）
+8.字典序算法 寻找在一个整数所包含数字的全部组合中，找到一个大于且仅大于原数的新整数
+9.贪心算法 依次求得局部最优解，最终得到全局最优解  给出一个整数，从该整数中去掉k个数字，要求剩下的数字形成的新整数尽可能小
+10.最大整数相加 创建两个数组，数组存入后进行加法
 */
 
 //冒泡排序
@@ -762,3 +766,245 @@ int main()
     return 0;
 }
 */
+
+//栈实现队列操作
+/*
+class Myqueue
+{
+private:
+    stack<int>getin;
+    stack<int>getout;
+
+    void stack_queueOut()
+    {
+        while (!getin.empty())
+        {
+            getout.push(getin.top());
+            getin.pop();
+        }
+    }
+
+public:
+    void push(int x)
+    {
+        getin.push(x);
+    }
+
+    int pop()
+    {
+        if (getout.empty())
+            stack_queueOut();
+        int topElement = getout.top();
+        getout.pop();
+        return topElement;
+    }
+
+    int peek()
+    {
+        if (getout.empty())
+            stack_queueOut();
+        return getout.top();
+    }
+
+    bool empty()
+    {
+        return getin.empty() && getout.empty();
+    }
+
+
+};
+
+
+int main()
+{
+    Myqueue q;
+    q.push(1);
+    q.push(2);
+    q.push(3);
+    q.push(4);
+    q.pop();
+    cout << q.pop();
+    return 0;
+}
+*/
+
+//字典序算法 寻找在一个整数所包含数字的全部组合中，找到一个大于且仅大于原数的新整数
+/*
+int findBig(int num)
+{
+    vector<int>tq;
+    while (num != 0)
+    {
+        int Bit = num % 10;
+        tq.push_back(Bit);
+        num /= 10;
+    }
+
+    int i = 1;
+    for (i; i < tq.size(); ++i)
+    {
+        if(tq[0]>tq[i])
+        {
+            swap(tq[0], tq[i]);
+            break;
+        }
+    }
+    //sort(tq.begin(), tq.begin() + i, [](int a, int b) {return a > b; });
+    reverse(tq.begin(), tq.begin() + i);
+
+    int lastnum = 0;
+    int flag = 1;
+    for (int j = 0; j < tq.size(); ++j)
+    {
+        lastnum += tq[j] * flag;
+        flag *= 10;
+    }
+    return lastnum;
+}
+
+
+int main()
+{
+    cout<<findBig(13452);
+    return 0;
+}
+*/
+
+//贪心算法 给出一个整数，从该整数中去掉k个数字，要求剩下的数字形成的新整数尽可能小
+/*
+string findsmall(string num, int del)
+{
+    int newlength = num.length() - del;
+    if (newlength <= 0) return "0";
+
+    stack<char> x;
+    for (char c : num) {
+        while (!x.empty() && x.top() > c && del > 0) {
+            x.pop();
+            --del;
+        }
+        x.push(c);
+    }
+
+    // 如果还有剩余的删除次数，继续从栈顶删除
+    while (del > 0) {
+        x.pop();
+        --del;
+    }
+
+    string newnum;
+    while (!x.empty()) {
+        newnum.push_back(x.top());
+        x.pop();
+    }
+    reverse(newnum.begin(), newnum.end());
+
+    // 去掉前导零
+    size_t startpos = newnum.find_first_not_of('0');
+    if (string::npos != startpos) {
+        newnum = newnum.substr(startpos);
+    }
+    else {
+        newnum = "0";
+    }
+
+    return newnum;
+}
+
+
+int main()
+{
+    string num{ "541270936" };
+    cin >> num;
+    cout << findsmall(num, 3);
+    return 0;
+}
+*/
+
+//特大整数相加 两个数组
+//1.比较笨的方法
+/*
+string bigNumSum(string bigA, string bigB)
+{
+    int maxnum = max(bigA.length(), bigB.length());
+
+    vector<int>x, y;
+    for (int i = 0; i < bigA.length(); ++i)
+        x.push_back(bigA[bigA.length() - i - 1] - '0');
+    for (int i = 0; i <= maxnum - bigA.length(); ++i)
+        x.push_back(0);
+    for (int i = 0; i < bigB.length(); ++i)
+        y.push_back(bigB[bigB.length() - i - 1] - '0');
+    for (int i = 0; i <= maxnum - bigB.length(); ++i)
+        y.push_back(0);
+
+    //vector<int>z(x.size(), 0);
+    string z(x.size(), '0');
+    for (int i = 0; i < x.size() - 1; ++i)
+    {
+        z[i] += (x[i] + y[i]) % 10;
+        z[i + 1] += (x[i] + y[i]) / 10;
+    }
+
+    reverse(z.begin(), z.end());
+    size_t startpos = z.find_first_not_of('0');
+    if (string::npos != startpos)
+        z = z.substr(startpos);
+    else
+        z = "0";
+    return z;
+}
+
+int main()
+{
+    string num{ "5411111111211" };
+    string num1{ "1231111114" };
+    cout << bigNumSum(num, num1);
+    return 0;
+}
+*/
+//2.优化的方法
+/*
+string bigNumSum(string bigA, string bigB) {
+    int lenA = bigA.length();
+    int lenB = bigB.length();
+    int maxLen = max(lenA, lenB);
+
+    // 结果字符串，长度为 maxLen + 1 以处理可能的进位
+    string result(maxLen + 1, '0');
+
+    int carry = 0;
+    for (int i = 0; i < maxLen; ++i) {
+        int digitA = (i < lenA) ? (bigA[lenA - 1 - i] - '0') : 0;
+        int digitB = (i < lenB) ? (bigB[lenB - 1 - i] - '0') : 0;
+        int sum = digitA + digitB + carry;
+        result[maxLen - i] = (sum % 10) + '0';
+        carry = sum / 10;
+    }
+
+    // 处理最高位的进位
+    if (carry > 0) {
+        result[0] = carry + '0';
+    } else {
+        result.erase(result.begin()); // 去掉多余的最高位
+    }
+
+    // 去掉前导零
+    size_t startpos = result.find_first_not_of('0');
+    if (string::npos != startpos) {
+        result = result.substr(startpos);
+    } else {
+        result = "0";
+    }
+
+    return result;
+}
+
+int main() {
+    string num{ "5411111111211" };
+    string num1{ "1231111114" };
+    cout << bigNumSum(num, num1) << endl;
+    return 0;
+}
+*/
+
