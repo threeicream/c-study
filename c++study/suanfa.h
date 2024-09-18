@@ -90,6 +90,16 @@ void fun4(int n){if(n<=1){return;} fun4(n-1);}
 桶排序：
 每一个桶（bucket）代表一个区间范围，里面可以承载一个或多个元素
 
+动态规划（dp）和递归：
+相同：
+都能分解成若干子问题
+不同：
+dp存储子问题的结果
+动规的处理方式：
+1.从上往下：实际就是递归，通过调用函数，无法通过数组储存上一个结果的值
+2.从下往上：迭代，也可以说是循环
+dp注意点：1.状态转移方程2.问题边界3.从下往上，保存上一个结果的值
+例子：1.斐波那契数列 2.金矿问题（见漫画算法P370）
 
 
 问题：
@@ -1004,6 +1014,114 @@ int main() {
     string num{ "5411111111211" };
     string num1{ "1231111114" };
     cout << bigNumSum(num, num1) << endl;
+    return 0;
+}
+*/
+
+//二叉搜索树转换为双向链表，通过中序遍历的思维进行
+/*
+// 定义二叉树节点结构
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+// 辅助函数：将 BST 转换为排序的双向链表
+void convertBSTToDoublyList(TreeNode* root, TreeNode*& head, TreeNode*& prev) //通过中序遍历的思维进行
+{
+    if (!root) return;
+
+    // 递归处理左子树
+    convertBSTToDoublyList(root->left, head, prev);
+
+    // 处理当前节点
+    if (!head) {
+        head = root; // 初始化链表头
+    }
+    else {
+        prev->right = root;
+        root->left = prev;
+    }
+    prev = root;
+
+    // 递归处理右子树
+    convertBSTToDoublyList(root->right, head, prev);
+}
+
+// 主函数：调用辅助函数并返回链表头节点
+TreeNode* convertBSTToDoublyList(TreeNode* root) {
+    TreeNode* head = NULL;
+    TreeNode* prev = NULL;
+    convertBSTToDoublyList(root, head, prev);
+    return head;
+}
+
+// 测试函数
+int main() {
+    // 构建示例二叉搜索树
+    TreeNode* root = new TreeNode(4);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(5);
+    root->left->left = new TreeNode(1);
+    root->left->right = new TreeNode(3);
+
+    TreeNode* head = convertBSTToDoublyList(root);
+
+    // 输出双向链表
+    TreeNode* curr = head;
+    while (curr) {
+        cout << curr->val << " ";
+        curr = curr->right;
+    }
+    cout << endl;
+
+    return 0;
+}
+*/
+
+//金矿问题
+/*
+int moreGod(int godnum, int Mannum, vector<int>& needMan, vector<int>& haveGod)
+{
+    vector<vector<int>>bom(godnum + 1, vector<int>(Mannum + 1));//保证行和列为0的位置都是0
+    for (int i = 1; i <= godnum; ++i)
+    {
+        for (int j = 1; j <= Mannum; ++j)
+        {
+            if (j < needMan[i-1])
+                bom[i][j] = bom[i - 1][j];//保证有0可以赋值
+            else
+                bom[i][j] = max(bom[i - 1][j], bom[i - 1][j - needMan[i-1]] + haveGod[i-1]);
+        }
+    }
+    int Maxgod = bom[godnum][Mannum];
+    return Maxgod;
+}
+
+int bestMoreGod(int godnum, int Mannum, vector<int>& needMan, vector<int>& haveGod)
+{
+    vector<int>bom(Mannum + 1, 0);
+    for (int i = 1; i <= godnum; ++i)
+    {
+        for (int j = Mannum; j >= 1; --j)//需要改成从后到前，否则会导致最后几位值计算错误
+        {
+            if (j >= needMan[i - 1])//触发方式修改，提高效率
+                bom[j] = max(bom[j], bom[j - needMan[i - 1]] + haveGod[i - 1]);
+        }
+    }
+    return bom[Mannum];
+}
+
+// 测试函数
+int main()
+{
+    vector<int>needMan{ 5,5,3,4,3 };
+    vector<int>haveGod{ 400,500,200,300,350 };
+    int godnum = 5, Mannum = 10;
+    int i = bestMoreGod(godnum, Mannum, needMan, haveGod);
+    cout << i;
     return 0;
 }
 */
