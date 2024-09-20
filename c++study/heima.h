@@ -154,6 +154,10 @@ const修饰成员函数==常函数： void asd()const{this->age=100;}//不可修改age
 2.类做友元  friend class x;
 3.类中成员函数做友元  friend void x::visit();//使用2、3时成员函数都要类外定义
 运算符重载：对已有的运算符重新定义，赋予另一种功能，以适应不同的数据类型（尽量都是用全局函数，否则会有局限性）
+①只能使用成员函数重载的运算符有：=、()、[]、->、new、delete
+②单目运算符最好重载为成员函数+ - ++ --
+③对于复合的赋值运算符如+=、-=、*=、/=、&=、!=、~=、%=、>>=、<<=建议重载为成员函数
+④对于其它运算符，建议重载为友元函数
 1.加号重载 
 通过成员函数重载+号
 Circle operator+(Circle &p)
@@ -258,6 +262,9 @@ class animal{};
 class sheep :virtual public animal{};
 class tuo :virtual public animal{};
 class sheeptuo :public sheep,public tuo{};
+A *p = new B;
+p的静态类型是A*，调用非虚函数时会静态绑定到父类A上
+动态类型是B*，调用虚函数时会动态绑定到子类B上
 
 多态:
 1.静态多态：函数重载、运算符重载属于静态多态
@@ -273,6 +280,8 @@ class sheeptuo :public sheep,public tuo{};
 1.解决父类指针释放子类对象
 2.需要具体实现的函数 （类内声明，类外实现最好）
 3.如果是纯虚析构，类就属于抽象类，无法实例化对象
+
+常见的不能声明为虚函数的有:普通函数(非成员函数)，静态成员函数，内联成员函数，构造函数，友元函数
 
 继承的作用：通过继承，子类可以使用父类的所有非私有成员，并且可以添加新的成员或重写父类的方法。
 多态的作用：多态是指同一个函数或方法在不同对象中有不同的实现。
@@ -348,6 +357,24 @@ T:通用数据类型，通常为大写字母
 类模板没有自动推导使用方式
 类模板在模板参数列表中可以有默认参数template<class nametype=string, class agetype=int> 这样调用ppp <>x(15, "erw");就不需要写类型进去
 类模板的成员函数只有在调用时才创建（因为没有确认类型）
+类模板对象做函数参数的传入方式：
+1.指定传入的类型——直接显示对象的数据类型
+void printPerson1(Person<string, int>&p){}
+2.参数模板化——将对象中的参数变为模板进行传递
+template<class T1, class T2>
+void printPerson2(Person<T1, T2>& p){}
+3.整个类模板化——将这个对象类型 模板化进行传递
+template<class T>
+void printPerson3(T &p){}
+类模板与继承：
+必须要知道父类中T的类型，才能继承给子类
+class Son:public Person<string, int>//必须要加<string, int>
+如果想灵活指定父类中T类型，子类也需要变成类模板
+template<class T1, class T2,class T3>
+class Son:public Person<T1, T2>{T3 obj;};
+类模板中成员函数类外实现
+void Person<string, int>::showPerson()
+类模板分文件编写时：由于类模板的成员函数只有在调用时才创建（因为没有确认类型），所以需要将定义和声明放在一块（.hpp文件）
 */
 
 

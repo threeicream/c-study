@@ -63,10 +63,61 @@ public:
     }
 };
 
+class xcv
+{
+public:
+    int x;
+    int y;
+    xcv() = default;
+    xcv(int a,int b,int c):x(a),y(b),z(c){}
+    friend void show(xcv& a);
+    friend xcv operator+(xcv& a, xcv& b);
+private:
+    int z;
+};
+
+xcv operator+(xcv& a, xcv& b)
+{
+    xcv p;
+    p.x = a.x + b.x;
+    p.y = a.y + b.y;
+    return p;
+}
+
+void show(xcv&a)
+{
+    cout << a.z;
+}
+
+int search(vector<int>& nums, int target) {
+    int left = 0;
+    int right = nums.size() - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;//¼Ç×¡midÒªLeft+
+        if (nums[mid] == target) {
+            return mid;
+        }
+        if (nums[mid] < target) {
+            left = mid + 1;
+        }
+        else {
+            right = mid - 1;
+        }
+    }
+    return -1;
+}
+
 int main() 
 {
-    ppp <>x(15, "erw");
-    x.show();
+    ///*ppp <>x(15, "erw");
+    //x.show();*/
+    //xcv a(1, 2,3);
+    //xcv b(2, 3,4);
+    //xcv c = a + b;
+    //cout << c.x;
+    //show(c);
+    vector<int>x{ -2,-1,3 };
+    cout << search(x, 3);
 
     return 0;
 }

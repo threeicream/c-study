@@ -99,7 +99,57 @@ dp存储子问题的结果
 1.从上往下：实际就是递归，通过调用函数，无法通过数组储存上一个结果的值
 2.从下往上：迭代，也可以说是循环
 dp注意点：1.状态转移方程2.问题边界3.从下往上，保存上一个结果的值
-例子：1.斐波那契数列 2.金矿问题（见漫画算法P370）
+例子：1.斐波那契数列 2.金矿问题（见漫画算法P370）3.矩阵最小路径和
+dp4要素：
+1.状态（存储小规模问题的结果）
+2.方程（状态之间的练习，怎么通过小的状态，来算大的状态）
+3.初始化（最极限的小状态是什么）
+4.答案（最大的状态是什么）
+
+记忆化搜索：递归靠哈希表记录 dp靠数组
+模板：
+T func(N node, Hash Table<N, T>& cache) {
+If (cache.contains(node)) {
+ return cache.get(node);
+}
+...
+T sub _res = func(next _node, cache);
+...
+//当前子问题的解， 依赖于更小的子问题(s)
+T res = G( sub_res ... );
+cache.set(node, res);
+return res;
+}
+dp常见算法策略比较：
+分而治之Divide and Conquer 
+动态规划Dynamic Programming 
+贪婪算法Greedy Algorithm  局部最优解，
+回溯法Backtracking 穷举法，暴力深度优先搜索（DFS，树tree和图graph）
+模式识别：
+1.用DP（从下到上）解决收敛结构问题
+将状态方程列出，有助于理清算法实现的思路
+如果出现类似于“所有解”、“所有路径”等关键词，则用从上到下更为直接
+
+图论
+基本概念
+任意两个数据对象之间都可能存在某种特定关系的数据结构
+graph一般由两个集合共同构成，1.非空但是有限的顶点集合Vertex。2.描述顶点之间连接关系的边集合Edge 图表示为：G=(V,E)
+有向图<> 每个节点分为入度和出度，入度就是其他点指向该顶点的边的个数，出度相反（度就是边数）
+无向图()
+无向完全图 任意两个顶点都有一条边
+有向完全图 任意两个顶点都有方向互为相反的两条边连接
+连通图 任意两个点都是连通的，连通就是一个顶点到另一个顶点有路径
+子图 对于G=(V,E)和G'=(V',E')若V'是V的子集，E'是E的子集，那么G'就是子图
+极大连通子图 拥有最大的顶点树，再加入原图中的其他节点都会导致子图不连通（也可以叫连通分量）
+存储结构
+邻接矩阵：使用矩阵去表示途中各顶点之间的灵界关系和权值
+无向图的邻接矩阵一定是对称矩阵，所以可以只存放上半部分
+无向图的邻接矩阵的第i行非0（或非∞）的个数就是第i个顶点的度
+有向图的邻接矩阵的第i行非0（或非∞）的个数就是第i个顶点的出度（纵向就是入度）相关资料：https://www.itbaima.cn/document/0qzy7bogo0g2pusa
+
+
+
+
 
 
 问题：
@@ -117,8 +167,12 @@ dp注意点：1.状态转移方程2.问题边界3.从下往上，保存上一个结果的值
 6.求无序数组排序后两个相邻元素的最大插值（使用桶排序的思路）
 7.如何用栈实现队列操作（两个栈，一个入，一个出）
 8.字典序算法 寻找在一个整数所包含数字的全部组合中，找到一个大于且仅大于原数的新整数
-9.贪心算法 依次求得局部最优解，最终得到全局最优解  给出一个整数，从该整数中去掉k个数字，要求剩下的数字形成的新整数尽可能小
-10.最大整数相加 创建两个数组，数组存入后进行加法
+9.贪心算法（dp变种） 依次求得局部最优解，最终得到全局最优解  给出一个整数，从该整数中去掉k个数字，要求剩下的数字形成的新整数尽可能小
+10.特大整数相加 创建两个数组，数组存入后进行加法
+11.二分法 针对有规律的数组，得出中间值，比较要求值和中间值，变化两边边界 关键点：
+①mid=left+(right-left)>>1;//避免直接使用 (left + right) 可能带来的整数溢出问题
+②left = mid + 1;right = mid - 1;//不能包含mid，以确保搜索区间正确缩小并推进搜索过程
+12.深度优先搜索 
 */
 
 //冒泡排序
@@ -1081,7 +1135,7 @@ int main() {
 }
 */
 
-//金矿问题
+//金矿问题 动态规划
 /*
 int moreGod(int godnum, int Mannum, vector<int>& needMan, vector<int>& haveGod)
 {
@@ -1126,3 +1180,185 @@ int main()
 }
 */
 
+//矩阵的最小路径和 动态规划
+/*
+int minPathSum(vector<vector<int> >& matrix) {
+    //write code here
+    int row = matrix.size();
+    int col = matrix[0].size();
+    vector<vector<int> > dp(col, vector<int>(row,0));
+    dp[0][0] = matrix[0][0];
+
+    for (int i = 1; i < row; ++i)//初始化第一行
+        dp[0][i] = dp[0][i - 1] + matrix[0][i];
+
+    for (int i = 1; i < col; ++i)//初始化第一列
+        dp[i][0] = dp[i-1][0] + matrix[i][0];
+
+    for(int i=1;i<row;++i)
+        for (int j = 1; j < col; ++j)
+        {
+            dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + matrix[i][j];
+        }
+    return dp[row - 1][col - 1];
+}
+
+int minPathSum1(vector<vector<int> >& matrix) //优化为一维数组
+{
+    // write code here
+    int row = matrix.size();
+    int col = matrix[0].size();
+    //vector<vector<int> > dp(col, vector<int>(row, 0));
+    vector<int>dp(row, 0);
+    dp[0] = matrix[0][0];
+
+    for (int i = 1; i < col; ++i)//初始化第一行
+        dp[i] = dp[i - 1] + matrix[0][i];
+
+    for (int i = 1; i < row; ++i)
+        for (int j = 0; j < col; ++j)
+        {
+            int left = INT_MAX;//从左到达该点
+            int up = dp[j];//从上到达该点
+            if (j > 0)
+                left = dp[j - 1];
+            dp[j] = min(left,up) + matrix[i][j];
+        }
+    return dp[col - 1];
+}
+
+int minPathSum3(vector<vector<int> >& matrix) {//更优秀的方法，直接在原数组上进行修改
+        // write code here
+
+        int rowls = matrix.size();
+        int cols = matrix[0].size();
+
+        for (int i =0;i< rowls;i++)
+        {
+            for(int j=0;j< cols;j++)
+            {
+                if (i==0 && j>0)
+                    matrix[i][j] =  matrix[i][j] + matrix[i][j - 1];
+                else if (j == 0 && i> 0)
+                {
+                    matrix[i][j] =  matrix[i -1][j] + matrix[i][j];
+                }
+                else{
+                    if (i ==0 && j==0) continue;
+                    int min_v = matrix[i][j-1] > matrix[i-1][j]?matrix[i-1][j]:matrix[i][j-1];
+                    matrix[i][j] = matrix[i][j] + min_v;
+                }
+            }
+        }
+
+        return matrix[rowls -1][cols-1];
+    }
+
+// 测试函数
+int main()
+{
+    vector<vector<int>> grid = {
+        {1, 3, 5, 9},
+        {8, 1, 3, 4},
+        {5, 0, 6, 1},
+        {8, 8, 4, 0}
+    };
+
+    cout << "最小路径和: " << minPathSum1(grid) << endl;
+    return 0;
+}
+*/
+
+//字符串判断单词，添加空格  动态规划
+/*
+vector<int> wordBreak(string st, unordered_set<string>& dict)
+{
+    int begin = 0, end = 0;
+    string word;
+    vector<int>words(st.size() + 1, 0);
+    words[0] = true;
+    int t = 0;
+
+    for (int i = 1; i < st.size() + 1; ++i)
+    {
+        words[i] = false;
+        for (end = 0; end < st.size(); ++end)
+        {
+            begin = t;
+            for (begin; begin < end; ++begin)
+            {
+                string test = st.substr(begin, end - begin + 1);
+                if (words[begin] && dict.find(test) != dict.end())
+                {
+                    words[end + 1] = true;//标记空格位置
+                    break;
+                    t = end + 1;
+                }
+            }
+        }
+    }
+    return words;
+}
+
+int main()
+{
+    unordered_set<string>dict{ "fuck","you","apple","pie" };
+    string s{ "appleapplepiefuckyou" };
+    vector<int> i = wordBreak(s, dict);
+    int t = 0;
+    for (int x = 1; x < i.size()-1; ++x)
+    {
+        if (i[x] == 1)
+        {
+            s.insert(x + t, " ");
+            ++t;
+        }
+    }
+    cout << s << endl;
+    return 0;
+}
+*/
+
+//寻找质数  动态规划
+/*
+int GetNthPrime(int n)
+{
+    vector<int>x{ 1,2 };
+    int number = 3;
+    while (x.size() != n)
+    {
+        bool flag = true;
+        for (auto it = x.begin() + 1; it != x.end() && (*it) * (*it) <= number; ++it)
+        {
+            if (number % (*it) == 0)
+                flag = false;
+        }
+        if (flag)
+            x.push_back(number);
+        number += 2;
+    }
+    return *(x.rbegin());
+}
+*/
+
+//回文 动态规划？
+/*
+int huiwen(string s)
+{
+    if (s.size() <= 1)
+        return s.size();
+
+    vector<char>word;
+    int i = 0;
+
+    for (i; i < s.size() - i; ++i)
+    {
+        if (i == s.size() - 1)
+            return i;
+        if (s[i] != s[s.size() - 1 - i])
+            return 0;
+    }
+    return i;
+}
+
+*/
