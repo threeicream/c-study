@@ -45,79 +45,77 @@ typedef string::size_type sz;
 using namespace std;//一个就把上面using全等效了
 using namespace placeholders;
 
-template<class nametype=string, class agetype=int>
-class ppp
-{
+class Solution {
 public:
-    agetype age;
-    nametype name;
-    ppp(agetype a, nametype n)
-    {
-        age = a;
-        name = n;
-    }
-    void show()
-    {
-        cout << age << endl;
-        cout << name << endl;
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     *
+     * @param s string字符串
+     * @return bool布尔型
+     */
+    int compare(string version1, string version2) {
+        // write code here
+        int i = 0, j = 0;
+        int len1 = version1.size(), len2 = version2.size();
+        while (i < len1 || j < len2)
+        {
+            int num1 = 0, num2 = 0;
+            while (i < len1 && version1[i] != '.')
+            {
+                num1 = num1 * 10 + (version1[i] - '0');
+                ++i;
+            }
+            while (j < len2 && version2[j] != '.')
+            {
+                num2 = num2 * 10 + (version2[j] - '0');
+                ++j;
+            }
+            if (num1 > num2)
+                return 1;
+            if (num1 < num2)
+                return -1;
+            ++i;
+            ++j;
+        }
+        return 0;
+
     }
 };
 
-class xcv
-{
-public:
-    int x;
-    int y;
-    xcv() = default;
-    xcv(int a,int b,int c):x(a),y(b),z(c){}
-    friend void show(xcv& a);
-    friend xcv operator+(xcv& a, xcv& b);
+int i = 0;
+class Base {
 private:
-    int z;
+    int value=1;
+
+public:
+    Base() = default;
+    Base(int v) : value(v) { cout << "base show" << endl; }
+    ~Base() { cout << "~base" <<i++<< endl; }
+
+    // 声明友元函数
+    friend void showValue(Base& b);
 };
 
-xcv operator+(xcv& a, xcv& b)
-{
-    xcv p;
-    p.x = a.x + b.x;
-    p.y = a.y + b.y;
-    return p;
+// 友元函数定义
+void showValue(Base& b) {
+    cout << "Base Value: " << b.value << endl;
 }
 
-void show(xcv&a)
-{
-    cout << a.z;
-}
+class Derived : public Base {
+    int age;
+public:
+    Derived(int v) : age(v) { cout << "derived show" << endl; }
+    ~Derived() { cout << "~derived" << endl; }
+};
 
-int search(vector<int>& nums, int target) {
-    int left = 0;
-    int right = nums.size() - 1;
-    while (left <= right) {
-        int mid = left + (right - left) / 2;//记住mid要Left+
-        if (nums[mid] == target) {
-            return mid;
-        }
-        if (nums[mid] < target) {
-            left = mid + 1;
-        }
-        else {
-            right = mid - 1;
-        }
-    }
-    return -1;
-}
+int main() {
+    Base base(10);
+    Derived derived(20);
 
-int main() 
-{
-    ///*ppp <>x(15, "erw");
-    //x.show();*/
-    //xcv a(1, 2,3);
-    //xcv b(2, 3,4);
-    //xcv c = a + b;
-    //cout << c.x;
-    //show(c);
-    vector<int>x{ -2,-1,3 };
-    cout << search(x, 3);
+    // 友元函数可以访问Base类的私有成员
+    showValue(base);
+    showValue(derived); // 访问Derived对象中的Base部分的私有成员
 
     return 0;
 }

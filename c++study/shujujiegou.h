@@ -101,6 +101,43 @@ FIFO，元素先入先出。队列的出口端叫作队头（front），队列的入口端叫作队尾（rear）
 使用二叉堆中的最小堆实现最小优先队列
 
 
+图论
+基本概念
+任意两个数据对象之间都可能存在某种特定关系的数据结构
+graph一般由两个集合共同构成，1.非空但是有限的顶点集合Vertex。2.描述顶点之间连接关系的边集合Edge 图表示为：G=(V,E)
+有向图<> 每个节点分为入度和出度，入度就是其他点指向该顶点的边的个数，出度相反（度就是边数）
+无向图()
+无向完全图 任意两个顶点都有一条边
+有向完全图 任意两个顶点都有方向互为相反的两条边连接
+连通图 任意两个点都是连通(有一条路径)的，连通就是一个顶点到另一个顶点有路径
+子图 对于G=(V,E)和G'=(V',E')若V'是V的子集，E'是E的子集，那么G'就是子图
+极大连通子图 拥有最大的顶点树，再加入原图中的其他节点都会导致子图不连通（也可以叫连通分量）
+如果原图本身不连通，那么其连通分量（强连通分量）不止一个。
+如果原图本身连通，那么其连通分量（强连通分量）就是其本身。
+极小连通子图（边数极小） 直接理解为极大连通子图尽可能去掉能去掉的边就行了
+存储结构
+邻接矩阵：使用矩阵去表示途中各顶点之间的灵界关系和权值
+无向图的邻接矩阵一定是对称矩阵，所以可以只存放上半部分
+无向图的邻接矩阵的第i行非0（或非∞）的个数就是第i个顶点的度
+有向图的邻接矩阵的第i行非0（或非∞）的个数就是第i个顶点的出度（纵向就是入度）相关资料：https://www.itbaima.cn/document/0qzy7bogo0g2pusa
+邻接表：
+对于图中的每个顶点，建立一个数组，存放一个头结点，我们将与其邻接的顶点，
+通过一个链表进行记录（看着挺像前面讲的哈希表）这样，也可以表示一个图的连接关系
+邻接表无法快速查看入度：创建逆邻接表表示入度
+图的遍历：
+1.深度优先搜索DFS
+跟二叉树的前序遍历比较像，使用递归，一层循环控制遍历到底，但是前提是不能回到经过的节点，所以需要数组记录经过的顶点
+2.广度优先搜索
+跟二叉树的层次遍历比较像，使用队列，两层循环，第一层确认队列非空，第二层确认层次遍历完了
+图应用：
+生成树和最小生成树
+最小连通子图可以变成树和森林
+最小生成树：边有权值，生成树边的权值总和最小
+算法：prim算法、kruskal算法
+①prim：
+从任意一个顶点开始，不断成长为一棵树，每次选择尽可能小的方向去进行延伸
+②kruskal：
+主动选择最小的边，去除其他的边
 */
 
 //链表
@@ -577,5 +614,156 @@ maxHeap.sort_heap();
 maxHeap.print_heap();
 
 return 0;
+}
+*/
+
+//图：邻接矩阵
+/*
+#define MaxVertex 5
+using E = char;
+struct MatrixGraph {
+    // 结构体成员定义
+    int vertexCount, edgeCount;//顶点数和边数
+    int matrix[MaxVertex][MaxVertex]{ {0} };//邻接矩阵
+    E data[MaxVertex];//各个顶点对应的数据
+
+    MatrixGraph():vertexCount(0), edgeCount(0){}
+    MatrixGraph(int a,int b):vertexCount(a),edgeCount(b){}
+
+    void addVertex(E element)
+    {
+        if (vertexCount >= MaxVertex)return;
+        data[vertexCount++] = element;
+    }
+
+    void addEdge(int a, int b)
+    {
+        if (matrix[a][b] == 0) {
+            matrix[a][b] = 1;//如果是无向图，[a][b]和[b][a]都置为1
+            ++edgeCount;
+        }
+    }
+};
+using Graph = MatrixGraph*;
+
+void printGraph(Graph graph)
+{
+    char a = 'A';
+    for (int i = -1; i < graph->vertexCount; ++i) {
+        for (int j = -1; j < graph->vertexCount; ++j) {
+            if (j == -1)
+                //printf("%c", 'A' + i);
+                cout << (char)(a + i) << " ";
+            else if (i == -1)
+                //printf("%3c", 'A' + j);
+                cout << (char)(a + j) << " ";
+            else
+                //printf("%3d", graph->matrix[i][j]);
+                cout << graph->matrix[i][j] << " ";
+        }
+        //putchar('\n');
+        cout << endl;
+    }
+}
+
+// 测试函数
+int main()
+{
+    Graph graph = new MatrixGraph;
+    for (int c = 'A'; c <= 'D'; ++c)
+        graph->addVertex((char)c);
+    graph->addEdge(0, 1);//a->b
+    graph->addEdge(1, 2);//b->c
+    graph->addEdge(2, 3);//c->d
+    graph->addEdge(3, 0);//d->a
+    graph->addEdge(2, 0);//c->a
+    printGraph(graph);
+    return 0;
+}
+*/
+//图：邻接表
+/*
+#define MaxVertex 5
+using E = char;
+
+struct Node//节点和头节点分开定义，普通节点记录邻接顶点信息
+{
+    int nextVertex;
+    struct Node* next;
+};
+using Tnode = Node*;
+
+struct HeadNode//头节点记录元素
+{
+    E element;
+    struct Node* next;
+};
+
+struct AdjacencyGraph
+{
+    int vertexCount;//顶点数
+    int edgeCount;//边数
+    struct HeadNode vertex[MaxVertex];
+
+    AdjacencyGraph():vertexCount(0), edgeCount(0){}
+
+    void addVertex(E element)
+    {
+        vertex[vertexCount].element = element;
+        vertex[vertexCount].next = nullptr;
+        ++vertexCount;
+    }
+
+    void addEdge(int a, int b)
+    {
+        Tnode node = vertex[a].next;
+        Tnode newNode = new Node;
+        newNode->next = nullptr;
+        newNode->nextVertex = b;
+        if (!node)
+            vertex[a].next = newNode;
+        else
+        {
+            while (true)
+            {
+                if (node->nextVertex == b) { delete newNode; return; }//如果已经连接了对应的顶点，释放内存返回
+                if (node->next)node = node->next;//否则继续往后遍历
+                else break;//没有下一个直接结束
+            }
+            node->next = newNode;
+        }
+        ++edgeCount;
+    }
+
+
+};
+using Graph = AdjacencyGraph*;
+
+void printGraph(Graph graph)
+{
+    for (int i = 0; i < graph->vertexCount; ++i)
+    {
+        cout << i << "  " << graph->vertex[i].element;
+        Tnode node = graph->vertex[i].next;
+        while (node) {
+            cout << " -> " << node->nextVertex;
+            node = node->next;
+        }
+        cout << endl;
+    }
+}
+
+int main()
+{
+    Graph graph = new AdjacencyGraph;
+    for (int c = 'A'; c <= 'D'; ++c)
+        graph->addVertex((char)c);
+    graph->addEdge(0, 1);//a->b
+    graph->addEdge(1, 2);//b->c
+    graph->addEdge(2, 3);//c->d
+    graph->addEdge(3, 0);//d->a
+    graph->addEdge(2, 0);//c->a
+    printGraph(graph);
+    return 0;
 }
 */

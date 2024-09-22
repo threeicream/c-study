@@ -130,22 +130,6 @@ dp常见算法策略比较：
 将状态方程列出，有助于理清算法实现的思路
 如果出现类似于“所有解”、“所有路径”等关键词，则用从上到下更为直接
 
-图论
-基本概念
-任意两个数据对象之间都可能存在某种特定关系的数据结构
-graph一般由两个集合共同构成，1.非空但是有限的顶点集合Vertex。2.描述顶点之间连接关系的边集合Edge 图表示为：G=(V,E)
-有向图<> 每个节点分为入度和出度，入度就是其他点指向该顶点的边的个数，出度相反（度就是边数）
-无向图()
-无向完全图 任意两个顶点都有一条边
-有向完全图 任意两个顶点都有方向互为相反的两条边连接
-连通图 任意两个点都是连通的，连通就是一个顶点到另一个顶点有路径
-子图 对于G=(V,E)和G'=(V',E')若V'是V的子集，E'是E的子集，那么G'就是子图
-极大连通子图 拥有最大的顶点树，再加入原图中的其他节点都会导致子图不连通（也可以叫连通分量）
-存储结构
-邻接矩阵：使用矩阵去表示途中各顶点之间的灵界关系和权值
-无向图的邻接矩阵一定是对称矩阵，所以可以只存放上半部分
-无向图的邻接矩阵的第i行非0（或非∞）的个数就是第i个顶点的度
-有向图的邻接矩阵的第i行非0（或非∞）的个数就是第i个顶点的出度（纵向就是入度）相关资料：https://www.itbaima.cn/document/0qzy7bogo0g2pusa
 
 
 
@@ -1361,4 +1345,167 @@ int huiwen(string s)
     return i;
 }
 
+*/
+
+//二分查找
+/*
+int search(vector<int>& nums, int target) {
+    int left = 0;
+    int right = nums.size() - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;//为了避免直接使用 (left + right) / 2 可能带来的整数溢出问题
+        if (nums[mid] == target) {
+            return mid;
+        }
+        if (nums[mid] < target) {
+            left = mid + 1; //这样可以确保不会重复检查 mid 位置
+        }
+        else {
+            right = mid - 1;//这样可以确保不会重复检查 mid 位置
+        }
+    }
+    return -1;
+}
+*/
+
+//图：DFS和BFS
+/*
+#define MaxVertex 8
+using E = char;
+
+struct Node//节点和头节点分开定义，普通节点记录邻接顶点信息
+{
+    int nextVertex;
+    struct Node* next;
+};
+using Tnode = Node*;
+
+struct HeadNode//头节点记录元素
+{
+    E element;
+    struct Node* next;
+};
+
+struct AdjacencyGraph
+{
+    int vertexCount;//顶点数
+    int edgeCount;//边数
+    struct HeadNode vertex[MaxVertex];
+
+    AdjacencyGraph() :vertexCount(0), edgeCount(0) {}
+
+    void addVertex(E element)
+    {
+        vertex[vertexCount].element = element;
+        vertex[vertexCount].next = nullptr;
+        ++vertexCount;
+    }
+
+    void addEdge(int a, int b)
+    {
+        Tnode node = vertex[a].next;
+        Tnode newNode = new Node;
+        newNode->next = nullptr;
+        newNode->nextVertex = b;
+        if (!node)
+            vertex[a].next = newNode;
+        else
+        {
+            while (true)
+            {
+                if (node->nextVertex == b) { delete newNode; return; }//如果已经连接了对应的顶点，释放内存返回
+                if (node->next)node = node->next;//否则继续往后遍历
+                else break;//没有下一个直接结束
+            }
+            node->next = newNode;
+        }
+        ++edgeCount;
+    }
+
+
+};
+using Graph = AdjacencyGraph*;
+
+void printGraph(Graph graph)
+{
+    for (int i = 0; i < graph->vertexCount; ++i)
+    {
+        cout << i << "  " << graph->vertex[i].element;
+        Tnode node = graph->vertex[i].next;
+        while (node) {
+            cout << " -> " << node->nextVertex;
+            node = node->next;
+        }
+        cout << endl;
+    }
+}
+ 
+
+bool dfs(Graph graph, int startVertex, int targetVertex, vector<int> visited) {
+    visited[startVertex] = 1;   //走过之后一定记得mark一下
+    //printf("%c -> ", graph->vertex[startVertex].element);   //打印当前顶点值
+    cout << graph->vertex[startVertex].element << " -> ";
+    if (startVertex == targetVertex)return true;
+    Tnode node = graph->vertex[startVertex].next;   //遍历当前顶点所有的分支
+    while (node) {
+        if (!visited[node->nextVertex])   //如果已经到过（有可能是走其他分支到过，或是回头路）那就不继续了
+            if(dfs(graph, node->nextVertex, targetVertex, visited))//没到过就继续往下走，这里将startVertex设定为对于分支的下一个顶点，按照同样的方式去寻找
+                return true;
+        node = node->next;
+    }
+    return false;
+}
+
+queue<int>x;
+bool bfs(Graph graph, int startVertex, int targetVertex, vector<int>visited)
+{
+    x.push(startVertex);
+    visited[startVertex] = 1;
+    cout << graph->vertex[startVertex].element << " -> ";
+    Tnode newNode = graph->vertex[startVertex].next;
+    while(!x.empty())
+    {
+        while (newNode)
+        {
+            if (!visited[newNode->nextVertex])
+            {
+                int flag = newNode->nextVertex;
+                x.push(flag);
+                visited[flag] = 1;
+                cout << graph->vertex[flag].element << " -> ";
+            }
+            newNode = newNode->next;
+        }
+        x.pop();
+        if (!x.empty())
+            newNode = graph->vertex[x.front()].next;
+        if (visited[targetVertex] == 1)
+        {
+            cout << endl;
+            return true;
+        }
+    }
+    cout << endl;
+    return false;
+}
+
+
+
+// 测试函数
+int main()
+{
+    Graph graph = new AdjacencyGraph;
+    for (int c = 'A'; c <= 'G'; ++c)
+        graph->addVertex((char)c);
+    graph->addEdge(0, 1);//a->b
+    graph->addEdge(1, 4);//b->c
+    graph->addEdge(1, 3);//c->d
+    graph->addEdge(1, 2);//c->e
+    graph->addEdge(4, 5);//c->f
+    printGraph(graph);
+    cout << endl;
+    vector<int>arr(graph->vertexCount, 0);
+    cout<<bfs(graph, 0, 6, arr);
+    return 0;
+}
 */
