@@ -136,7 +136,9 @@
   <ItemGroup>
     <ClInclude Include="cp.h" />
     <ClInclude Include="heima.h" />
+    <ClInclude Include="linux.h" />
     <ClInclude Include="person.h" />
+    <ClInclude Include="QT.h" />
     <ClInclude Include="sales.h" />
     <ClInclude Include="Sales_item.h" />
     <ClInclude Include="screen.h" />

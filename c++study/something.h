@@ -285,6 +285,8 @@ typedef int (*PTypeFun2)(int, int);
  s1.erase(6, 2);//删除
  s1.insert(4,"you")；//插入
  getline(cin,s);//返回一行，只有收到换行符了才返回
+ s1.compare(s2);//比较函数
+ s1.substr(int pos,int npos);
 
  string+字面值：必须string类型在前面
  string s4=s+",";

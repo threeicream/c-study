@@ -45,78 +45,224 @@ typedef string::size_type sz;
 using namespace std;//一个就把上面using全等效了
 using namespace placeholders;
 
-class Solution {
-public:
-    /**
-     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-     *
-     *
-     * @param s string字符串
-     * @return bool布尔型
-     */
-    int compare(string version1, string version2) {
-        // write code here
-        int i = 0, j = 0;
-        int len1 = version1.size(), len2 = version2.size();
-        while (i < len1 || j < len2)
-        {
-            int num1 = 0, num2 = 0;
-            while (i < len1 && version1[i] != '.')
-            {
-                num1 = num1 * 10 + (version1[i] - '0');
-                ++i;
-            }
-            while (j < len2 && version2[j] != '.')
-            {
-                num2 = num2 * 10 + (version2[j] - '0');
-                ++j;
-            }
-            if (num1 > num2)
-                return 1;
-            if (num1 < num2)
-                return -1;
-            ++i;
-            ++j;
-        }
-        return 0;
 
+
+class Base {
+private:
+    int value;
+
+public:
+    Base(int v) : value(v) {
+        cout << "Base constructor called with value: " << v << endl;
+    }
+    virtual ~Base() {
+        cout << "Base destructor called" << endl;
+    }
+    virtual int xyzz() = 0; // 纯虚函数，使Base成为抽象类
+};
+
+class Derived : public Base {
+private:
+    int age;
+
+public:
+    Derived(int v, int a) : Base(v), age(a) {
+        cout << "Derived constructor called with age: " << a << endl;
+    }
+    ~Derived() {
+        cout << "Derived destructor called" << endl;
+    }
+    int xyzz() override {
+        return age;
     }
 };
 
-int i = 0;
-class Base {
-private:
-    int value=1;
-
-public:
-    Base() = default;
-    Base(int v) : value(v) { cout << "base show" << endl; }
-    ~Base() { cout << "~base" <<i++<< endl; }
-
-    // 声明友元函数
-    friend void showValue(Base& b);
+const pair<int, string> valuesy[]{
+    {1000, "M"},
+    {900,  "CM"},
+    {500,  "D"},
+    {400,  "CD"},
+    {100,  "C"},
+    {90,   "XC"},
+    {50,   "L"},
+    {40,   "XL"},
+    {10,   "X"},
+    {9,    "IX"},
+    {5,    "V"},
+    {4,    "IV"},
+    {1,    "I"},
 };
 
-// 友元函数定义
-void showValue(Base& b) {
-    cout << "Base Value: " << b.value << endl;
-}
+struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode* next) : val(x), next(next) {}
+    
+};
 
-class Derived : public Base {
-    int age;
+class Solution {
+private:
+    
+
 public:
-    Derived(int v) : age(v) { cout << "derived show" << endl; }
-    ~Derived() { cout << "~derived" << endl; }
+    long long maximumSubsequenceCount(string text, string pattern) {
+        int num1 = 0, num2 = 0;
+        /*int flag1 = 0, flag2 = 0;*/
+        long long ans = 0;
+        
+        for (auto a : text)
+        {
+            if (a == pattern[1])
+            {
+                ans += num1;
+                ++num2;
+            }
+            if (a == pattern[0])
+            {
+                ++num1;
+            }
+        }
+        return ans = max(ans + num1, ans + num2);
+    }
+    //负二进制
+    string baseNeg2(int n) {
+        // 如果 n 为 0，直接返回字符串 "0"
+        if (n == 0) return "0";
+
+        std::string result = "";
+
+        while (n != 0) {
+            // 计算余数
+            int remainder = n % -2;
+            n /= -2;  // 计算新的商
+
+            // 如果余数为负数，则进行修正
+            if (remainder < 0) {
+                remainder += 2;
+                n += 1;
+            }
+
+            // 将当前的余数（0 或 1）添加到结果的前面
+            result = std::to_string(remainder) + result;
+        }
+
+        return result;
+    }
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) 
+    {   
+        int a = 0, b = 0;
+        ListNode* test1 = l1, *test2 = l2;
+        while (test1 != nullptr || test2 != nullptr)
+        {
+            if (test1) { test1 = test1->next; ++a;}
+            if (test2) { test2 = test2->next; ++b;}
+        }
+        ListNode* result;
+        if (a > b)
+        {
+            result = l1;
+        }
+        else
+        {
+            result = l1;
+            l1 = l2;
+            l2 = result;
+            result = l1;
+        }
+        int flag = 0;
+
+        //新建一条链表储存
+        /*ListNode* head = nullptr, * tail = nullptr;
+        while (l1 || l2)
+        {
+            int n1 = l1 ? l1->val : 0;
+            int n2 = l2 ? l2->val : 0;
+            int sum = n1 + n2 + flag;
+            if (!head)
+                head = tail = new ListNode(sum % 10);
+            else
+            {
+                tail->next = new ListNode(sum % 10);
+                tail = tail->next;
+            }
+            flag = sum / 10;
+            if (l1)l1 = l1->next;
+            if (l2)l2 = l2->next;
+        }
+        if (flag > 0)
+            tail->next = new ListNode(flag);*/
+
+        while (l1 != nullptr && l2 != nullptr)
+        {
+            l1->val += l2->val;
+            flag = l1->val / 10;
+            if (flag)
+            {
+                l1->val = l1->val % 10;
+            }
+
+            if (l1->next) {
+                l1 = l1->next;
+                l1->val += flag;
+                flag = 0;
+            }
+            else if (flag)
+            {
+                l1->next = new ListNode();
+                l1 = l1->next;
+                l1->val += flag;
+                flag = 0;
+            }
+            else
+                break;
+
+            if (l2->next) l2 = l2->next;
+            else
+                break;
+        }
+        flag = l1->val / 10;
+        l1->val = l1->val % 10;
+        while (flag)
+        {
+            if (l1->next) {
+                l1 = l1->next;
+                l1->val += flag;
+                flag = l1->val / 10;
+                l1->val = l1->val % 10;
+            }
+            else
+            {
+                l1->next = new ListNode();
+                l1 = l1->next;
+                l1->val += flag;
+                flag = 0;
+            }
+        }
+        return result;
+    }
 };
 
 int main() {
-    Base base(10);
-    Derived derived(20);
+    ListNode* l1 = new ListNode(0, nullptr);
+    ListNode* le = new ListNode(9, l1);
+    ListNode* ld = new ListNode(9, le);
+    ListNode* lc = new ListNode(9, ld);
+    ListNode* la = new ListNode(9, lc);
+    ListNode* lb = new ListNode(9, la);
 
-    // 友元函数可以访问Base类的私有成员
-    showValue(base);
-    showValue(derived); // 访问Derived对象中的Base部分的私有成员
-
+    ListNode* l2 = new ListNode(3, nullptr);
+    ListNode* lx = new ListNode(7, l2);
+    ListNode* ly = new ListNode(9, lx);
+    
+    Solution x;
+    ListNode* u = x.addTwoNumbers(l1, lx);
+    while (u != nullptr)
+    { 
+        cout << u->val << " ";
+        u = u->next;
+    }
     return 0;
 }
 

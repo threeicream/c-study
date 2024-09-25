@@ -48,6 +48,12 @@
     <ClInclude Include="cp.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="linux.h">
+      <Filter>资源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="QT.h">
+      <Filter>资源文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="study.cpp">
