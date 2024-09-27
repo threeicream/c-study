@@ -147,6 +147,7 @@
     <ClInclude Include="suanfa.h" />
     <ClInclude Include="test.h" />
     <ClInclude Include="Version_test.h" />
+    <ClInclude Include="多线程\多进程.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,6 +3,7 @@
 //#include <filesystem>//C++17的文件系统库
 #include<sstream>//读写内存string对象的类型
 #include <typeinfo>
+
 //顺序容器
 #include<string>
 #include<vector>
@@ -24,6 +25,10 @@
 #include<algorithm>
 #include<numeric>
 #include<functional>
+//多线程
+#include <thread>
+//智能指针
+#include<memory>
 
 #include<cstring>
 #include <initializer_list>
@@ -242,27 +247,94 @@ public:
         }
         return result;
     }
+	bool isPalindrome(int x) {
+		if (x < 0)return false;
+		vector<int>u;
+		while (x)
+		{
+			int i = x % 10;
+            x = x / 10;
+			u.push_back(i);
+		}
+        int a = 0, b = u.size() - 1;
+        while (b > a)
+        {
+            if (u[a] == u[b])
+            {
+                ++a;
+                --b;
+            }
+            else
+                return false;
+        }
+        return true;
+	}
+	int myAtoi(string str) {
+		if (str.empty()) return 0;
+		int index = 0, n = str.size(), sign = 1, res = 0;
+		// 处理前置空格
+		while (index < n && str[index] == ' ') {
+			++index;
+		}
+		// 处理符号
+		if (index < n && (str[index] == '+' || str[index] == '-')) {
+			sign = str[index++] == '+' ? 1 : -1;
+		}
+		// 处理数字
+		while (index < n && isdigit(str[index])) {
+			int digit = str[index] - '0';
+			// 判断是否溢出
+			if (res > (INT_MAX - digit) / 10) {
+				return sign == 1 ? INT_MAX : INT_MIN;
+			}
+			res = res * 10 + digit;
+			++index;
+		}
+		return res * sign;
+	}
+	int reverse(int x) {
+		int rev = 0;
+		while (x != 0) {
+			if (rev < INT_MIN / 10 || rev > INT_MAX / 10) {
+				return 0;
+			}
+			int digit = x % 10;
+			x /= 10;
+			rev = rev * 10 + digit;
+		}
+		return rev;
+	}
+
+};
+
+
+
+class A
+{
+public:
+	void foo() {
+		std::cout << "hello" << std::endl; // 访问已经被销毁的指针
+	}
 };
 
 int main() {
-    ListNode* l1 = new ListNode(0, nullptr);
-    ListNode* le = new ListNode(9, l1);
-    ListNode* ld = new ListNode(9, le);
-    ListNode* lc = new ListNode(9, ld);
-    ListNode* la = new ListNode(9, lc);
-    ListNode* lb = new ListNode(9, la);
+	/*ListNode* l1 = new ListNode(0, nullptr);
+	ListNode* le = new ListNode(9, l1);
+	ListNode* ld = new ListNode(9, le);
+	ListNode* lc = new ListNode(9, ld);
+	ListNode* la = new ListNode(9, lc);
+	ListNode* lb = new ListNode(9, la);
 
-    ListNode* l2 = new ListNode(3, nullptr);
-    ListNode* lx = new ListNode(7, l2);
-    ListNode* ly = new ListNode(9, lx);
+	ListNode* l2 = new ListNode(3, nullptr);
+	ListNode* lx = new ListNode(7, l2);
+	ListNode* ly = new ListNode(9, lx);*/
     
-    Solution x;
-    ListNode* u = x.addTwoNumbers(l1, lx);
-    while (u != nullptr)
-    { 
-        cout << u->val << " ";
-        u = u->next;
-    }
+	Solution x;
+    cout << x.reverse(-123);
+    
+    /*std::shared_ptr<A> a = std::make_shared<A>();
+    thread t(&A::foo,a);
+    t.join();*/
     return 0;
 }
 
