@@ -62,6 +62,10 @@ FIFO£¬ÔªËØÏÈÈëÏÈ³ö¡£¶ÓÁĞµÄ³ö¿Ú¶Ë½Ğ×÷¶ÓÍ·£¨front£©£¬¶ÓÁĞµÄÈë¿Ú¶Ë½Ğ×÷¶ÓÎ²£¨rear£©
 ¶ş²æÊ÷»¹ÓĞÁ½ÖÖÌØÊâĞÎÊ½£¬Ò»¸ö½Ğ×÷Âú¶ş²æÊ÷£¬ÁíÒ»¸ö½Ğ×÷ÍêÈ«¶ş²æÊ÷
 ¼òµ¥µãËµ£¬Âú¶ş²æÊ÷µÄÃ¿Ò»¸ö·ÖÖ§¶¼ÊÇÂúµÄ                 ¸ß¶ÈhÓë½ÚµãÊıÁ¿nµÄ¹ØÏµ£ºh=log(n+1) ĞèÒªÓÃµ½µÈ±ÈÊıÁĞÇóºÍ¹«Ê½
 ÍêÈ«¶ş²æÊ÷Ö»Ğè±£Ö¤×îºóÒ»¸ö½ÚµãÖ®Ç°µÄ½Úµã¶¼ÆëÈ«¼´¿É     ¸ß¶ÈhÓë½ÚµãÊıÁ¿nµÄ¹ØÏµ£ºh=log(n)+1
+¶ş²æËÑË÷Ê÷£º
+×ó±ßµÄÖµ<¸ù½Úµã£¬ÓÒ±ßµÄÖµ>¸ù½Úµã
+Æ½ºâ¶ş²æËÑË÷Ê÷£º
+ÔÚÉÏÊöµÄ»ù´¡ÉÏ£¬±£Ö¤×óÓÒ×ÓÊ÷µÄ¸ß¶È²î²»³¬¹ı1
 ¶ş²æÊ÷±í´ï·½Ê½£º
 1. Á´Ê½´æ´¢½á¹¹ Ò»¸ödata£¬Ò»¸ö×óÖ¸Õë£¬Ò»¸öÓÒÖ¸Õë
 2. Êı×é  Ê¹ÓÃÊı×é´æ´¢Ê±£¬»á°´ÕÕ²ã¼¶Ë³Ğò°Ñ¶ş²æÊ÷µÄ½Úµã·Åµ½Êı×éÖĞ¶ÔÓ¦µÄÎ»ÖÃÉÏ¡£Èç¹ûÄ³Ò»¸ö½ÚµãµÄ×óº¢×Ó»òÓÒº¢×Ó¿ÕÈ±£¬ÔòÊı×éµÄÏàÓ¦Î»ÖÃÒ²¿Õ³öÀ´
@@ -69,10 +73,10 @@ FIFO£¬ÔªËØÏÈÈëÏÈ³ö¡£¶ÓÁĞµÄ³ö¿Ú¶Ë½Ğ×÷¶ÓÍ·£¨front£©£¬¶ÓÁĞµÄÈë¿Ú¶Ë½Ğ×÷¶ÓÎ²£¨rear£©
 ¶ş²æÊ÷µÄ¹¦ÄÜ£º
 1.²éÕÒ  ¶ş²æ²éÕÒÊ÷£º×ó×ÓÊ÷ÉÏËùÓĞ½ÚµãµÄÖµ¾ùĞ¡ÓÚ¸ù½ÚµãµÄÖµ ÓÒ×ÓÊ÷ÉÏËùÓĞ½ÚµãµÄÖµ¾ù´óÓÚ¸ù½ÚµãµÄÖµ O(logn)
 ¶ş²æÊ÷µÄ±éÀú·½Ê½£º
-1.Ç°Ğò±éÀú Éî¶ÈÓÅÏÈ O(n) O(n) O(n)
+1.Ç°Ğò±éÀú Éî¶ÈÓÅÏÈ O(n) O(n) O(n)  ×ÔÉÏ´ÓÏÂ
 2.ÖĞĞò±éÀú Éî¶ÈÓÅÏÈ O(n) O(n) O(n)
-3.ºóĞò±éÀú Éî¶ÈÓÅÏÈ O(n) O(n) O(n)
-4.²ãĞò±éÀú ¹ã¶ÈÓÅÏÈ O(n) O(n) O(n)
+3.ºóĞò±éÀú Éî¶ÈÓÅÏÈ O(n) O(n) O(n)  ×ÔÏÂµ½ÉÏ£¬ÊÊºÏ´¦Àíµ×²ãÌâÄ¿£¨ĞèÒª»ØËİµÄ£©
+4.²ãĞò±éÀú ¹ã¶ÈÓÅÏÈ O(n) O(n) O(n)  
 Éî¶ÈÓÅÏÈ£º
 1.Ç°ĞòÓÅÏÈ£º¶ş²æÊ÷µÄÇ°Ğò±éÀú£¬Êä³öË³ĞòÊÇ¸ù½Úµã¡¢×ó×ÓÊ÷¡¢ÓÒ×ÓÊ÷
 2.ÖĞĞò±éÀú£º¶ş²æÊ÷µÄÖĞĞò±éÀú£¬Êä³öË³ĞòÊÇ×ó×ÓÊ÷¡¢¸ù½Úµã¡¢ÓÒ×ÓÊ÷
@@ -127,7 +131,7 @@ graphÒ»°ãÓÉÁ½¸ö¼¯ºÏ¹²Í¬¹¹³É£¬1.·Ç¿Õµ«ÊÇÓĞÏŞµÄ¶¥µã¼¯ºÏVertex¡£2.ÃèÊö¶¥µãÖ®¼äÁ¬½Ó¹
 Í¼µÄ±éÀú£º
 1.Éî¶ÈÓÅÏÈËÑË÷DFS
 ¸ú¶ş²æÊ÷µÄÇ°Ğò±éÀú±È½ÏÏñ£¬Ê¹ÓÃµİ¹é£¬Ò»²ãÑ­»·¿ØÖÆ±éÀúµ½µ×£¬µ«ÊÇÇ°ÌáÊÇ²»ÄÜ»Øµ½¾­¹ıµÄ½Úµã£¬ËùÒÔĞèÒªÊı×é¼ÇÂ¼¾­¹ıµÄ¶¥µã
-2.¹ã¶ÈÓÅÏÈËÑË÷
+2.¹ã¶ÈÓÅÏÈËÑË÷BFS
 ¸ú¶ş²æÊ÷µÄ²ã´Î±éÀú±È½ÏÏñ£¬Ê¹ÓÃ¶ÓÁĞ£¬Á½²ãÑ­»·£¬µÚÒ»²ãÈ·ÈÏ¶ÓÁĞ·Ç¿Õ£¬µÚ¶ş²ãÈ·ÈÏ²ã´Î±éÀúÍêÁË
 Í¼Ó¦ÓÃ£º 
 Éú³ÉÊ÷ºÍ×îĞ¡Éú³ÉÊ÷
@@ -423,6 +427,27 @@ void preorderTraversal(TreeNode* root) {
     }
 }
 
+vector<int> preorderTraversal(TreeNode* root) {
+		vector<int> res;
+		if (root == nullptr) {
+			return res;
+		}
+
+		stack<TreeNode*> stk;
+		TreeNode* node = root;
+		while (!stk.empty() || node != nullptr) {
+			while (node != nullptr) {
+				res.emplace_back(node->val);
+				stk.emplace(node);
+				node = node->left;
+			}
+			node = stk.top();
+			stk.pop();
+			node = node->right;
+		}
+		return res;
+	}
+
 ÖĞĞò±éÀú£¨Inorder Traversal£©
 ÖĞĞò±éÀúµÄË³ĞòÊÇ£º×ó×ÓÊ÷ -> ¸ù½Úµã -> ÓÒ×ÓÊ÷¡£Ê¹ÓÃÕ»À´ÊµÏÖÖĞĞò±éÀú£º
 
@@ -447,7 +472,7 @@ void inorderTraversal(TreeNode* root) {
 }
 
 ºóĞò±éÀú£¨Postorder Traversal£©
-ºóĞò±éÀúµÄË³ĞòÊÇ£º×ó×ÓÊ÷ -> ÓÒ×ÓÊ÷ -> ¸ù½Úµã¡£Ê¹ÓÃÁ½¸öÕ»À´ÊµÏÖºóĞò±éÀú£º
+ºóĞò±éÀúµÄË³ĞòÊÇ£º×ó×ÓÊ÷ -> ÓÒ×ÓÊ÷ -> ¸ù½Úµã¡£Ê¹ÓÃÁ½¸öÕ»À´ÊµÏÖºóĞò±éÀú£ºÒ»¸öÒ²¿ÉÒÔ
 
 void postorderTraversal(TreeNode* root) {
     if (root == nullptr) return;
@@ -470,6 +495,32 @@ void postorderTraversal(TreeNode* root) {
         cout << node->val << " ";
     }
 }
+
+vector<int> postorderTraversal(TreeNode* root) {
+		if(!root)return{};
+		stack<TreeNode*>s;
+		vector<int>ans;
+		TreeNode*prev=nullptr;
+		while(root||!s.empty()){
+			while(root){
+				s.emplace(root);
+				root=root->left;
+			}
+			root=s.top();
+			s.pop();
+			if(!root->right||root->right==prev){
+				ans.emplace_back(root->val);
+				prev=root;
+				root=nullptr;
+			}
+			else{
+				s.emplace(root);
+				root=root->right;
+			}
+
+		}
+		return ans;
+	}
 
 Ê¾Àı
 ÒÔÏÂÊÇÒ»¸öÍêÕûµÄÊ¾Àı³ÌĞò£¬Õ¹Ê¾ÁËÈçºÎÊ¹ÓÃÉÏÊö±éÀú·½·¨£º
@@ -510,22 +561,40 @@ int main() {
 
 //¶ş²æÊ÷µÄ²ã´Î±éÀú
 /*
-void guangdu(tree_2* root)//²ã´Î±éÀú
-{
-    if (root == nullptr)return;
-    queue<tree_2*>x;
-    tree_2* node = root;
-    x.push(node);
-    while (!x.empty())
-    {
-        if (node->left)x.push(node->left);
-        if (node->right)x.push(node->right);
-        node = x.front();
-        cout << node->val << " ";
-        x.pop();
-        if(!x.empty())node = x.front();
-    }
-}
+void order(TreeNode* cur, vector<vector<int>>& result, int depth)
+	{
+		if (cur == nullptr) return;
+		if (result.size() == depth) result.push_back(vector<int>());
+		result[depth].push_back(cur->val);
+		order(cur->left, result, depth + 1);
+		order(cur->right, result, depth + 1);
+	}
+	vector<vector<int>> levelOrder(TreeNode* root) {
+		vector<vector<int>> result;
+		int depth = 0;
+		order(root, result, depth);
+		return result;
+	}
+
+ vector<vector<int>> levelOrder(TreeNode* root) {
+		queue<TreeNode*> que;
+		if (root != NULL) que.push(root);
+		vector<vector<int>> result;
+		while (!que.empty()) {
+			int size = que.size();
+			vector<int> vec;
+			// ÕâÀïÒ»¶¨ÒªÊ¹ÓÃ¹Ì¶¨´óĞ¡size£¬²»ÒªÊ¹ÓÃque.size()£¬ÒòÎªque.sizeÊÇ²»¶Ï±ä»¯µÄ
+			for (int i = 0; i < size; i++) {
+				TreeNode* node = que.front();
+				que.pop();
+				vec.push_back(node->val);
+				if (node->left) que.push(node->left);
+				if (node->right) que.push(node->right);
+			}
+			result.push_back(vec);
+		}
+		return result;
+	}
 */
 
 //¶ş²æ¶Ñ

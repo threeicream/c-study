@@ -57,6 +57,9 @@
     <ClInclude Include="多线程\多进程.h">
       <Filter>资源文件</Filter>
     </ClInclude>
+    <ClInclude Include="sql.h">
+      <Filter>资源文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="study.cpp">
