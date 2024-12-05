@@ -1677,21 +1677,27 @@ public:
 		return reduce(f[n - 1].begin(), f[n - 1].begin() + nums[n - 1] + 1, 0LL) % MOD;
 	}
 
-	int largestSumAfterKNegations(vector<int>& nums, int k) {
-		ranges::sort(nums);
-		int m = INT_MAX;
-		for (int i = 0; i < nums.size(); ++i) {
-			if (k == 0)break;
-			if (nums[i] < 0) {
-				nums[i] = -nums[i];
-				--k;
+	int monotoneIncreasingDigits(int n) {
+		vector<int>ans;
+		while (n) {
+			int tmp = n % 10;
+			ans.emplace_back(tmp);
+			n /= 10;
+		}
+		int sum = 0;
+		int tmp = 1;
+		for (int i = 0; i < ans.size() - 1; ++i) {
+			if (i)tmp *= 10;
+			if (ans[i] >= ans[i + 1]) {
+				sum += ans[i] * tmp;
 			}
-			m = min(m, nums[i]);
+			else {
+				sum += 9 * tmp;
+				--ans[i + 1];
+			}
 		}
-		int sum = accumulate(nums.begin(), nums.end(), 0);
-		if (!(k ^ 1)) {
-			sum -= 2 * m;
-		}
+		if (ans[ans.size() - 1] <= ans[ans.size() - 2])
+			sum += ans[ans.size() - 1] * tmp * 10;
 		return sum;
 	}
 	//vector<string> letterCombinations(string digits) {//回溯
@@ -1854,13 +1860,16 @@ int main() {
 	unordered_map<int, vector<int>>map;
 	map[0] = { 1,2 };
 
-    vector<int>uu{ 1, 7, 4, 9, 2, 5 };
+    vector<int>uu{ 1,0,2 };
     vector<int>tt(6, 0);
-    vector<vector<int>>grid({{ 2,4 }, { 0,2 }, { 0,4 }});
+    vector<vector<int>>grid({{ 1,3 }, { 2,6 }, { 8,10 }});
     
 
-	x.largestSumAfterKNegations(nums1,3);
-	std::accumulate(nums1.begin(),nums1.end(), 0);
+	//x.monotoneIncreasingDigits(100);
+	cout << (char)('2' - 1);
+	pair<int, int>t1,t2;
+	t1.first = 1;
+
 	
     return 0;
 }

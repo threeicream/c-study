@@ -788,6 +788,12 @@ tabmodel->setHeaderData(tabmodel->fieldIndex("empNo"), Qt::Horizontal, "工号");
 ui.tableView->setModel(tabmodel);// 先设置视图的模型
 ui.tableView->setColumnHidden(tabmodel->fieldIndex("Memo"), true);//隐藏部分数据
 
+tabmodel->insertRecord(curindex.row(), QSqlRecord ret);//插入数据
+tabmodel->insertRow(curindex.row());//插入一行空数据
+tabmodel->removeRow(curindex.row());//移除一行数据
+tabmodel->submitAll();//保存数据库更改
+tabmodel->revertAll();//撤销数据库更改
+
 //字段与widget映射
 datamapper = new QDataWidgetMapper(this);
 datamapper->setModel(tabmodel);
@@ -813,5 +819,25 @@ QSqlQuery query;
 query.prepare("select Memo,Photo from employee where EmpNo= :ID");//只有 EmpNo 列等于绑定参数 :ID 的记录的 Memo 和 Photo 列的数据会被获取
 query.bindValue(":ID",empNo);//将参数 :ID 绑定到一个具体的值 empNo
 query.exec();//执行已经准备好的 SQL 查询
+
+QSqlRelationalTableModel:
+QSqlRelation是上述类的辅助类，存储SQL外键的信息
+外键已有相关代理，自动变成下拉菜单
+QSqlRelationalDelegate* del = new QSqlRelationalDelegate(this);
+ui.tableView->setItemDelegate(del);
+
+tabmodel->setRelation(tabmodel->fieldIndex("departID"),
+						  QSqlRelation("departments","departID","department"));//将外键内容修改为对应表格的内容
+
+QPainter绘图：
+QPainter：用来进行绘图操作
+主要设置：pen、brush、font
+painter.setpen(QPen());
+painter.setBrush(QBrush());
+painter.setFont(QFont());
+painter.setRenderHint(QPainter::Antialiasing);//抗锯齿模式
+通常使用painter.drawXXX();来绘制图形
+
+QPaintDevice：QWidget、QImage、QPixmap等的基类，抽象的二维界面，是中间媒介
 */
  

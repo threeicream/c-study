@@ -1120,6 +1120,8 @@ set.erase(4); // 删除元素4
 //std::reduce(first, last, init);//对范围 [first, last) 中的所有元素进行累加操作，并将结果与 init 累加
 //ranges::sort(g);
 //std::accumulate(range, init);
+//string strN = to_string(n);//将int转换为string
+//stoi(str);//将string转为int
 
 
 //IO库
